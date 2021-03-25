@@ -1,4 +1,4 @@
-from vereinswebseite import db
+from vereinswebseite import db, ma
 
 
 class User(db.Model):
@@ -11,3 +11,8 @@ class User(db.Model):
         self.name = name
         self.email = email
         self.password = password
+
+
+class UserSchema(ma.Schema):
+    class Meta:
+        fields = ('id', 'name', 'email', 'password')
