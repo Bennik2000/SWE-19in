@@ -19,4 +19,8 @@ app.get("/reset_password", (req, res) => {
     res.render("reset_password")
 })
 
+app.get("/create_account", (req, res) => {
+    res.render("create_account")
+})
+
 app.listen(5000)
