@@ -11,4 +11,12 @@ app.get("/", (req, res) => {
     res.render("index")
 })
 
+app.get("/loginpage", (req, res) => {
+    res.render("loginpage")
+})
+
+app.get("/reset_password", (req, res) => {
+    res.render("reset_password")
+})
+
 app.listen(5000)
