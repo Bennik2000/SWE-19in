@@ -16,10 +16,6 @@ body {
   position: fixed;
 }
 
-.back_arrow_div {
-  width: 5%;
-}
-
 p {
   font-size: 12pt;
   color: black;
@@ -88,30 +84,16 @@ margin-bottom: 4%;
   border-radius: 0 0 10px 10px;
 }
 
-
-.back_arrow{
-  width: 5%;
-  image-orientation: left;
-  margin-top: 2%;
-  margin-left: 2%;
-}
-
-
 input[type=button], input[type=submit], input[type=reset]  {
   background-color: #56baed;
   border: none;
   color: white;
-  padding: 15px 80px;
+  padding: 2% 15%;
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  text-transform: uppercase;
-  font-size: 13px;
-  -webkit-box-shadow: 0 10px 30px 0 rgba(95,186,233,0.4);
-  box-shadow: 0 10px 30px 0 rgba(95,186,233,0.4);
-  -webkit-border-radius: 5px 5px 5px 5px;
-  border-radius: 5px 5px 5px 5px;
-  margin: 10px 20px 10px 20px;
+  font-size: 110%;
+  margin: 4% 4% 4% 4%;
   -webkit-transition: all 0.3s ease-in-out;
   -moz-transition: all 0.3s ease-in-out;
   -ms-transition: all 0.3s ease-in-out;
@@ -178,4 +160,16 @@ input[type=text]:placeholder, input[type=password]:placeholder{
 
 .underlineHover:hover:after{
   width: 100%;
+}
+
+#cancel{
+  margin: 0% 4% 4% 4%;
+  font-size: 110%;
+  padding: 3% 30.5%;
+  text-align: center;
+}
+
+#createAccount {
+  padding: 3% 25%;
+  border-radius: 3px 3px 3px 3px;
 }

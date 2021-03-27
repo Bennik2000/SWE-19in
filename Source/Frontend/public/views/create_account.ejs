@@ -25,16 +25,8 @@
 
 <body>
     <div class="wrapper">
-        <div id="formContent">
-            <div class="back_arrow_div" >
-                <a href="loginpage">
-                <img class="back_arrow" src="../img/Arrows-Left-Round-icon.png">
-                </a>
-            </div>
-            <div class="">
-                <h1>Neuen Account anlegen:</h1>
-            </div>
-          
+        <div id="formContent">  
+        <div><h1>Neuen Account anlegen:</h1></div>        
         <p>E-Mail eingeben:</p>
         <input name="email" type="text" id="email" placeholder="E-Mail" aria-label="email" aria-describedby="basic-addon1" required="true"/>
         <p>Passwort eingeben:</p>
@@ -43,8 +35,8 @@
         <input name="password2" type="password" id="password2" placeholder="Passwort" required="true" aria-label="password2" aria-describedby="basic-addon1" /> 
         <p>Token eingeben:</p>
         <input name="token" type="text" class="last_token" id="token" placeholder="Token" required="true" aria-label="token" aria-describedby="basic-addon1" /> 
-        <input type="submit" class="fadeIn first" value="Account erstellen">
-        
+        <input id="createAccount" type="submit" class="fadeIn first" value="Account erstellen">    
+        <a id="cancel" class="btn btn-danger" href="loginpage" role="button">Abbrechen</a>
         </div>
     </div>
 </body>
