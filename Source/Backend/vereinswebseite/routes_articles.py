@@ -13,9 +13,6 @@ def add_article():
     content = request.json['content']
     author = request.json['author']
 
-    # TODO: check if the author is in the database
-    # TODO: validate all input
-    # TODO: Success message should be returned in json format
     new_article = Article(title, content, author)
 
     db.session.add(new_article)
@@ -33,9 +30,9 @@ def get_all_articles():
 
 
 # Get one Article
-@app.route('/article/<id>', methods=['GET'])
-def get_article(id):
-    article = Article.query.get(id)
+@app.route('/article/<article_id>', methods=['GET'])
+def get_article(article_id):
+    article = Article.query.get(article_id)
     result = OneArticle.jsonify(article)
     result.headers.add("Access-Control-Allow-Origin", "*")
     return result
