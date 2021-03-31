@@ -4,7 +4,7 @@ from vereinswebseite import db, ma
 class Article(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String)
-    content = db.Column(db.String)
+    content = db.Column(db.UnicodeText)
     author_id = db.Column(db.String, db.ForeignKey('user.id'))
 
     def __init__(self, title, content, author_id):
