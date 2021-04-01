@@ -11,3 +11,5 @@ ma = Marshmallow(app)
 # Ignore PEP8 this one time to have the routes in a separate file,
 # while avoiding circular imports
 from vereinswebseite import routes  # noqa: E402
+from vereinswebseite import routes_users  # noqa: E402
+from vereinswebseite import routes_articles  # noqa: E402
