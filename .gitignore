@@ -345,4 +345,5 @@ Thumbs.db #thumbnail cache on Windows
 
 Source/Frontend/node_modules
 Source/.idea
+Source/Backend/.vscode/settings.json
 
