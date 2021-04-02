@@ -1,6 +1,6 @@
 from vereinswebseite import app, db, login_manager
 from vereinswebseite.models import User, UserSchema
-from flask import request, jsonify
+from flask import request, jsonify, abort
 from flask_login import current_user, login_user, logout_user, login_required
 
 # Init Schemas
@@ -25,8 +25,11 @@ def register_user():
     return "User registered", 201
 
 
-@app.route('/users/login', methods=['POST'])
+@app.route('/users/login', methods=['POST', 'GET'])
 def login():
+    if request.method == "GET":
+        abort(400)
+
     email = request.json['email']
     password = request.json['password']
 

@@ -32,7 +32,7 @@ class User(UserMixin, db.Model):
 
 class UserSchema(ma.Schema):
     class Meta:
-        fields = ('id', 'name', 'email', 'password')
+        fields = ('id', 'name', 'email')
 
 
 class ArticleSchema(ma.Schema):
