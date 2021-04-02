@@ -27,6 +27,13 @@ class User(db.Model):
         self.password = password
 
 
+class AccessCode(db.Model):
+    code = db.Column(db.String, primary_key=True)
+
+    def __init__(self, code):
+        self.code = code
+
+
 class UserSchema(ma.Schema):
     class Meta:
         fields = ('id', 'name', 'email', 'password')
@@ -35,3 +42,8 @@ class UserSchema(ma.Schema):
 class ArticleSchema(ma.Schema):
     class Meta:
         fields = ('id', 'title', 'content', 'author_id')
+
+
+class AccessCodeSchema(ma.Schema):
+    class Meta:
+        fields = ('code', )
