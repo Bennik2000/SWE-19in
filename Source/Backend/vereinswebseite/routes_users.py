@@ -16,43 +16,64 @@ def register_user():
 
     existing_user = User.query.filter_by(email=email).first()
     if existing_user is not None:
-        return "User already exists", 409
+        return {
+            "errors": [
+                {
+                    "title": "User already exists",
+                    "status": "409",
+                }
+            ],
+            "user_registered": False
+        }, 409
 
     new_user = User(name=name, email=email)
     new_user.set_password(password)
     db.session.add(new_user)
     db.session.commit()
-    return "User registered", 201
+    return {"user_registered": True}, 201
 
 
 @app.route('/users/login', methods=['POST', 'GET'])
 def login():
     if request.method == "GET":
-        abort(400)
+        abort(405)
 
     email = request.json['email']
     password = request.json['password']
 
     if current_user.is_authenticated:
-        return "Already authenticated"
+        return {
+            "errors": [
+                {
+                    "title": "Already authenticated",
+                    "status": "400",
+                }
+            ],
+            "logged_in": False
+        }, 400
 
     user = User.query.filter_by(email=email).first()
 
-    if not user:
-        return "User not found", 404
+    if not user or not user.check_password(password=password):
+        return {
+            "errors": [
+                {
+                    "title": "Email and/or password wrong",
+                    "status": "400",
+                }
+            ],
+            "logged_in": False
+        }, 400
 
-    if user.check_password(password=password):
-        login_user(user)
-        return "Login successful"
-
-    return "Wrong password", 403
+    login_user(user)
+    return {"logged_in": True}
 
 
 @app.route("/users/logout")
 @login_required
 def logout():
     logout_user()
-    return "Logged out"
+    return {"logged_out": True}
 
 
 @login_manager.user_loader
@@ -64,10 +85,11 @@ def load_user(user_id):
 
 @login_manager.unauthorized_handler
 def unauthorized():
-    return "Error: unauthorized", 401
+    abort(401)
 
 
 @app.route('/users', methods=['GET'])
+@login_required
 def get_all_users():
     all_users = User.query.all()
     result = jsonify(ManyUsers.dump(all_users))
@@ -76,8 +98,9 @@ def get_all_users():
 
 
 @app.route('/users/<id>', methods=['GET'])
-def get_user(id):
-    user = User.query.get(id)
+@login_required
+def get_user(id_):
+    user = User.query.get(id_)
     result = OneUser.jsonify(user)
     result.headers.add("Access-Control-Allow-Origin", "*")
     return result
