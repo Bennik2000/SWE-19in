@@ -25,7 +25,7 @@ class UserLoginSessionTest(TestCase):
     def test_register_user_valid_user(self):
         response = self.app.post("/users", json=self.ValidTestJson)
         print(f"JSON response: {response.json}")
-        self.assertTrue(response.json.items() >= {"user_registered": True}.items())
+        self.assertTrue(response.json.items() >= {"success": True}.items())
 
     def test_register_user_existing_user(self):
         response = None
@@ -85,5 +85,5 @@ class UserLoginSessionTest(TestCase):
         self._assert_user_not_registered_and_error(response)
 
     def _assert_user_not_registered_and_error(self, response):
-        self.assertTrue(response.json.items() >= {"user_registered": False}.items())
+        self.assertTrue(response.json.items() >= {"success": False}.items())
         self.assertIsNotNone(response.json.get("errors"))

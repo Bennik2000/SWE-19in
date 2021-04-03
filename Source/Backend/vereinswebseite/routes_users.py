@@ -1,36 +1,48 @@
 from vereinswebseite import app, db, login_manager
 from vereinswebseite.models import User, UserSchema
+from vereinswebseite.errors import generate_error
 from flask import request, jsonify, abort
 from flask_login import current_user, login_user, logout_user, login_required
+from http import HTTPStatus
 
 # Init Schemas
 OneUser = UserSchema()
 ManyUsers = UserSchema(many=True)
 
 
+# Errors
+username_invalid = generate_error("User name invalid", HTTPStatus.BAD_REQUEST.value)
+email_invalid = generate_error("Email invalid", HTTPStatus.BAD_REQUEST.value)
+password_invalid = generate_error("Password invalid", HTTPStatus.BAD_REQUEST.value)
+user_already_exists = generate_error("User already exists", HTTPStatus.CONFLICT.value)
+already_authenticated = generate_error("Already authenticated", HTTPStatus.BAD_REQUEST.value)
+email_or_password_wrong = generate_error("Email and/or password wrong", HTTPStatus.UNAUTHORIZED.value)
+
+
 @app.route('/users', methods=['POST'])
 def register_user():
-    name = request.json['name']
-    email = request.json['email']
-    password = request.json['password']
+    name = request.json.get('name')
+    email = request.json.get('email')
+    password = request.json.get('password')
+
+    if name is None or name == "":
+        return username_invalid
+
+    if email is None or email == "":
+        return email_invalid
+
+    if password is None or password == "":
+        return password_invalid
 
     existing_user = User.query.filter_by(email=email).first()
     if existing_user is not None:
-        return {
-            "errors": [
-                {
-                    "title": "User already exists",
-                    "status": "409",
-                }
-            ],
-            "user_registered": False
-        }, 409
+        return user_already_exists
 
     new_user = User(name=name, email=email)
     new_user.set_password(password)
     db.session.add(new_user)
     db.session.commit()
-    return {"user_registered": True}, 201
+    return {"success": True}, 201
 
 
 @app.route('/users/login', methods=['POST', 'GET'])
@@ -38,42 +50,32 @@ def login():
     if request.method == "GET":
         abort(405)
 
-    email = request.json['email']
-    password = request.json['password']
+    email = request.json.get('email')
+    password = request.json.get('password')
+
+    if email is None or email == "":
+        return email_invalid
+
+    if password is None or password == "":
+        return password_invalid
 
     if current_user.is_authenticated:
-        return {
-            "errors": [
-                {
-                    "title": "Already authenticated",
-                    "status": "400",
-                }
-            ],
-            "logged_in": False
-        }, 400
+        return already_authenticated
 
     user = User.query.filter_by(email=email).first()
 
     if not user or not user.check_password(password=password):
-        return {
-            "errors": [
-                {
-                    "title": "Email and/or password wrong",
-                    "status": "400",
-                }
-            ],
-            "logged_in": False
-        }, 400
+        return email_or_password_wrong
 
     login_user(user)
-    return {"logged_in": True}
+    return {"success": True}
 
 
 @app.route("/users/logout")
 @login_required
 def logout():
     logout_user()
-    return {"logged_out": True}
+    return {"success": True}
 
 
 @login_manager.user_loader
