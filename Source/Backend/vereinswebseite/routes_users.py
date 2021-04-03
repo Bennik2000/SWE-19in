@@ -5,6 +5,7 @@ from flask import request, jsonify, abort
 from flask_login import current_user, login_user, logout_user, login_required
 from http import HTTPStatus
 
+
 # Init Schemas
 OneUser = UserSchema()
 ManyUsers = UserSchema(many=True)
