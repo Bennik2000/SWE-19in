@@ -9,9 +9,8 @@ function createAccount() {
     var newToken = document.getElementById("token")as HTMLInputElement;
 
     if(newPassword.value != newPassword2.value) {
-     alert("Passwörter stimmen nicht überein. \n Bitte überprüfen!"); 
-     newEmail.value = newEmail.value;
-     return;  
+        alert("Passwörter stimmen nicht überein. \n Bitte überprüfen!"); 
+        return;  
     }
 
     if (newEmail.value != "" && firstName.value != "" && secondName.value != "" &&
@@ -24,8 +23,7 @@ function createAccount() {
         var myJSON = JSON.stringify(obj);
     
         var xhttp = new XMLHttpRequest();
-        var url = "/user";
-        xhttp.open("POST", url, true);
+        xhttp.open("POST", "/user", true);
         xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         xhttp.send(myJSON);
 
