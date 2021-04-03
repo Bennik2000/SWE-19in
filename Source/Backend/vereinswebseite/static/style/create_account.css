@@ -169,7 +169,15 @@ html {
     text-align: center;
   }
   
-  #createAccount {
+  #createAccountButton {
     padding: 3% 25%;
     border-radius: 3px 3px 3px 3px;
+  }
+
+  #firstname {
+    width:  41%;
+  }
+  
+  #secondname {
+    width: 41%;
   }

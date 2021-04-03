@@ -16,8 +16,6 @@ def add_user():
     password = request.json['password']
     new_user = User(name, email, password)
 
-    render_template()
-
     db.session.add(new_user)
     db.session.commit()
     return "User " + name + " Added"
