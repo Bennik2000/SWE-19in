@@ -1,7 +1,8 @@
 from vereinswebseite import app, db, login_manager
 from vereinswebseite.models import User, UserSchema
-from flask import request, jsonify, abort
+from flask import request, jsonify, abort, render_template
 from flask_login import current_user, login_user, logout_user, login_required
+
 
 # Init Schemas
 OneUser = UserSchema()

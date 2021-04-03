@@ -6,7 +6,11 @@ from flask_marshmallow import Marshmallow
 from flask_login import LoginManager
 
 
-app = Flask("VereinSWEbseite")
+app = Flask("VereinSWEbseite",
+            template_folder="vereinswebseite/templates",
+            static_url_path='',
+            static_folder='vereinswebseite/static')
+
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db.sqlite"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SECRET_KEY"] = "M2JjYjU2NDZmYzUJhMIgIC0K"
@@ -21,5 +25,6 @@ login_manager = LoginManager(app)
 from vereinswebseite import routes  # noqa: E402
 from vereinswebseite import routes_users  # noqa: E402
 from vereinswebseite import routes_articles  # noqa: E402
+from vereinswebseite import routes_static  # noqa: E402
 
 db.create_all()
