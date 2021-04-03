@@ -27,11 +27,11 @@ class User(db.Model):
         self.password = password
 
 
-class AccessCode(db.Model):
-    code = db.Column(db.String, primary_key=True)
+class AccessToken(db.Model):
+    token = db.Column(db.String, primary_key=True)
 
-    def __init__(self, code):
-        self.code = code
+    def __init__(self, token):
+        self.token = token
 
 
 class UserSchema(ma.Schema):
@@ -44,6 +44,6 @@ class ArticleSchema(ma.Schema):
         fields = ('id', 'title', 'content', 'author_id')
 
 
-class AccessCodeSchema(ma.Schema):
+class AccessTokenSchema(ma.Schema):
     class Meta:
-        fields = ('code', )
+        fields = ('token', )

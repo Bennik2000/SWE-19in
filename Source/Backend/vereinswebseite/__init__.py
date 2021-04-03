@@ -16,5 +16,6 @@ ma = Marshmallow(app)
 # while avoiding circular imports
 from vereinswebseite import routes  # noqa: E402
 from vereinswebseite import routes_users  # noqa: E402
+from vereinswebseite import routes_accss_token  # noqa: E402
 from vereinswebseite import routes_articles  # noqa: E402
 from vereinswebseite import routes_static  # noqa: E402
