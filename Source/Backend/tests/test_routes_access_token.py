@@ -27,7 +27,7 @@ class AccessTokenRoutesTest(TestCase):
         response = self.app.get(f"/accessToken/delete", json={"token": self.AccessTokenToDelete})
 
         print(f"JSON response: {response.json}")
-        self.assertTrue(response.json["deleted"])
+        self.assertTrue(response.json["success"])
         self.assertIsNone(AccessToken.query.get(self.AccessTokenToDelete))
 
     def test_given_access_token_not_existing_when_delete_access_token_then_error(self):
@@ -36,7 +36,7 @@ class AccessTokenRoutesTest(TestCase):
         print(f"JSON response: {response.json}")
         self.assertIsNotNone(response.status_code, 404)
         self.assertIsNotNone(response.json["errors"])
-        self.assertFalse(response.json["deleted"])
+        self.assertFalse(response.json["success"])
 
     def test_given_access_token_exists_when_validate_then_access_token_valid(self):
         db.session.add(AccessToken("ExistingAccessToken"))

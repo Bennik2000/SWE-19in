@@ -1,4 +1,7 @@
+from http import HTTPStatus
+
 from vereinswebseite import app, db
+from vereinswebseite.errors import generate_error
 from vereinswebseite.models import AccessTokenSchema, AccessToken
 from flask import request
 from uuid import uuid4
@@ -7,6 +10,9 @@ OneAccessToken = AccessTokenSchema()
 ManyAccessToken = AccessTokenSchema(many=True)
 
 AccessTokenLength = 8
+
+username_invalid = generate_error("Access token does not exist", HTTPStatus.NOT_FOUND.value)
+
 
 @app.route('/accessToken/validate')
 def validate_access_token():
@@ -24,22 +30,13 @@ def delete_access_token():
     access_token = AccessToken.query.get(token)
 
     if not access_token:
-        return \
-            {
-                "errors": [
-                    {
-                        "title": "Access token does not exist",
-                        "status": "404",
-                    }
-                ],
-                "deleted": False
-            }, 404
+        return username_invalid
 
     db.session.delete(access_token)
     db.session.commit()
     return \
         {
-            "deleted": True
+            "success": True
         }, 200
 
 
