@@ -6,6 +6,7 @@ from uuid import uuid4
 OneAccessToken = AccessTokenSchema()
 ManyAccessToken = AccessTokenSchema(many=True)
 
+AccessTokenLength = 8
 
 @app.route('/accessToken/validate')
 def validate_access_token():
@@ -44,7 +45,7 @@ def delete_access_token():
 
 @app.route('/accessToken', methods=["POST"])
 def create_access_token():
-    access_token = str(uuid4())[0:8].upper()
+    access_token = str(uuid4())[0:AccessTokenLength].upper()
     token = AccessToken(access_token)
 
     db.session.add(token)

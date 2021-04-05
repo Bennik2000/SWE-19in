@@ -2,6 +2,7 @@ from unittest import TestCase
 from vereinswebseite import app, db
 
 from vereinswebseite.models import AccessToken
+from vereinswebseite.routes_accss_token import AccessTokenLength
 
 
 class AccessTokenRoutesTest(TestCase):
@@ -17,7 +18,7 @@ class AccessTokenRoutesTest(TestCase):
     def test_given_no_access_tokens_when_create_access_token_then_correct_created(self):
         response = self.app.post("/accessToken")
         print(f"JSON response: {response.json}")
-        self.assertTrue(len(response.json["token"]) == 8)
+        self.assertEqual(len(response.json["token"]), AccessTokenLength)
 
     def test_given_access_token_existing_when_delete_access_token_then_correct_deleted(self):
         db.session.add(AccessToken(self.AccessTokenToDelete))
