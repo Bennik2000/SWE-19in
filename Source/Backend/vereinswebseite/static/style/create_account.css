@@ -163,26 +163,23 @@ input[type=text]:placeholder, input[type=password]:placeholder{
 }
 
 #cancel{
-  margin: 0% 4% 4% 4%;
+  margin: 0% 3% 3% 3%;
   font-size: 110%;
-  padding: 3% 32%;
-  text-align: center;
+  padding: 2% 32%;
   font-size: 1vw;
   background-color: #FB0E2E;
   width: 85%;
-  border-radius: 5px 5px 5px 5px;
+  border-radius: 3px 3px 3px 3px;
 }
 
 #createAccountButton{
   margin: 0% 4% 4% 4%;
   font-size: 110%;
-  padding: 3% 32%;
-  text-align: center;
+  padding: 2% 32%;
   font-size: 1vw;
-  background-color: #56baed;
   margin-top: 3%;
   width: 85%;
-  border-radius: 5px 5px 5px 5px;
+  border-radius: 3px 3px 3px 3px;
 }
 
 #firstname {
