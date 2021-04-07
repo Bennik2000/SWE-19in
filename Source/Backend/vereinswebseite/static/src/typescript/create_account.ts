@@ -38,3 +38,7 @@ function createAccount() {
     }
 
 }
+
+function cancelCreateAccount(){
+    window.location.href = "/#";
+}
