@@ -1,15 +1,13 @@
 from vereinswebseite import app, db, login_manager
-from vereinswebseite.models import User, UserSchema
+from vereinswebseite.models import User, UserSchema, AccessToken
 from vereinswebseite.errors import generate_error
 from flask import request, jsonify, abort
 from flask_login import current_user, login_user, logout_user, login_required
 from http import HTTPStatus
 
-
 # Init Schemas
 OneUser = UserSchema()
 ManyUsers = UserSchema(many=True)
-
 
 # Errors
 username_invalid = generate_error("User name invalid", HTTPStatus.BAD_REQUEST.value)
@@ -18,6 +16,7 @@ password_invalid = generate_error("Password invalid", HTTPStatus.BAD_REQUEST.val
 user_already_exists = generate_error("User already exists", HTTPStatus.CONFLICT.value)
 already_authenticated = generate_error("Already authenticated", HTTPStatus.BAD_REQUEST.value)
 email_or_password_wrong = generate_error("Email and/or password wrong", HTTPStatus.UNAUTHORIZED.value)
+token_invalid = generate_error("Invalid access token", HTTPStatus.UNAUTHORIZED.value)
 
 
 @app.route('/users', methods=['POST'])
@@ -25,6 +24,7 @@ def register_user():
     name = request.json.get('name')
     email = request.json.get('email')
     password = request.json.get('password')
+    token_string = request.json.get('token')
 
     if name is None or name == "":
         return username_invalid
@@ -35,13 +35,19 @@ def register_user():
     if password is None or password == "":
         return password_invalid
 
+    token = AccessToken.query.get(token_string)
+    if token is None:
+        return token_invalid
+
     existing_user = User.query.filter_by(email=email).first()
     if existing_user is not None:
         return user_already_exists
 
     new_user = User(name=name, email=email)
     new_user.set_password(password)
+
     db.session.add(new_user)
+    db.session.delete(token)
     db.session.commit()
     return {"success": True}, 201
 
