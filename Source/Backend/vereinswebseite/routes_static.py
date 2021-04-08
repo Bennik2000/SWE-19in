@@ -6,10 +6,10 @@ def style():
     return app.send_static_file('main.css')
 
 @app.route('/static/style/create_account.css')
-def styleCreateAccount():
+def style_create_account():
     return app.send_static_file('style/create_account.css')
 
     
 @app.route('/static/src/create_account.js')
-def srcCreateAccount():
+def src_create_account():
     return app.send_static_file('src/create_account.js')
