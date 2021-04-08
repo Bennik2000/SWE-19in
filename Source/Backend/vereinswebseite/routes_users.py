@@ -36,7 +36,7 @@ def register_user():
         return password_invalid
 
     token = AccessToken.query.get(token_string)
-    if token is None:
+    if token is None and not app.debug:
         return token_invalid
 
     existing_user = User.query.filter_by(email=email).first()
@@ -47,7 +47,10 @@ def register_user():
     new_user.set_password(password)
 
     db.session.add(new_user)
-    db.session.delete(token)
+
+    if not app.debug:
+        db.session.delete(token)
+
     db.session.commit()
     return {"success": True}, 201
 
