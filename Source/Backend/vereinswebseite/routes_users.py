@@ -1,6 +1,6 @@
-from vereinswebseite import app, db, login_manager
-from vereinswebseite.models import User, UserSchema
-from vereinswebseite.errors import generate_error
+from Source.Backend.vereinswebseite import app, db, login_manager
+from Source.Backend.vereinswebseite.models import User, UserSchema
+from Source.Backend.vereinswebseite.errors import generate_error
 from flask import request, jsonify, abort
 from flask_login import current_user, login_user, logout_user, login_required
 from http import HTTPStatus
@@ -112,5 +112,5 @@ def get_user(id_):
 @login_required
 def delete():
     db.session.delete(current_user)
-    db.session.commit
+    db.session.commit()
     return {"success": True}

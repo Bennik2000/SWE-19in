@@ -1,5 +1,5 @@
-from vereinswebseite import app, db
-from vereinswebseite.models import Article, ArticleSchema
+from Source.Backend.vereinswebseite import app, db
+from Source.Backend.vereinswebseite.models import Article, ArticleSchema
 from flask import request, jsonify
 
 OneArticle = ArticleSchema()
