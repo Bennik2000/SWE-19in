@@ -35,9 +35,9 @@ def register_user():
     if password is None or password == "":
         return password_invalid
 
-    token = AccessToken.query.get(token_string)
-    if token is None:
-        return token_invalid
+    #token = AccessToken.query.get(token_string)
+    #if token is None:
+        #return token_invalid
 
     existing_user = User.query.filter_by(email=email).first()
     if existing_user is not None:
@@ -47,7 +47,7 @@ def register_user():
     new_user.set_password(password)
 
     db.session.add(new_user)
-    db.session.delete(token)
+    # db.session.delete(token)
     db.session.commit()
     return {"success": True}, 201
 
