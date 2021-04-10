@@ -27,7 +27,6 @@ function createAccount() {
         xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
         xhttp.responseType = "json";
         xhttp.send(myJSON);
-        var test = true;
         // Read the backend-response
         xhttp.onload = function (e) {
             if (this.response.success) { // The response accesses "success:" of the responded JSON Object
