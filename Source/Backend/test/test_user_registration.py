@@ -9,7 +9,7 @@ from vereinswebseite.models import User
 from vereinswebseite.models import AccessToken
 
 
-class UserLoginSessionTest(TestCase):
+class UserRegistrationTest(TestCase):
     TestUserName = "TestUser"
     TestEmail = "test@email.com"
     TestPassword = "TestPassword"
