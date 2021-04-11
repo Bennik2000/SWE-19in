@@ -97,22 +97,33 @@ def load_user(user_id):
 
 @login_manager.unauthorized_handler
 def unauthorized():
-    abort(401)
+    abort(HTTPStatus.UNAUTHORIZED)
+
+
+@app.route('/users/personal_info', methods=['GET'])
+@login_required
+def personal_info():
+    current_user_info = User.query.get(current_user.id)
+    result = OneUser.jsonify(current_user_info)
+    result.headers.add("Access-Control-Allow-Origin", "*")
+    return result
 
 
 @app.route('/users', methods=['GET'])
 @login_required
-def get_all_users():
-    all_users = User.query.all()
-    result = jsonify(ManyUsers.dump(all_users))
+# TODO: Webmaster role required
+def get_users():
+    id_ = request.args.get("id", default="*")
+
+    result = None
+
+    if id_ == "*":
+        all_users = User.query.all()
+        result = jsonify(ManyUsers.dump(all_users))
+    else:
+        user = User.query.get(id_)
+        result = OneUser.jsonify(user)
+
     result.headers.add("Access-Control-Allow-Origin", "*")
     return result
 
-
-@app.route('/users/<id>', methods=['GET'])
-@login_required
-def get_user(id_):
-    user = User.query.get(id_)
-    result = OneUser.jsonify(user)
-    result.headers.add("Access-Control-Allow-Origin", "*")
-    return result

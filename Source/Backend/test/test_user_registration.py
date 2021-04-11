@@ -22,7 +22,6 @@ class UserRegistrationTest(TestCase):
     def setUp(self) -> None:
         app.config["TESTING"] = True
         app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///:memory:"
-        #app.config["SQLALCHEMY_ECHO"] = True
         self.app = app.test_client()
         db.drop_all()
         db.create_all()
