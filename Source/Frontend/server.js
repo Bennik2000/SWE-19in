@@ -23,4 +23,7 @@ app.get("/create_account", (req, res) => {
     res.render("create_account")
 })
 
+app.get("/account", (req, res) => {
+    res.render("personal_account_space")
+})
 app.listen(5000)
