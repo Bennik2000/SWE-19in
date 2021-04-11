@@ -107,10 +107,10 @@ def get_user(id_):
     return result
 
 
-@app.route('/users/delete')
+@app.route('/users/delete', methods=['DELETE'])
 @login_required
 def delete():
     db.session.delete(current_user)
     db.session.commit()
     logout_user()
-    return {"success": True}
+    return {"success": True}, 200

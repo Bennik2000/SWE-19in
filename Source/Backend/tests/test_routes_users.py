@@ -1,7 +1,7 @@
 from unittest import TestCase
 from vereinswebseite import app, db
 from copy import deepcopy
-
+from http import HTTPStatus
 from vereinswebseite.models import User
 
 
@@ -27,8 +27,9 @@ class UserLoginSessionTest(TestCase):
     def test_delete_user(self):
         self.app.post("/users", json=self.ValidTestJson)
         self.app.post("/users/login", json=self.ValidTestJson)
-        self.app.post("/users/delete")
-        self.assertIsNotNone(db.session.query(User.name).filter_by(name='TestUser').first())
+        response = self.app.delete("/users/delete")
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+        self.assertIsNone(db.session.query(User.name).filter_by(name='TestUser').first())
 
     def test_register_user_valid_user(self):
         response = self.app.post("/users", json=self.ValidTestJson)
