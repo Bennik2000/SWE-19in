@@ -97,7 +97,7 @@ def load_user(user_id):
 
 @login_manager.unauthorized_handler
 def unauthorized():
-    abort(401)
+    abort(HTTPStatus.UNAUTHORIZED.value)
 
 
 @app.route('/users', methods=['GET'])

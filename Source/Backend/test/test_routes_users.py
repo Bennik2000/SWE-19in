@@ -1,4 +1,6 @@
 from unittest import TestCase
+
+from test.test_utils import setup_test_app
 from vereinswebseite import app, db
 from copy import deepcopy
 from http import HTTPStatus
@@ -22,12 +24,7 @@ class UserLoginSessionTest(TestCase):
     }
 
     def setUp(self) -> None:
-        app.config["TESTING"] = True
-        app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///:memory:"
-        # app.config["SQLALCHEMY_ECHO"] = True
-        self.app = app.test_client()
-        db.drop_all()
-        db.create_all()
+        self.app = setup_test_app()
 
     def test_delete_user(self):
         self._prepare_access_token()
