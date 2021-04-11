@@ -30,6 +30,7 @@ class UserLoginSessionTest(TestCase):
         db.create_all()
 
     def test_delete_user(self):
+        self._prepare_access_token()
         self.app.post("/users", json=self.ValidTestJson)
         self.app.post("/users/login", json=self.ValidTestJson)
         response = self.app.delete("/users/delete")
