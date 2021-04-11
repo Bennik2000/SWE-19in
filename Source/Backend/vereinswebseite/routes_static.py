@@ -17,3 +17,8 @@ def src_create_account():
 @app.route('/static/style/reset_password.css')
 def style_reset_password():
     return app.send_static_file('style/reset_password.css')
+
+    
+@app.route('/static/src/reset_password.js')
+def src_reset_password():
+    return app.send_static_file('src/reset_password.js')

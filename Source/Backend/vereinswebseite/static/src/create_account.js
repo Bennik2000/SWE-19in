@@ -1,4 +1,3 @@
-var text = '{"email": "jonas1.hille@email.com", "name": "Jonas1 Hille 2","password": "123456"}';
 function createAccount() {
     var newEmail = document.getElementById("email");
     var firstName = document.getElementById("firstname");
