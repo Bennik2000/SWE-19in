@@ -14,7 +14,11 @@ function resetPasswordRequest() {
     xhttp.send(myJSON);
     // Read the backend-response
     xhttp.onload = function (e) {
-        if (this.response.success) { // The response accesses "success:" of the responded JSON Object
+        if (this.response == null) {
+            alert("Kommunikation mit Server fehlgeschlagen!");
+            return;
+        }
+        else if (this.response.success) { // The response accesses "success:" of the responded JSON Object
             alert("Email wurde versendet!");
             window.location.href = "/#";
         }
