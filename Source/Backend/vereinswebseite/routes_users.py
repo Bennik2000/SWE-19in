@@ -10,13 +10,13 @@ OneUser = UserSchema()
 ManyUsers = UserSchema(many=True)
 
 # Errors
-username_invalid = generate_error("User name invalid", HTTPStatus.BAD_REQUEST.value)
-email_invalid = generate_error("Email invalid", HTTPStatus.BAD_REQUEST.value)
-password_invalid = generate_error("Password invalid", HTTPStatus.BAD_REQUEST.value)
-user_already_exists = generate_error("User already exists", HTTPStatus.CONFLICT.value)
-already_authenticated = generate_error("Already authenticated", HTTPStatus.BAD_REQUEST.value)
-email_or_password_wrong = generate_error("Email and/or password wrong", HTTPStatus.UNAUTHORIZED.value)
-token_invalid = generate_error("Invalid access token", HTTPStatus.UNAUTHORIZED.value)
+username_invalid = generate_error("Name ungültig", HTTPStatus.BAD_REQUEST.value)
+email_invalid = generate_error("Email ungültig", HTTPStatus.BAD_REQUEST.value)
+password_invalid = generate_error("Passwort ungültig", HTTPStatus.BAD_REQUEST.value)
+user_already_exists = generate_error("Account existiert bereits", HTTPStatus.CONFLICT.value)
+already_authenticated = generate_error("Bereits eingeloggt", HTTPStatus.BAD_REQUEST.value)
+email_or_password_wrong = generate_error("Email und/oder Passwort falsch", HTTPStatus.UNAUTHORIZED.value)
+token_invalid = generate_error("Registrierungscode ungültig", HTTPStatus.UNAUTHORIZED.value)
 
 
 @app.route('/users', methods=['POST'])

@@ -11,7 +11,7 @@ ManyAccessToken = AccessTokenSchema(many=True)
 
 AccessTokenLength = 8
 
-username_invalid = generate_error("Access token does not exist", HTTPStatus.NOT_FOUND.value)
+username_invalid = generate_error("Registrierungscode existiert nicht", HTTPStatus.NOT_FOUND.value)
 
 
 @app.route('/accessToken/validate')
