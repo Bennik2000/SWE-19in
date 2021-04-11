@@ -30,6 +30,13 @@ class User(UserMixin, db.Model):
         return check_password_hash(self.password, password)
 
 
+class AccessToken(db.Model):
+    token = db.Column(db.String, primary_key=True)
+
+    def __init__(self, token):
+        self.token = token
+
+
 class UserSchema(ma.Schema):
     class Meta:
         fields = ('id', 'name', 'email')
@@ -38,3 +45,8 @@ class UserSchema(ma.Schema):
 class ArticleSchema(ma.Schema):
     class Meta:
         fields = ('id', 'title', 'content', 'author_id')
+
+
+class AccessTokenSchema(ma.Schema):
+    class Meta:
+        fields = ('token', )
