@@ -5,7 +5,7 @@ from copy import deepcopy
 from vereinswebseite.models import AccessToken
 
 
-class UserLoginSessionTest(TestCase):
+class UserRegistrationTest(TestCase):
     TestUserName = "TestUser"
     TestEmail = "test@email.com"
     TestPassword = "TestPassword"
@@ -22,7 +22,6 @@ class UserLoginSessionTest(TestCase):
     def setUp(self) -> None:
         app.config["TESTING"] = True
         app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///:memory:"
-        #app.config["SQLALCHEMY_ECHO"] = True
         self.app = app.test_client()
         db.drop_all()
         db.create_all()
