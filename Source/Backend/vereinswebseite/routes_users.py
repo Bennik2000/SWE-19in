@@ -127,3 +127,11 @@ def get_users():
     result.headers.add("Access-Control-Allow-Origin", "*")
     return result
 
+
+@app.route('/users/delete', methods=['DELETE'])
+@login_required
+def delete():
+    db.session.delete(current_user)
+    db.session.commit()
+    logout_user()
+    return {"success": True}, 200
