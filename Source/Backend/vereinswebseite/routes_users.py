@@ -112,4 +112,5 @@ def get_user(id_):
 def delete():
     db.session.delete(current_user)
     db.session.commit()
+    logout_user()
     return {"success": True}

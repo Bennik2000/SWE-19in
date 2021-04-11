@@ -28,7 +28,7 @@ class UserLoginSessionTest(TestCase):
         self.app.post("/users", json=self.ValidTestJson)
         self.app.post("/users/login", json=self.ValidTestJson)
         self.app.post("/users/delete")
-        self.assertFalse(db.session.query(User.name).filter_by(name='TestUserName').first() is not None)
+        self.assertIsNotNone(db.session.query(User.name).filter_by(name='TestUser').first())
 
     def test_register_user_valid_user(self):
         response = self.app.post("/users", json=self.ValidTestJson)
