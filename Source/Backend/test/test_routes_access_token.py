@@ -1,4 +1,6 @@
 from unittest import TestCase
+
+from test.test_utils import setup_test_app
 from vereinswebseite import app, db
 
 from vereinswebseite.models import AccessToken
@@ -9,11 +11,7 @@ class AccessTokenRoutesTest(TestCase):
     AccessTokenToDelete = "AccessTokenToDelete"
 
     def setUp(self) -> None:
-        app.config["TESTING"] = True
-        app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///:memory:"
-        self.app = app.test_client()
-        db.drop_all()
-        db.create_all()
+        self.app = setup_test_app()
 
     def test_given_no_access_tokens_when_create_access_token_then_correct_created(self):
         response = self.app.post("/accessToken")
