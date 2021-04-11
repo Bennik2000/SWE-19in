@@ -2,7 +2,7 @@ import json
 from http import HTTPStatus
 
 from vereinswebseite import app
-from flask import render_template, jsonify
+from flask import render_template
 
 from vereinswebseite.errors import generate_error
 
@@ -25,7 +25,7 @@ def create_account():
     return render_template('create_account.jinja2')
 
 
-@app.errorhandler(429)
+@app.errorhandler(HTTPStatus.TOO_MANY_REQUESTS.value)
 def rate_limit_handler(e):
     response = e.get_response()
     response.data = json.dumps(too_many_requests[0])
@@ -33,7 +33,7 @@ def rate_limit_handler(e):
     return response
 
 
-@app.errorhandler(401)
+@app.errorhandler(HTTPStatus.UNAUTHORIZED.value)
 def unauthorized_handler(e):
     response = e.get_response()
     response.data = json.dumps(unauthorized[0])
