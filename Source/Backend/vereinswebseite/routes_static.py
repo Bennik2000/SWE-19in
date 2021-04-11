@@ -1,4 +1,4 @@
-from Source.Backend.vereinswebseite import app
+from vereinswebseite import app
 
 
 @app.route('/static/main.css')

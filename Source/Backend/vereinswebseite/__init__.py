@@ -22,9 +22,9 @@ login_manager = LoginManager(app)
 
 # Ignore PEP8 this one time to have the routes in a separate file,
 # while avoiding circular imports
-from Source.Backend.vereinswebseite import routes  # noqa: E402
-from Source.Backend.vereinswebseite import routes_users  # noqa: E402
-from Source.Backend.vereinswebseite import routes_articles  # noqa: E402
-from Source.Backend.vereinswebseite import routes_static  # noqa: E402
+from vereinswebseite import routes  # noqa: E402
+from vereinswebseite import routes_users  # noqa: E402
+from vereinswebseite import routes_articles  # noqa: E402
+from vereinswebseite import routes_static  # noqa: E402
 
 db.create_all()

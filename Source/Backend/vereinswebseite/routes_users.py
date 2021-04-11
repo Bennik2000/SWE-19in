@@ -1,15 +1,13 @@
-from Source.Backend.vereinswebseite import app, db, login_manager
-from Source.Backend.vereinswebseite.models import User, UserSchema
-from Source.Backend.vereinswebseite.errors import generate_error
+from vereinswebseite import app, db, login_manager
+from vereinswebseite.models import User, UserSchema
+from vereinswebseite.errors import generate_error
 from flask import request, jsonify, abort
 from flask_login import current_user, login_user, logout_user, login_required
 from http import HTTPStatus
 
-
 # Init Schemas
 OneUser = UserSchema()
 ManyUsers = UserSchema(many=True)
-
 
 # Errors
 username_invalid = generate_error("User name invalid", HTTPStatus.BAD_REQUEST.value)
@@ -108,7 +106,8 @@ def get_user(id_):
     result.headers.add("Access-Control-Allow-Origin", "*")
     return result
 
-@app.route("/users/delete")
+
+@app.route('/users/delete')
 @login_required
 def delete():
     db.session.delete(current_user)

@@ -1,4 +1,4 @@
-from Source.Backend.vereinswebseite import app, db
+from vereinswebseite import app, db
 from flask import render_template
 
 
