@@ -11,7 +11,7 @@ ManyAccessToken = AccessTokenSchema(many=True)
 
 AccessTokenLength = 8
 
-username_invalid = generate_error("Registrierungscode existiert nicht", HTTPStatus.NOT_FOUND.value)
+token_invalid = generate_error("Registrierungscode existiert nicht", HTTPStatus.NOT_FOUND.value)
 
 
 @app.route('/accessToken/validate')
@@ -30,7 +30,7 @@ def delete_access_token():
     access_token = AccessToken.query.get(token)
 
     if not access_token:
-        return username_invalid
+        return token_invalid
 
     db.session.delete(access_token)
     db.session.commit()
