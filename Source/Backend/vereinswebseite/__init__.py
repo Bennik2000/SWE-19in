@@ -17,6 +17,7 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db.sqlite"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SECRET_KEY"] = "M2JjYjU2NDZmYzUJhMIgIC0K"
 app.config["REMEMBER_COOKIE_DURATION"] = datetime.timedelta(weeks=12)
+app.config['JSON_AS_ASCII'] = False
 
 limiter = Limiter(
     app,
