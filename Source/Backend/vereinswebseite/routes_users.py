@@ -108,6 +108,18 @@ def personal_info():
     result.headers.add("Access-Control-Allow-Origin", "*")
     return result
 
+@app.route('/users/change_password', methods = ['POST'])
+@login_required
+def change_password():
+    password = request.json.get("password")
+
+    if password is None or password == "":
+        return password_invalid
+
+    current_user.set_password(password)
+    db.session.commit()
+    return {"success": True}, 200
+
 
 @app.route('/users', methods=['GET'])
 @login_required
