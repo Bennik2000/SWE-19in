@@ -1,3 +1,4 @@
+var frontendHelper = new FrontendHelper();
 function createAccount() {
     var newEmail = document.getElementById("email");
     var firstName = document.getElementById("firstname");
@@ -9,7 +10,7 @@ function createAccount() {
         alert("Passwörter stimmen nicht überein. \n Bitte überprüfen!");
         return;
     }
-    if (!validateEmail(newEmail.value)) {
+    if (!frontendHelper.validateEmail(newEmail.value)) {
         alert("Email nicht valide! Bitte überprüfen");
         return;
     }
@@ -44,8 +45,4 @@ function createAccount() {
 }
 function cancelCreateAccount() {
     window.location.href = "/#";
-}
-function validateEmail(email) {
-    var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(email).toLowerCase());
 }

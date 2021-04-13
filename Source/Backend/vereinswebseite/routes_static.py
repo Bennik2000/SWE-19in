@@ -22,3 +22,7 @@ def style_reset_password():
 @app.route('/static/src/reset_password.js')
 def src_reset_password():
     return app.send_static_file('src/reset_password.js')
+
+@app.route('/static/src/FrontendHelper.js')
+def src_FrontendHelper():
+    return app.send_static_file('src/FrontendHelper.js')

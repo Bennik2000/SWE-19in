@@ -1,6 +1,7 @@
+var frontendHelper = new FrontendHelper();
 function resetPasswordRequest() {
     var email = document.getElementById("email");
-    if (!validateEmail(email.value)) {
+    if (!frontendHelper.validateEmail(email.value)) {
         alert("Email nicht valide! Bitte überprüfen");
         return;
     }
@@ -26,8 +27,4 @@ function resetPasswordRequest() {
             alert("Email konnte nicht gesendet werden" + "\n➔ " + this.response.errors[0].title + ".");
         }
     };
-}
-function validateEmail(email) {
-    var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(email).toLowerCase());
 }
