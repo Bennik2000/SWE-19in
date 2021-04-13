@@ -1,7 +1,9 @@
 import unittest
 from http import HTTPStatus
 from werkzeug import Response
-from vereinswebseite import app, db
+
+from test.test_utils import setup_test_app
+from vereinswebseite import db
 from vereinswebseite.models import User
 
 
@@ -11,11 +13,7 @@ class UserPersonalInfoTest(unittest.TestCase):
     TestPassword = "TestPassword"
 
     def setUp(self) -> None:
-        app.config["TESTING"] = True
-        app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///:memory:"
-        self.app = app.test_client()
-        db.drop_all()
-        db.create_all()
+        self.app = setup_test_app()
 
     def test_personal_info_request_resource_found(self):
         response: Response = self.app.get("/users/personal_info")

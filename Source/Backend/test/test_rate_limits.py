@@ -1,7 +1,6 @@
 from unittest import TestCase
 
 from test.test_utils import setup_test_app
-from vereinswebseite import app, db
 
 
 class RateLimitTest(TestCase):
