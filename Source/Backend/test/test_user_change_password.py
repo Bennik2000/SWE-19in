@@ -24,12 +24,12 @@ class UserChangePasswordTest(unittest.TestCase):
     
     def test_logged_in_change_password_valid(self):
         self._create_and_login_testuser()
-        neuesPasswort = "neuesPasswort"
+        newPassword = "newPassword"
         self.app.post("/users/change_password", json={
-            "password": neuesPasswort
+            "password": newPassword
         })
         existing_user = User.query.filter_by(email=self.TestEmail).first()
-        self.assertTrue(existing_user.check_password(neuesPasswort))
+        self.assertTrue(existing_user.check_password(newPassword))
         
        
     def _create_and_login_testuser(self):
