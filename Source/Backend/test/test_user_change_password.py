@@ -1,9 +1,10 @@
 import unittest
 from http import HTTPStatus
 from werkzeug import Response
-from vereinswebseite import app, db, login_manager
+
+from test.test_utils import setup_test_app
+from vereinswebseite import db
 from vereinswebseite.models import User
-from flask_login import current_user
 
 
 class UserChangePasswordTest(unittest.TestCase):
@@ -12,11 +13,7 @@ class UserChangePasswordTest(unittest.TestCase):
     TestPassword = "TestPassword"
 
     def setUp(self) -> None:
-        app.config["TESTING"] = True
-        app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///:memory:"
-        self.app = app.test_client()
-        db.drop_all()
-        db.create_all()
+        self.app = setup_test_app()
     
     def test_change_password_request_not_logged_in(self):
         response: Response = self.app.post("/users/change_password")
