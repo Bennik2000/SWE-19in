@@ -4,6 +4,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from flask_login import LoginManager
+from flask_mail import Mail
 
 
 app = Flask("VereinSWEbseite",
@@ -15,6 +16,13 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db.sqlite"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SECRET_KEY"] = "M2JjYjU2NDZmYzUJhMIgIC0K"
 app.config["REMEMBER_COOKIE_DURATION"] = datetime.timedelta(weeks=12)
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = 'vereinSWEbseite@gmail.com'
+app.config['MAIL_PASSWORD'] = '2021SWEsem4'
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+mail = Mail(app)
 
 db = SQLAlchemy(app)
 ma = Marshmallow(app)

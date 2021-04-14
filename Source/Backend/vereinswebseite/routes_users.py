@@ -1,22 +1,29 @@
-from vereinswebseite import app, db, login_manager
+from vereinswebseite import app, db, login_manager, mail
 from vereinswebseite.models import User, UserSchema, AccessToken
 from vereinswebseite.errors import generate_error
 from flask import request, jsonify, abort
 from flask_login import current_user, login_user, logout_user, login_required
 from http import HTTPStatus
+from flask_mail import Message
 
 # Init Schemas
 OneUser = UserSchema()
 ManyUsers = UserSchema(many=True)
 
 # Errors
-username_invalid = generate_error("User name invalid", HTTPStatus.BAD_REQUEST.value)
+username_invalid = generate_error(
+    "User name invalid", HTTPStatus.BAD_REQUEST.value)
 email_invalid = generate_error("Email invalid", HTTPStatus.BAD_REQUEST.value)
-password_invalid = generate_error("Password invalid", HTTPStatus.BAD_REQUEST.value)
-user_already_exists = generate_error("User already exists", HTTPStatus.CONFLICT.value)
-already_authenticated = generate_error("Already authenticated", HTTPStatus.BAD_REQUEST.value)
-email_or_password_wrong = generate_error("Email and/or password wrong", HTTPStatus.UNAUTHORIZED.value)
-token_invalid = generate_error("Invalid access token", HTTPStatus.UNAUTHORIZED.value)
+password_invalid = generate_error(
+    "Password invalid", HTTPStatus.BAD_REQUEST.value)
+user_already_exists = generate_error(
+    "User already exists", HTTPStatus.CONFLICT.value)
+already_authenticated = generate_error(
+    "Already authenticated", HTTPStatus.BAD_REQUEST.value)
+email_or_password_wrong = generate_error(
+    "Email and/or password wrong", HTTPStatus.UNAUTHORIZED.value)
+token_invalid = generate_error(
+    "Invalid access token", HTTPStatus.UNAUTHORIZED.value)
 
 
 @app.route('/users', methods=['POST'])
@@ -116,3 +123,17 @@ def get_user(id_):
     result = OneUser.jsonify(user)
     result.headers.add("Access-Control-Allow-Origin", "*")
     return result
+
+
+@app.route('/users/resetpassword', methods=['POST'])
+def reset_pasword():
+    email = request.json.get('email')
+
+    if email is None or email == "":
+        return email_invalid
+
+    msg = Message('Change password request', sender='vereinSWEbseite@gmail.com',
+                  recipients=[email])
+    msg.body = "Your password change token: "
+    mail.send(msg)
+    return {"success": True}, 200
