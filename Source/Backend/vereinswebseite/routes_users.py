@@ -125,7 +125,7 @@ def get_user(id_):
     return result
 
 
-@app.route('/users/resetpassword', methods=['POST'])
+@app.route('/users/reset-password', methods=['POST'])
 def reset_pasword():
     email = request.json.get('email')
 
