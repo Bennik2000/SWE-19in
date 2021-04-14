@@ -15,7 +15,6 @@ def style_create_account():
 def src_create_account():
     return app.send_static_file('src/create_account.js')
 
-    
 
 # Set new password 
 @app.route('/static/style/set_new_password.css')
