@@ -1,3 +1,4 @@
+var text = '{"email": "jonas1.hille@email.com", "name": "Jonas1 Hille 2","password": "123456"}';
 function createAccount() {
     var newEmail = document.getElementById("email");
     var firstName = document.getElementById("firstname");
@@ -28,11 +29,7 @@ function createAccount() {
         xhttp.send(myJSON);
         // Read the backend-response
         xhttp.onload = function (e) {
-            if (this.response == null) {
-                alert("Kommunikation mit Server fehlgeschlagen!");
-                return;
-            }
-            else if (this.response.success) { // The response accesses "success:" of the responded JSON Object
+            if (this.response.success) { // The response accesses "success:" of the responded JSON Object
                 alert("Account erfolgreich angelegt!");
                 window.location.href = "/#";
             }
