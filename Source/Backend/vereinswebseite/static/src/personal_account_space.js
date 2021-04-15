@@ -16,6 +16,8 @@ function base() {
     document.getElementById("base_template").classList.remove('d-none');
     document.getElementById("email_template").classList.add('d-none');
     document.getElementById("password_template").classList.add('d-none');
+    document.getElementById("passcode_template").classList.add('d-none');
+    document.getElementById("berechtigung_template").classList.add('d-none');
     if (!(window.history.state == 1)) {
         history.pushState('1', '1');
     }
@@ -24,21 +26,45 @@ function password() {
     document.getElementById("base_template").classList.add('d-none');
     document.getElementById("email_template").classList.add('d-none');
     document.getElementById("password_template").classList.remove('d-none');
+    document.getElementById("passcode_template").classList.add('d-none');
+    document.getElementById("berechtigung_template").classList.add('d-none');
     if (!(window.history.state == 2)) {
         history.pushState('2', '2');
     }
 }
 function email() {
+    console.log("a");
     document.getElementById("base_template").classList.add('d-none');
     document.getElementById("email_template").classList.remove('d-none');
     document.getElementById("password_template").classList.add('d-none');
+    document.getElementById("passcode_template").classList.add('d-none');
+    document.getElementById("berechtigung_template").classList.add('d-none');
     if (!(window.history.state == 3)) {
         history.pushState('3', '3');
     }
 }
+function passcode() {
+    document.getElementById("base_template").classList.add('d-none');
+    document.getElementById("email_template").classList.add('d-none');
+    document.getElementById("password_template").classList.add('d-none');
+    document.getElementById("passcode_template").classList.remove('d-none');
+    document.getElementById("berechtigung_template").classList.add('d-none');
+    if (!(window.history.state == 4)) {
+        history.pushState('4', '4');
+    }
+}
+function berechtigung() {
+    document.getElementById("base_template").classList.add('d-none');
+    document.getElementById("email_template").classList.add('d-none');
+    document.getElementById("password_template").classList.add('d-none');
+    document.getElementById("passcode_template").classList.add('d-none');
+    document.getElementById("berechtigung_template").classList.remove('d-none');
+    if (!(window.history.state == 5)) {
+        history.pushState('5', '5');
+    }
+}
 function email_save() {
 }
-;
 function password_save() {
 }
 window.addEventListener('popstate', function (popstateEvent) {
@@ -51,6 +77,12 @@ window.addEventListener('popstate', function (popstateEvent) {
             break;
         case 3:
             email();
+            break;
+        case 4:
+            passcode();
+            break;
+        case 5:
+            berechtigung();
             break;
     }
 });

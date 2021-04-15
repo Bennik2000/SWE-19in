@@ -19,6 +19,8 @@
 
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
+  <script src= "/static/src/personal_account_space.js"></script>
+
   <title>My Account Space</title>
 </head>
 
@@ -61,7 +63,7 @@
 
       <div class="row mt-3">
 
-        <div class="col-md-2" id="left_body">
+        <div class="col-lg-2" id="left_body">
 
           <div class="btn-group-vertical w-100" role="group" aria-label="Basic Settings">
             <button type="button" class="btn btn-outline-secondary" onclick="base();">Account</button>
@@ -71,8 +73,8 @@
 
 
           <div class="btn-group-vertical mt-2 w-100" role="group" aria-label="Admin Settings">
-            <button type="button" class="btn btn-outline-secondary">Passcodes</button>
-            <button type="button" class="btn btn-outline-secondary">Berechtigungen</button>
+            <button type="button" class="btn btn-outline-secondary" onclick="passcode();">Passcodes</button>
+            <button type="button" class="btn btn-outline-secondary" onclick="berechtigung();">Berechtigungen</button>
           </div>
 
         </div>
@@ -106,7 +108,30 @@
 
         </div>
         <!--End right_body-->
-        
+        <div class="col-md-10 d-none" id="passcode_template"><!----------------------------Passcodes---------------------------------------->
+
+          <p>Passcodes:</p>
+          <ul class="list-group">
+            <li class="list-group-item">Passcode 1</li>
+            <li class="list-group-item">Passcode 1</li>
+            <li class="list-group-item">Passcode 1</li>
+            <li class="list-group-item">Passcode 1</li>
+          </ul>
+
+        </div>
+        <!--End right_body-->
+        <div class="col-md-10 d-none" id="berechtigung_template"><!----------------------------Berechtigunegn---------------------------------------->
+
+          <p>Berechtigungen:</p>
+          <ul class="list-group">
+            <li class="list-group-item">User 1</li>
+            <li class="list-group-item">User 1</li>
+            <li class="list-group-item">User 1</li>
+            <li class="list-group-item">User 1</li>
+          </ul>
+
+        </div>
+        <!--End right_body-->
       </div>
       <!--End body_row-->
       
@@ -114,7 +139,6 @@
 
     </div><!--End Container-->
   </div><!--End Page-->
-  <script src= "/static/src/personal_account_space.js"></script>
   
 </body>
 
