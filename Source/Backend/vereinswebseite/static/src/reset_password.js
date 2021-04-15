@@ -9,7 +9,7 @@ function resetPasswordRequest() {
     obj["email"] = email.value;
     var myJSON = JSON.stringify(obj);
     var xhttp = new XMLHttpRequest();
-    xhttp.open("RESET_PASSWORD", "/users", true);
+    xhttp.open("POST", "/users/reset_password", true);
     xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     xhttp.responseType = "json";
     xhttp.send(myJSON);
@@ -24,7 +24,7 @@ function resetPasswordRequest() {
             window.location.href = "/#";
         }
         else {
-            alert("Email konnte nicht gesendet werden" + "\n➔ " + this.response.errors[0].title + ".");
+            window.location.href = "/#";
         }
     };
 }
