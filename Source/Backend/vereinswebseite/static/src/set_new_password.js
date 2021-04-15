@@ -28,3 +28,15 @@ function setNewPassword() {
         }
     };
 }
+function showPassword() {
+    var x = document.getElementById("newPassword1");
+    var x2 = document.getElementById("newPassword2");
+    if (x.type === "password") {
+        x.type = "text";
+        x2.type = "text";
+    }
+    else {
+        x.type = "password";
+        x2.type = "password";
+    }
+}

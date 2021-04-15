@@ -35,3 +35,15 @@ function setNewPassword() {
         
 
 }
+
+function showPassword() {
+    var x = document.getElementById("newPassword1") as HTMLInputElement;
+    var x2 = document.getElementById("newPassword2") as HTMLInputElement;
+    if (x.type === "password") {
+      x.type = "text";
+      x2.type = "text";
+    } else {
+      x.type = "password";
+      x2.type = "password";
+    }
+  }
