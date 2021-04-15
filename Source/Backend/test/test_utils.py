@@ -5,6 +5,11 @@ import vereinswebseite
 from vereinswebseite.models import User
 
 
+TestUserName = "TestUser"
+TestEmail = "test@email.com"
+TestPassword = "TestPassword"
+
+
 def setup_test_app(limiter_enabled=False, email_enabled=False):
     app.config["TESTING"] = True
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///:memory:"
@@ -25,16 +30,16 @@ def setup_test_app(limiter_enabled=False, email_enabled=False):
     return app.test_client()
 
 
-def add_test_user(test_user_name, test_email, test_password):
-    user = User(name=test_user_name, email=test_email)
-    user.set_password(test_password)
+def add_test_user():
+    user = User(name=TestUserName, email=TestEmail)
+    user.set_password(TestPassword)
     db.session.add(user)
     db.session.commit()
 
 
-def create_and_login_test_user(test_app, test_user_name, test_email, test_password):
-    add_test_user(test_user_name, test_email, test_password)
+def create_and_login_test_user(test_app):
+    add_test_user()
     test_app.post("/users/login", json={
-        "email": test_email,
-        "password": test_password
+        "email": TestEmail,
+        "password": TestPassword
     })

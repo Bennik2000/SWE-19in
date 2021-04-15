@@ -1,24 +1,21 @@
 import unittest
 from http import HTTPStatus
 
-from test.test_utils import setup_test_app, add_test_user
+from test.test_utils import setup_test_app, add_test_user, TestEmail
 from vereinswebseite import db
 from vereinswebseite.models import PasswordResetToken, User
 
 
 class UserPasswordResetTest(unittest.TestCase):
-    TestUserName = "TestUser"
-    TestEmail = "test@email.com"
-    TestPassword = "TestPassword"
     TestToken = "ZHHEU2345"
 
     def setUp(self) -> None:
         self.app = setup_test_app()
-        add_test_user(self.TestUserName, self.TestEmail, self.TestPassword)
+        add_test_user()
 
     def test_given_user_exists_when_request_password_reset_then_token_generated(self):
         self.clear_reset_tokens()
-        response = self.app.post("/users/request_new_password", json={"email": self.TestEmail})
+        response = self.app.post("/users/request_new_password", json={"email": TestEmail})
 
         self.assertTrue(response.json["success"])
         self.assertEqual(len(PasswordResetToken.query.all()), 1)
@@ -51,7 +48,7 @@ class UserPasswordResetTest(unittest.TestCase):
             "token": self.TestToken})
 
         self.assertTrue(response.json["success"])
-        self.assertTrue(self.check_password(self.TestEmail, new_password))
+        self.assertTrue(self.check_password(TestEmail, new_password))
         self.assertIsNone(PasswordResetToken.query.get(self.TestToken))
 
     def test_given_incorrect_token_when_reset_password_then_new_password_not_set(self):
@@ -63,11 +60,11 @@ class UserPasswordResetTest(unittest.TestCase):
             "token": "invalidToken"})
 
         self.assertFalse(response.json["success"])
-        self.assertFalse(self.check_password(self.TestEmail, new_password))
+        self.assertFalse(self.check_password(TestEmail, new_password))
         self.assertIsNotNone(PasswordResetToken.query.get(self.TestToken))
 
     def insert_test_token(self):
-        user = User.query.filter_by(email=self.TestEmail).first()
+        user = User.query.filter_by(email=TestEmail).first()
         token = PasswordResetToken(self.TestToken, user)
 
         db.session.add(token)
