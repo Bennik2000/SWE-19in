@@ -24,6 +24,10 @@ def ping_handler():
 def create_account():
     return render_template('create_account.jinja2')
 
+@app.route('/login')
+def render_login():
+    return render_template('login.jinja2')
+
 
 @app.errorhandler(HTTPStatus.TOO_MANY_REQUESTS.value)
 def rate_limit_handler(e):
@@ -39,3 +43,5 @@ def unauthorized_handler(e):
     response.data = json.dumps(unauthorized[0])
     response.content_type = "application/json"
     return response
+
+

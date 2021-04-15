@@ -9,7 +9,14 @@ def style():
 def style_create_account():
     return app.send_static_file('style/create_account.css')
 
-    
 @app.route('/static/src/create_account.js')
 def src_create_account():
     return app.send_static_file('src/create_account.js')
+
+@app.route('/static/style/login.css')
+def style_login():
+    return app.send_static_file('style/login.css')
+
+@app.route('/static/src/login.js')
+def src_login():
+    return app.send_static_file('src/login.js')
