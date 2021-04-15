@@ -125,15 +125,18 @@ def get_user(id_):
     return result
 
 
-@app.route('/users/reset-password', methods=['POST'])
+@app.route('/users/reset_password', methods=['POST'])
 def reset_pasword():
     email = request.json.get('email')
 
     if email is None or email == "":
         return email_invalid
 
-    msg = Message('Change password request', sender='vereinSWEbseite@gmail.com',
-                  recipients=[email])
-    msg.body = "Your password change token: "
-    mail.send(msg)
+    user = User.query.filter_by(email=email).first()
+
+    if user:
+        msg = Message('Change password request', sender='vereinSWEbseite@gmail.com',
+                      recipients=[email])
+        msg.body = "Your password change token: "
+        mail.send(msg)
     return {"success": True}, 200
