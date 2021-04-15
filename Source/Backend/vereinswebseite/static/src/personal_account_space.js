@@ -12,77 +12,46 @@ function bio_save() {
         document.getElementById("head_description_save").setAttribute('disabled', '');
     }
 }
-function base() {
-    document.getElementById("base_template").classList.remove('d-none');
-    document.getElementById("email_template").classList.add('d-none');
-    document.getElementById("password_template").classList.add('d-none');
-    document.getElementById("passcode_template").classList.add('d-none');
-    document.getElementById("berechtigung_template").classList.add('d-none');
-    if (!(window.history.state == 1)) {
-        history.pushState('1', '1');
-    }
-}
-function password() {
-    document.getElementById("base_template").classList.add('d-none');
-    document.getElementById("email_template").classList.add('d-none');
-    document.getElementById("password_template").classList.remove('d-none');
-    document.getElementById("passcode_template").classList.add('d-none');
-    document.getElementById("berechtigung_template").classList.add('d-none');
-    if (!(window.history.state == 2)) {
-        history.pushState('2', '2');
-    }
-}
-function email() {
-    console.log("a");
-    document.getElementById("base_template").classList.add('d-none');
-    document.getElementById("email_template").classList.remove('d-none');
-    document.getElementById("password_template").classList.add('d-none');
-    document.getElementById("passcode_template").classList.add('d-none');
-    document.getElementById("berechtigung_template").classList.add('d-none');
-    if (!(window.history.state == 3)) {
-        history.pushState('3', '3');
-    }
-}
-function passcode() {
-    document.getElementById("base_template").classList.add('d-none');
-    document.getElementById("email_template").classList.add('d-none');
-    document.getElementById("password_template").classList.add('d-none');
-    document.getElementById("passcode_template").classList.remove('d-none');
-    document.getElementById("berechtigung_template").classList.add('d-none');
-    if (!(window.history.state == 4)) {
-        history.pushState('4', '4');
-    }
-}
-function berechtigung() {
-    document.getElementById("base_template").classList.add('d-none');
-    document.getElementById("email_template").classList.add('d-none');
-    document.getElementById("password_template").classList.add('d-none');
-    document.getElementById("passcode_template").classList.add('d-none');
-    document.getElementById("berechtigung_template").classList.remove('d-none');
-    if (!(window.history.state == 5)) {
-        history.pushState('5', '5');
-    }
-}
 function email_save() {
 }
 function password_save() {
 }
-window.addEventListener('popstate', function (popstateEvent) {
-    switch (Number(window.history.state)) {
+function reload(x) {
+    var templates = [document.getElementById("base_template"), document.getElementById("password_template"),
+        document.getElementById("email_template"), document.getElementById("passcode_template"),
+        document.getElementById("berechtigung_template")];
+    templates.forEach(function (element) {
+        element.classList.add('d-none');
+    });
+    templates[x].classList.remove('d-none');
+    switch (x) {
+        case 0:
+            if (window.history.state != x) {
+                history.pushState('0', 'Base');
+            }
+            break;
         case 1:
-            base();
+            if (window.history.state != x) {
+                history.pushState('1', 'Email');
+            }
             break;
         case 2:
-            password();
+            if (window.history.state != x) {
+                history.pushState('2', 'Password');
+            }
             break;
         case 3:
-            email();
+            if (window.history.state != x) {
+                history.pushState('3', 'Passcode');
+            }
             break;
         case 4:
-            passcode();
-            break;
-        case 5:
-            berechtigung();
+            if (window.history.state != x) {
+                history.pushState('4', 'Berechtigung');
+            }
             break;
     }
+}
+window.addEventListener('popstate', function (popstateEvent) {
+    reload(Number(window.history.state));
 });
