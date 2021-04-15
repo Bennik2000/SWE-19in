@@ -3,11 +3,10 @@ import datetime
 from flask import Flask
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
+from flask_mail import Mail
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from flask_login import LoginManager
-from flask_mail import Mail
-
 
 app = Flask("VereinSWEbseite",
             template_folder="vereinswebseite/templates",
@@ -26,13 +25,14 @@ app.config['MAIL_PASSWORD'] = '2021SWEsem4'
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
 
+mail = Mail(app)
+
 limiter = Limiter(
     app,
     key_func=get_remote_address,
     default_limits=["200 per day", "60 per hour"]
 )
 
-mail = Mail(app)
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
 login_manager = LoginManager(app)
