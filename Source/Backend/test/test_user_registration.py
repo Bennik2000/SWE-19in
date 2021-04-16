@@ -1,7 +1,7 @@
 from unittest import TestCase
 
-from test.test_utils import setup_test_app
-from vereinswebseite import app, db
+from test.test_utils import setup_test_app, TestUserName, TestEmail, TestPassword
+from vereinswebseite import db
 from copy import deepcopy
 from http import HTTPStatus
 from vereinswebseite.models import User
@@ -10,10 +10,6 @@ from vereinswebseite.models import AccessToken
 
 
 class UserRegistrationTest(TestCase):
-    TestUserName = "TestUser"
-    TestEmail = "test@email.com"
-    TestPassword = "TestPassword"
-
     ValidAccessToken = "VALID_TOKEN"
 
     ValidTestJson = {
