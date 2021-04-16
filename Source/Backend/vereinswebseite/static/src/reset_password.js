@@ -1,7 +1,9 @@
-var frontendHelper = new FrontendHelper();
+"use strict";
+exports.__esModule = true;
+exports.validateEmail = void 0;
 function resetPasswordRequest() {
     var email = document.getElementById("email");
-    if (!frontendHelper.validateEmail(email.value)) {
+    if (!validateEmail(email.value)) {
         alert("Email nicht valide! Bitte überprüfen");
         return;
     }
@@ -28,3 +30,8 @@ function resetPasswordRequest() {
         }
     };
 }
+function validateEmail(email) {
+    var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+}
+exports.validateEmail = validateEmail;

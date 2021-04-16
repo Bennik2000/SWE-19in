@@ -1,5 +1,3 @@
-let frontendHelper = new FrontendHelper();
-
 function createAccount() {
     var newEmail = document.getElementById("email") as HTMLInputElement;
     var firstName = document.getElementById("firstname") as HTMLInputElement;
@@ -13,7 +11,7 @@ function createAccount() {
         return;  
     }
 
-    if (!frontendHelper.validateEmail(newEmail.value)) {
+    if (!validateEmail(newEmail.value)) {
         alert("Email nicht valide! Bitte überprüfen");
         return;
     }
@@ -53,6 +51,7 @@ function createAccount() {
 
 }
 
-function cancelCreateAccount(){
-    window.location.href = "/#";
+export function validateEmail(email) {
+    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
 }
