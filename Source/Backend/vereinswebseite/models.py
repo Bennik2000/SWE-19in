@@ -37,6 +37,17 @@ class AccessToken(db.Model):
         self.token = token
 
 
+class PasswordResetToken(db.Model):
+    token = db.Column(db.String, primary_key=True)
+
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user = db.relationship("User")
+
+    def __init__(self, token, user):
+        self.token = token
+        self.user = user
+
+
 class UserSchema(ma.Schema):
     class Meta:
         fields = ('id', 'name', 'email')

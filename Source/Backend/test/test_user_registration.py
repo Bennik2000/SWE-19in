@@ -1,15 +1,15 @@
 from unittest import TestCase
-from vereinswebseite import app, db
+
+from test.test_utils import setup_test_app, TestUserName, TestEmail, TestPassword
+from vereinswebseite import db
 from copy import deepcopy
+from http import HTTPStatus
+from vereinswebseite.models import User
 
 from vereinswebseite.models import AccessToken
 
 
-class UserLoginSessionTest(TestCase):
-    TestUserName = "TestUser"
-    TestEmail = "test@email.com"
-    TestPassword = "TestPassword"
-
+class UserRegistrationTest(TestCase):
     ValidAccessToken = "VALID_TOKEN"
 
     ValidTestJson = {
@@ -20,12 +20,15 @@ class UserLoginSessionTest(TestCase):
     }
 
     def setUp(self) -> None:
-        app.config["TESTING"] = True
-        app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///:memory:"
-        #app.config["SQLALCHEMY_ECHO"] = True
-        self.app = app.test_client()
-        db.drop_all()
-        db.create_all()
+        self.app = setup_test_app()
+
+    def test_delete_user(self):
+        self._prepare_access_token()
+        self.app.post("/users", json=self.ValidTestJson)
+        self.app.post("/users/login", json=self.ValidTestJson)
+        response = self.app.delete("/users/delete")
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+        self.assertIsNone(db.session.query(User.name).filter_by(name='TestUser').first())
 
     def test_register_user_valid_user(self):
         self._prepare_access_token()
