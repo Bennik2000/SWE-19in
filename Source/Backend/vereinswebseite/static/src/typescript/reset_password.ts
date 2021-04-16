@@ -12,7 +12,7 @@ function resetPasswordRequest() {
     var myJSON = JSON.stringify(obj);
 
     var xhttp = new XMLHttpRequest();
-    xhttp.open("POST", "/users/reset_password", true);
+    xhttp.open("POST", "/users/request_new_password", true);
     xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     xhttp.responseType = "json";
     xhttp.send(myJSON);
