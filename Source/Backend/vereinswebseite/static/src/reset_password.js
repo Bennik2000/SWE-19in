@@ -1,22 +1,14 @@
-"use strict";
-exports.__esModule = true;
-exports.validateEmail = void 0;
+var frontendHelper = new FrontendHelper();
 function resetPasswordRequest() {
     var email = document.getElementById("email");
-    if (!validateEmail(email.value)) {
+    if (!frontendHelper.validateEmail(email.value)) {
         alert("Email nicht valide! Bitte überprüfen");
         return;
     }
     var obj = {};
     obj["email"] = email.value;
     var myJSON = JSON.stringify(obj);
-    var xhttp = new XMLHttpRequest();
-    xhttp.open("POST", "/users/request_new_password", true);
-    xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-    xhttp.responseType = "json";
-    xhttp.send(myJSON);
-    // Read the backend-response
-    xhttp.onload = function (e) {
+    function myOnloadFunction() {
         if (this.response == null) {
             alert("Kommunikation mit Server fehlgeschlagen!");
             return;
@@ -28,10 +20,6 @@ function resetPasswordRequest() {
         else {
             window.location.href = "/#";
         }
-    };
+    }
+    frontendHelper.manageXMLHttpRequest("POST", "/users/request_new_password", myJSON, myOnloadFunction);
 }
-function validateEmail(email) {
-    var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(email).toLowerCase());
-}
-exports.validateEmail = validateEmail;
