@@ -28,6 +28,21 @@ function delete_account(){
 }
 
 function email_save() {
+    /*let newEmail=document.getElementById("current_email_new");
+    function reqListener(){
+        let response = this.response
+        document.getElementById("Username").innerHTML=response.name;
+        document.getElementById("current_email").innerHTML=response.email;
+        
+    }
+    let xhttp = new XMLHttpRequest();
+    xhttp.addEventListener("load",reqListener)
+    xhttp.open("GET","/users/personal_info",true);
+    xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    let request={};
+    request["email"]=
+    xhttp.responseType="json";
+    xhttp.send();*/
 }
 
 function password_save() {
