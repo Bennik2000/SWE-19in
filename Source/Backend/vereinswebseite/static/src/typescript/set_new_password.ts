@@ -1,6 +1,7 @@
 function setNewPassword() {
     var newPassword1 = document.getElementById("newPassword1") as HTMLInputElement;
     var newPassword2 = document.getElementById("newPassword2") as HTMLInputElement;
+    var token = document.getElementById("token") as HTMLElement;
 
     if((newPassword1.value != newPassword2.value) && newPassword1.value != "") {
         alert("Passwörter stimmen nicht überein. \n Bitte überprüfen!"); 
@@ -8,7 +9,8 @@ function setNewPassword() {
     }
     
     var obj = {};
-        obj["newPassword"] = newPassword1.value;
+        obj["password"] = newPassword1.value;
+        obj["token"] = token.innerText;
         var myJSON = JSON.stringify(obj);
     
         var xhttp = new XMLHttpRequest();

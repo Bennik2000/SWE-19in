@@ -188,7 +188,7 @@ def reset_password_page(reset_token):
     if token is None:
         return abort(HTTPStatus.NOT_FOUND)
     else:
-        return render_template('reset_password.jinja2', token=reset_token)
+        return render_template('set_new_password.jinja2', token=reset_token)
 
 
 @app.route('/users/reset_password', methods=['POST'])
