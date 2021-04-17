@@ -57,6 +57,7 @@ function reload(x) {
             if (window.history.state != x) {
                 history.pushState('3', 'Passcode');
             }
+            get_access_token();
             break;
         case 4:
             if (window.history.state != x) {
@@ -64,6 +65,47 @@ function reload(x) {
             }
             break;
     }
+}
+function get_access_token() {
+    var tokenlist = document.getElementById("acces_tokens");
+    function reqListener() {
+        var response = this.response;
+        while (tokenlist.lastChild) {
+            tokenlist.removeChild(tokenlist.lastChild);
+        }
+        response.forEach(function (element) {
+            var token = document.createElement("a");
+            token.innerHTML = element;
+            var button = document.createElement("button");
+            button.type = "button";
+            button.classList.add("btn");
+            button.classList.add("btn-secondary");
+            button.classList.add("ml-2");
+            button.innerHTML = "Löschen";
+            var listItem = document.createElement("li");
+            listItem.classList.add("list-group-item");
+            listItem.appendChild(button);
+            listItem.appendChild(token);
+            tokenlist.appendChild(listItem);
+        });
+    }
+    var xhttp = new XMLHttpRequest();
+    xhttp.addEventListener("load", reqListener);
+    xhttp.open("GET", "/accessToken", true);
+    xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    xhttp.responseType = "json";
+    xhttp.send();
+}
+function delete_access_token() {
+    function reqListener() {
+        var response = this.response;
+    }
+    //let xhttp = new XMLHttpRequest();
+    //xhttp.addEventListener("load",reqListener)
+    //xhttp.open("GET","/users/personal_info",true);
+    //xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    //xhttp.responseType="json";
+    //xhttp.send();
 }
 function get_user_info() {
     function reqListener() {
