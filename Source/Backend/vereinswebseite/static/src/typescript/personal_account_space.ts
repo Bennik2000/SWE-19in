@@ -12,7 +12,20 @@ function bio_save() {
         document.getElementById("head_description_save").setAttribute('disabled', '');
     }
 }
-
+function delete_account(){
+    function reqListener(){
+        let response = this.response
+        if (response.success!=true){
+            
+        }
+        window.location.href="/"
+    }
+    let xhttp = new XMLHttpRequest();
+    xhttp.addEventListener("load",reqListener)
+    xhttp.open("DELETE", "/users/delete",true);
+    xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    xhttp.send();
+}
 
 function email_save() {
 }
@@ -60,7 +73,26 @@ function reload(x:number){
     }
 
 }
+
+function get_user_info(){
+    function reqListener(){
+        let response = this.response
+        document.getElementById("Username").innerHTML=response.name;
+        document.getElementById("current_email").innerHTML=response.email;
+        
+    }
+    let xhttp = new XMLHttpRequest();
+    xhttp.addEventListener("load",reqListener)
+    xhttp.open("GET","/users/personal_info",true);
+    xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    xhttp.responseType="json";
+    xhttp.send();
+}
 window.addEventListener('popstate', function (popstateEvent) {
     reload(Number(window.history.state));
 
 });
+
+window.onload=function(){
+    get_user_info();
+}

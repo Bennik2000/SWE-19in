@@ -12,6 +12,19 @@ function bio_save() {
         document.getElementById("head_description_save").setAttribute('disabled', '');
     }
 }
+function delete_account() {
+    function reqListener() {
+        var response = this.response;
+        if (response.success != true) {
+        }
+        window.location.href = "/";
+    }
+    var xhttp = new XMLHttpRequest();
+    xhttp.addEventListener("load", reqListener);
+    xhttp.open("DELETE", "/users/delete", true);
+    xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    xhttp.send();
+}
 function email_save() {
 }
 function password_save() {
@@ -52,6 +65,22 @@ function reload(x) {
             break;
     }
 }
+function get_user_info() {
+    function reqListener() {
+        var response = this.response;
+        document.getElementById("Username").innerHTML = response.name;
+        document.getElementById("current_email").innerHTML = response.email;
+    }
+    var xhttp = new XMLHttpRequest();
+    xhttp.addEventListener("load", reqListener);
+    xhttp.open("GET", "/users/personal_info", true);
+    xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    xhttp.responseType = "json";
+    xhttp.send();
+}
 window.addEventListener('popstate', function (popstateEvent) {
     reload(Number(window.history.state));
 });
+window.onload = function () {
+    get_user_info();
+};
