@@ -1,3 +1,4 @@
+let frontendHelper = new FrontendHelper()
 function createAccount() {
     var newEmail = document.getElementById("email") as HTMLInputElement;
     var firstName = document.getElementById("firstname") as HTMLInputElement;
@@ -11,7 +12,7 @@ function createAccount() {
         return;  
     }
 
-    if (!validateEmail(newEmail.value)) {
+    if (!frontendHelper.validateEmail(newEmail.value)) {
         alert("Email nicht valide! Bitte überprüfen");
         return;
     }
@@ -25,15 +26,8 @@ function createAccount() {
         obj["password"] = newPassword.value;
         obj["token"] = newToken.value;
         var myJSON = JSON.stringify(obj);
-    
-        var xhttp = new XMLHttpRequest();
-        xhttp.open("POST", "/users", true);
-        xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-        xhttp.responseType = "json";
-        xhttp.send(myJSON);
-        
-        // Read the backend-response
-        xhttp.onload = function(e) {
+
+        function myOnloadFunction() {
             if (this.response == null) {
                 alert("Kommunikation mit Server fehlgeschlagen!");
                 return;
@@ -46,12 +40,7 @@ function createAccount() {
             {
                 alert("Account anlegen fehlgeschlagen!" + "\n➔ " + this.response.errors[0].title + ".");
             }
-        } 
         }
-
-}
-
-export function validateEmail(email) {
-    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(email).toLowerCase());
+        frontendHelper.manageXMLHttpRequest("POST", "/users", myJSON, myOnloadFunction); 
+    }
 }
