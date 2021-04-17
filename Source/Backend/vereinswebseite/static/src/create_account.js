@@ -38,3 +38,6 @@ function createAccount() {
         frontendHelper.manageXMLHttpRequest("POST", "/users", myJSON, myOnloadFunction);
     }
 }
+function cancelCreateAccount() {
+    window.location.href = "/#";
+}
