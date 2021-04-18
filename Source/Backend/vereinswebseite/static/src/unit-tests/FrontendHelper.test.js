@@ -36,26 +36,19 @@ test('detecting a correct email: "xyz@zxy.yxz"', () => {
 
 
 /********************************************* Testing the manageXMLHttpRequest function of the FrontendHelper ***********************************************/ 
-
-//------------------------------------------ testing the creation of a JSON-Object ------------------------------------------//
-// create the JSON-Object for creating an user
-var jsonObj = {};
-jsonObj["email"] = "jannik@well-online.de";
-jsonObj["name"] = "Jannik Well";
-jsonObj["password"] = "password123";
-jsonObj["token"] = "123";
-
-test('correct created JSON-Object as sent to the server"', () => {
-  expect(jsonObj).toMatchObject({email: "jannik@well-online.de", name: "Jannik Well", password: "password123", token: "123"});
-});
-
-
 //-------------------------- testing the function call of manageXMLhttpRequest for creating an user --------------------------//
 test('correct called FrontendHelper.manageXMLHttpRequest(...) for creating a new user', () => {
+  // create the JSON-Object for creating an user
+  var jsonObj = {};
+  jsonObj["email"] = "test@test.com";
+  jsonObj["name"] = "Test User";
+  jsonObj["password"] = "password123";
+  jsonObj["token"] = "123";
+  
   frontendHelper.testXHRequestCallback =  (request, route, json) => {
       expect(request).toBe("POST");
       expect(route).toBe("/users");
-      expect(json).toBe(jsonObj);
+      expect(jsonObj).toMatchObject({email: "test@test.com", name: "Test User", password: "password123", token: "123"});
 
       var responseObj = {};
       responseObj["success"] = true;
