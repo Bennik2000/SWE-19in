@@ -10,13 +10,13 @@ OneUser = UserSchema()
 ManyUsers = UserSchema(many=True)
 
 # Errors
-username_invalid = generate_error("User name invalid", HTTPStatus.BAD_REQUEST.value)
-email_invalid = generate_error("Email invalid", HTTPStatus.BAD_REQUEST.value)
-password_invalid = generate_error("Password invalid", HTTPStatus.BAD_REQUEST.value)
-user_already_exists = generate_error("User already exists", HTTPStatus.CONFLICT.value)
-already_authenticated = generate_error("Already authenticated", HTTPStatus.BAD_REQUEST.value)
-email_or_password_wrong = generate_error("Email and/or password wrong", HTTPStatus.UNAUTHORIZED.value)
-token_invalid = generate_error("Invalid access token", HTTPStatus.UNAUTHORIZED.value)
+username_invalid = generate_error("Name ungültig", HTTPStatus.BAD_REQUEST.value)
+email_invalid = generate_error("Email ungültig", HTTPStatus.BAD_REQUEST.value)
+password_invalid = generate_error("Passwort ungültig", HTTPStatus.BAD_REQUEST.value)
+user_already_exists = generate_error("Account existiert bereits", HTTPStatus.CONFLICT.value)
+already_authenticated = generate_error("Bereits eingeloggt", HTTPStatus.BAD_REQUEST.value)
+email_or_password_wrong = generate_error("Email und/oder Passwort falsch", HTTPStatus.UNAUTHORIZED.value)
+token_invalid = generate_error("Registrierungscode ungültig", HTTPStatus.UNAUTHORIZED.value)
 
 
 @app.route('/users', methods=['POST'])
@@ -97,22 +97,53 @@ def load_user(user_id):
 
 @login_manager.unauthorized_handler
 def unauthorized():
-    abort(401)
+    abort(HTTPStatus.UNAUTHORIZED)
+
+
+@app.route('/users/personal_info', methods=['GET'])
+@login_required
+def personal_info():
+    current_user_info = User.query.get(current_user.id)
+    result = OneUser.jsonify(current_user_info)
+    result.headers.add("Access-Control-Allow-Origin", "*")
+    return result
+
+@app.route('/users/change_password', methods = ['POST'])
+@login_required
+def change_password():
+    password = request.json.get("password")
+
+    if password is None or password == "":
+        return password_invalid
+
+    current_user.set_password(password)
+    db.session.commit()
+    return {"success": True}, 200
 
 
 @app.route('/users', methods=['GET'])
 @login_required
-def get_all_users():
-    all_users = User.query.all()
-    result = jsonify(ManyUsers.dump(all_users))
+# TODO: Webmaster role required
+def get_users():
+    id_ = request.args.get("id", default="*")
+
+    result = None
+
+    if id_ == "*":
+        all_users = User.query.all()
+        result = jsonify(ManyUsers.dump(all_users))
+    else:
+        user = User.query.get(id_)
+        result = OneUser.jsonify(user)
+
     result.headers.add("Access-Control-Allow-Origin", "*")
     return result
 
 
-@app.route('/users/<id>', methods=['GET'])
+@app.route('/users/delete', methods=['DELETE'])
 @login_required
-def get_user(id_):
-    user = User.query.get(id_)
-    result = OneUser.jsonify(user)
-    result.headers.add("Access-Control-Allow-Origin", "*")
-    return result
+def delete():
+    db.session.delete(current_user)
+    db.session.commit()
+    logout_user()
+    return {"success": True}, 200

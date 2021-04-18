@@ -1,6 +1,8 @@
 import datetime
 
 from flask import Flask
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from flask_login import LoginManager
@@ -15,6 +17,13 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db.sqlite"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SECRET_KEY"] = "M2JjYjU2NDZmYzUJhMIgIC0K"
 app.config["REMEMBER_COOKIE_DURATION"] = datetime.timedelta(weeks=12)
+app.config['JSON_AS_ASCII'] = False
+
+limiter = Limiter(
+    app,
+    key_func=get_remote_address,
+    default_limits=["200 per day", "60 per hour"]
+)
 
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
