@@ -48,7 +48,7 @@ test('correct called FrontendHelper.manageXMLHttpRequest(...) for creating a new
   frontendHelper.testXHRequestCallback =  (request, route, json) => {
       expect(request).toBe("POST");
       expect(route).toBe("/users");
-      expect(jsonObj).toMatchObject({email: "test@test.com", name: "Test User", password: "password123", token: "123"});
+      expect(json).toMatchObject({email: "test@test.com", name: "Test User", password: "password123", token: "123"});
 
       var responseObj = {};
       responseObj["success"] = true;
