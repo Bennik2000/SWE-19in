@@ -2,7 +2,7 @@ const { expect } = require('@jest/globals');
 const {frontendHelper} = require('../FrontendHelper');
 frontendHelper.isTesting = true;
 
-/*********************************************** Testing the validateEmail function as used in the FrontendHelper ***********************************************/ 
+/*********************************************** Testing the validateEmail function of the FrontendHelper ***********************************************/ 
 
 
 //-------------------- validating incorrect emails --------------------//
@@ -31,34 +31,38 @@ test('detecting a correct email: "jannik@well-online.de"', () => {
 test('detecting a correct email: "xyz@zxy.yxz"', () => {
   expect(frontendHelper.validateEmail('xyz@zxy.yxz')).toBe(true);
 });  
-/****************************************************************************************************************************************************************/
+/*************************************************************************************************************************************************************/
 
 
 
-//-------------------- testing the creation of a JSON-Object --------------------//
+/********************************************* Testing the manageXMLHttpRequest function of the FrontendHelper ***********************************************/ 
 
-var obj = {};
-obj["email"] = "jannik@well-online.de";
-obj["name"] = "Jannik Well";
-obj["password"] = "password123";
-obj["token"] = "123";
+//------------------------------------------ testing the creation of a JSON-Object ------------------------------------------//
+// create the JSON-Object for creating an user
+var jsonObj = {};
+jsonObj["email"] = "jannik@well-online.de";
+jsonObj["name"] = "Jannik Well";
+jsonObj["password"] = "password123";
+jsonObj["token"] = "123";
 
 test('correct created JSON-Object as sent to the server"', () => {
-  expect(obj).toMatchObject({email: "jannik@well-online.de", name: "Jannik Well", password: "password123", token: "123"});
+  expect(jsonObj).toMatchObject({email: "jannik@well-online.de", name: "Jannik Well", password: "password123", token: "123"});
 });
 
 
-
-test('test', () => {
+//-------------------------- testing the function call of manageXMLhttpRequest for creating an user --------------------------//
+test('correct called FrontendHelper.manageXMLHttpRequest(...) for creating a new user', () => {
   frontendHelper.testXHRequestCallback =  (request, route, json) => {
-      expect(request).toBe("POST")
-      // TODO: route, json überprüfen
+      expect(request).toBe("POST");
+      expect(route).toBe("/users");
+      expect(json).toBe(jsonObj);
+
       var responseObj = {};
       responseObj["success"] = true;
       return responseObj;
   }
   function myOnloadFunction(response){
-
+      expect(response.success).toBe(true);
   }
-  frontendHelper.manageXMLHttpRequest("POST", "/users", obj, myOnloadFunction)
+  frontendHelper.manageXMLHttpRequest("POST", "/users", jsonObj, myOnloadFunction)
 }); 
