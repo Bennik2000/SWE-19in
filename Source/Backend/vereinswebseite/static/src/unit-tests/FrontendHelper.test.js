@@ -1,36 +1,35 @@
 const { expect } = require('@jest/globals');
+const {frontendHelper} = require('../FrontendHelper');
+frontendHelper.isTesting = true;
 
 /*********************************************** Testing the validateEmail function as used in the FrontendHelper ***********************************************/ 
-function validateEmailTest(email) {
-  var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  return re.test(String(email).toLowerCase());
-}
+
 
 //-------------------- validating incorrect emails --------------------//
 test('detecting an incorrect email: "jannikwell-online.de"', () => {
-  expect(validateEmailTest('jannikwell-online.de')).toBe(false);
+  expect(frontendHelper.validateEmail('jannikwell-online.de')).toBe(false);
 });
 
 test('detecting an incorrect email: "jannik@well-online"', () => {
-  expect(validateEmailTest('jannik@well-online')).toBe(false);
+  expect(frontendHelper.validateEmail('jannik@well-online')).toBe(false);
 });
 
 test('detecting an incorrect email: "jannikwell-online.de"', () => {
-  expect(validateEmailTest('jannikwell-online.de')).toBe(false);
+  expect(frontendHelper.validateEmail('jannikwell-online.de')).toBe(false);
 });
 
 test('detecting an incorrect email: "jannik@well-online,de"', () => {
-  expect(validateEmailTest('jannik@well-online,de')).toBe(false);
+  expect(frontendHelper.validateEmail('jannik@well-online,de')).toBe(false);
 });
 
 
 //-------------------- validating correct emails --------------------//
 test('detecting a correct email: "jannik@well-online.de"', () => {
-  expect(validateEmailTest('jannik@well-online.de')).toBe(true);
+  expect(frontendHelper.validateEmail('jannik@well-online.de')).toBe(true);
 });  
 
 test('detecting a correct email: "xyz@zxy.yxz"', () => {
-  expect(validateEmailTest('xyz@zxy.yxz')).toBe(true);
+  expect(frontendHelper.validateEmail('xyz@zxy.yxz')).toBe(true);
 });  
 /****************************************************************************************************************************************************************/
 
@@ -50,3 +49,16 @@ test('correct created JSON-Object as sent to the server"', () => {
 
 
 
+test('test', () => {
+  frontendHelper.testXHRequestCallback =  (request, route, json) => {
+      expect(request).toBe("POST")
+      // TODO: route, json überprüfen
+      var responseObj = {};
+      responseObj["success"] = true;
+      return responseObj;
+  }
+  function myOnloadFunction(response){
+
+  }
+  frontendHelper.manageXMLHttpRequest("POST", "/users", obj, myOnloadFunction)
+}); 

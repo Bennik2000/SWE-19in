@@ -19,29 +19,28 @@ function createAccount() {
 
     if (newEmail.value != "" && firstName.value != "" && secondName.value != "" &&
         newPassword.value != "" && newPassword2.value != "" && newToken.value != "") {
-        var obj = {};
-        obj["email"] = newEmail.value;
+        var jsonObj = {};
+        jsonObj["email"] = newEmail.value;
 
-        obj["name"] = firstName.value + " " + secondName.value;
-        obj["password"] = newPassword.value;
-        obj["token"] = newToken.value;
-        var myJSON = JSON.stringify(obj);
+        jsonObj["name"] = firstName.value + " " + secondName.value;
+        jsonObj["password"] = newPassword.value;
+        jsonObj["token"] = newToken.value;
 
-        function myOnloadFunction() {
-            if (this.response == null) {
+        function myOnloadFunction(response) {
+            if (response == null) {
                 alert("Kommunikation mit Server fehlgeschlagen!");
                 return;
             }
-            else if(this.response.success) { // The response accesses "success:" of the responded JSON Object
+            else if(response.success) { // The response accesses "success:" of the responded JSON Object
                 alert("Account erfolgreich angelegt!"); 
                 window.location.href = "/#";
             }
             else
             {
-                alert("Account anlegen fehlgeschlagen!" + "\n➔ " + this.response.errors[0].title + ".");
+                alert("Account anlegen fehlgeschlagen!" + "\n➔ " + response.errors[0].title + ".");
             }
         }
-        frontendHelper.manageXMLHttpRequest("POST", "/users", myJSON, myOnloadFunction); 
+        frontendHelper.manageXMLHttpRequest("POST", "/users", jsonObj, myOnloadFunction); 
     }
 }
 
