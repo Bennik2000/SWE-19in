@@ -347,3 +347,4 @@ Source/Frontend/node_modules
 Source/.idea
 Source/Backend/.vscode/settings.json
 
+Source/Backend/node_modules
