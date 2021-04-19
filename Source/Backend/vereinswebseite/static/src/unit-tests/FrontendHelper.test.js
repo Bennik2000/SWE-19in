@@ -35,9 +35,9 @@ test('detecting a correct email: "xyz@zxy.yxz"', () => {
 
 
 
-/********************************************* Testing the manageXMLHttpRequest function of the FrontendHelper ***********************************************/ 
-//-------------------------- testing the function call of manageXMLhttpRequest for creating an user --------------------------//
-test('correct called FrontendHelper.manageXMLHttpRequest(...) for creating a new user', () => {
+/********************************************* Testing the makeHttpRequest function of the FrontendHelper ***********************************************/ 
+//-------------------------- testing the function call of makeHttpRequest for creating an user --------------------------//
+test('correct called FrontendHelper.makeHttpRequest(...) for creating a new user', () => {
   // create the JSON-Object for creating an user
   var jsonObj = {};
   jsonObj["email"] = "test@test.com";
@@ -45,7 +45,7 @@ test('correct called FrontendHelper.manageXMLHttpRequest(...) for creating a new
   jsonObj["password"] = "password123";
   jsonObj["token"] = "123";
   
-  frontendHelper.testXHRequestCallback =  (request, route, json) => {
+  frontendHelper.testRequestCallback =  (request, route, json) => {
       expect(request).toBe("POST");
       expect(route).toBe("/users");
       expect(json).toMatchObject({email: "test@test.com", name: "Test User", password: "password123", token: "123"});
@@ -57,5 +57,5 @@ test('correct called FrontendHelper.manageXMLHttpRequest(...) for creating a new
   function myOnloadFunction(response){
       expect(response.success).toBe(true);
   }
-  frontendHelper.manageXMLHttpRequest("POST", "/users", jsonObj, myOnloadFunction)
+  frontendHelper.makeHttpRequest("POST", "/users", jsonObj, myOnloadFunction)
 }); 

@@ -34,7 +34,7 @@ function createAccount() {
                 alert("Account anlegen fehlgeschlagen!" + "\n➔ " + response.errors[0].title + ".");
             }
         }
-        frontendHelper.manageXMLHttpRequest("POST", "/users", jsonObj, myOnloadFunction);
+        frontendHelper.makeHttpRequest("POST", "/users", jsonObj, myOnloadFunction);
     }
 }
 function cancelCreateAccount() {

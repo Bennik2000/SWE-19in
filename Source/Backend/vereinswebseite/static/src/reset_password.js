@@ -20,5 +20,5 @@ function resetPasswordRequest() {
             window.location.href = "/#";
         }
     }
-    frontendHelper.manageXMLHttpRequest("POST", "/users/request_new_password", jsonObj, myOnloadFunction);
+    frontendHelper.makeHttpRequest("POST", "/users/request_new_password", jsonObj, myOnloadFunction);
 }

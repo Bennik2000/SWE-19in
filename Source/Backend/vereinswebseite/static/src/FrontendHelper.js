@@ -4,13 +4,13 @@ exports.frontendHelper = void 0;
 var FrontendHelper = /** @class */ (function () {
     function FrontendHelper() {
         this.isTesting = false;
-        this.testXHRequestCallback = null;
+        this.testRequestCallback = null;
     }
     FrontendHelper.prototype.validateEmail = function (email) {
         var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return re.test(String(email).toLowerCase());
     };
-    FrontendHelper.prototype.manageXMLHttpRequest = function (request, route, json, onloadFunction) {
+    FrontendHelper.prototype.makeHttpRequest = function (request, route, json, onloadFunction) {
         if (!this.isTesting) {
             var xhttp = new XMLHttpRequest();
             xhttp.open(request, route, true);
@@ -22,8 +22,8 @@ var FrontendHelper = /** @class */ (function () {
             };
         }
         else {
-            if (this.testXHRequestCallback != null) {
-                var response = this.testXHRequestCallback(request, route, json);
+            if (this.testRequestCallback != null) {
+                var response = this.testRequestCallback(request, route, json);
                 onloadFunction(response);
             }
         }
