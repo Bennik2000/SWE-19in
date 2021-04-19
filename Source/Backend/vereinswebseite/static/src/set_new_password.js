@@ -1,3 +1,4 @@
+var frontendHelper = new FrontendHelper();
 function setNewPassword() {
     var newPassword1 = document.getElementById("newPassword1");
     var newPassword2 = document.getElementById("newPassword2");
@@ -9,14 +10,7 @@ function setNewPassword() {
     var obj = {};
     obj["password"] = newPassword1.value;
     obj["token"] = token.innerText;
-    var myJSON = JSON.stringify(obj);
-    var xhttp = new XMLHttpRequest();
-    xhttp.open("POST", "/users", true);
-    xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-    xhttp.responseType = "json";
-    xhttp.send(myJSON);
-    // Read the backend-response
-    xhttp.onload = function (e) {
+    function myOnLoadFunction(response) {
         if (this.response == null) {
             alert("Kommunikation mit Server fehlgeschlagen!");
             return;
@@ -28,7 +22,8 @@ function setNewPassword() {
         else {
             alert("Passwort ändern fehlgeschlagen!" + "\n➔ " + this.response.errors[0].title + ".");
         }
-    };
+    }
+    frontendHelper.makeHttpRequest("POST", "/users", obj, myOnLoadFunction);
 }
 function showPassword() {
     var x = document.getElementById("newPassword1");
