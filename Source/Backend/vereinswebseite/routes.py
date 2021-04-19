@@ -11,7 +11,7 @@ unauthorized = generate_error("Unauthorized", HTTPStatus.UNAUTHORIZED.value)
 
 
 @app.route('/')
-def index():
+def render_index():
     return render_template('index.jinja2')
 
 
@@ -21,7 +21,7 @@ def ping_handler():
 
 
 @app.route('/create_account')
-def create_account():
+def render_create_account():
     return render_template('create_account.jinja2')
 
 
@@ -42,5 +42,5 @@ def unauthorized_handler(e):
     
     
 @app.route('/reset_password')
-def reset_password():
+def render_reset_password():
     return render_template('reset_password.jinja2')
