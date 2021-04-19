@@ -12,24 +12,24 @@ function setNewPassword() {
     
     var obj = {};
         obj["password"] = newPassword1.value;
-        obj["token"] = token.innerText;
+        obj["token"] = token.innerHTML;
 
         function myOnLoadFunction(response) {
-            if (this.response == null) {
+            if (response == null) {
                 alert("Kommunikation mit Server fehlgeschlagen!");
                 return;
             }
-            else if(this.response.success) { // The response accesses "success:" of the responded JSON Object
+            else if(response.success) { // The response accesses "success:" of the responded JSON Object
                 alert("Passwort erfolgreich geändert!"); 
                 window.location.href = "/#";
             }
             else
             {
-                alert("Passwort ändern fehlgeschlagen!" + "\n➔ " + this.response.errors[0].title + ".");
+                alert("Passwort ändern fehlgeschlagen!" + "\n➔ " + response.errors[0].title + ".");
             }
         }
 
-        frontendHelper.makeHttpRequest("POST", "/users", obj, myOnLoadFunction);
+        frontendHelper.makeHttpRequest("POST", "/users/reset_password", obj, myOnLoadFunction);
 }
 
 function showPassword() {
