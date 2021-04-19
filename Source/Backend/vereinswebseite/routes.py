@@ -23,11 +23,6 @@ def ping_handler():
 @app.route('/create_account')
 def create_account():
     return render_template('create_account.jinja2')
-
-
-@app.route('/set_new_password')
-def set_new_password():
-    return render_template('set_new_password.jinja2')
     
 @app.errorhandler(HTTPStatus.TOO_MANY_REQUESTS.value)
 def rate_limit_handler(e):

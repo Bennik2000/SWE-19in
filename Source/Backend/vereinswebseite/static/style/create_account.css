@@ -172,3 +172,15 @@ input[type=text]:placeholder, input[type=password]:placeholder{
   width: 41%;
 }
 
+@media (max-width: 768px) 
+{
+   #firstname, #secondname, #createAccountButton, #cancel {
+       font-size: 1.5vw; 
+   }
+   h1 {
+       font-size: 2vw;;
+   }
+   p {
+    font-size: 1.5vw;;
+}
+}
