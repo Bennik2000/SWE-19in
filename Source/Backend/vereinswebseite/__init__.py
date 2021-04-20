@@ -42,7 +42,7 @@ login_manager = LoginManager(app)
 from vereinswebseite import routes  # noqa: E402
 from vereinswebseite import routes_users  # noqa: E402
 from vereinswebseite import routes_accss_token  # noqa: E402
-from vereinswebseite import routes_articles  # noqa: E402
+from vereinswebseite import routes_blog_posts  # noqa: E402
 from vereinswebseite import routes_static  # noqa: E402
 
 db.create_all()
