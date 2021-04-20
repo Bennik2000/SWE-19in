@@ -1,6 +1,6 @@
 import unittest
 
-from test.test_utils import setup_test_app, add_test_user
+from test.test_utils import setup_test_app, add_test_user, TestUserName
 from vereinswebseite import db
 from vereinswebseite.models import BlogPost
 
@@ -20,3 +20,5 @@ class GetAllBlogPostsTest(unittest.TestCase):
         self.assertEqual(len(response.json["blog_posts"]), 2)
         self.assertEqual(response.json["blog_posts"][0]["title"], "Title")
         self.assertEqual(response.json["blog_posts"][0]["content"], "Content")
+        self.assertEqual(response.json["blog_posts"][0]["author"], TestUserName)
+        self.assertEqual(response.json["blog_posts"][0]["author_id"], "1")

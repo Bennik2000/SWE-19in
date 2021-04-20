@@ -39,7 +39,19 @@ def add_blog_post():
 
 @app.route('/blog_posts', methods=['GET'])
 def get_all_blog_posts():
-    all_articles = BlogPost.query.all()
-    result = jsonify({"success": True, "blog_posts": ManyBlogPost.dump(all_articles)})
-    result.headers.add("Access-Control-Allow-Origin", "*")
-    return result
+    posts = BlogPost.query.all()
+
+    all_posts = []
+
+    for post in posts:
+        user = User.query.get(post.author_id)
+
+        post_obj = {
+            "title": post.title,
+            "content": post.content,
+            "author": user.name,
+            "author_id": post.author_id
+        }
+        all_posts.append(post_obj)
+
+    return jsonify({"success": True, "blog_posts": all_posts})
