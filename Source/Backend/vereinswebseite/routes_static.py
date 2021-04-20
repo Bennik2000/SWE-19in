@@ -45,4 +45,3 @@ def style_login():
 @app.route('/static/src/login.js')
 def src_login():
     return app.send_static_file('src/login.js')
-    return app.send_static_file('src/login.js')
