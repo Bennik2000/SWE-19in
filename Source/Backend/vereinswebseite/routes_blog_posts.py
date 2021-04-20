@@ -13,6 +13,7 @@ ManyBlogPost = BlogPostSchema(many=True)
 title_invalid = generate_error("Titel ungültig", HTTPStatus.BAD_REQUEST.value)
 content_invalid = generate_error("Inhalt ungültig", HTTPStatus.BAD_REQUEST.value)
 user_invalid = generate_error("Benutzer Id ungültig", HTTPStatus.BAD_REQUEST.value)
+not_permitted_to_delete = generate_error("Dieser Post gehört zu einem anderen Benutzer. Daher kann er nicht gelöscht werden.", HTTPStatus.BAD_REQUEST.value)
 
 
 @app.route('/blog_posts', methods=['POST'])
@@ -56,3 +57,19 @@ def get_all_blog_posts():
         all_posts.append(post_obj)
 
     return jsonify({"success": True, "blog_posts": all_posts})
+
+
+@app.route('/blog_posts/delete', methods=['DELETE'])
+@login_required
+def delete_blog_post():
+    post_id = request.json.get("id")
+
+    post = BlogPost.query.get(post_id)
+
+    if int(post.author_id) != current_user.id:
+        return not_permitted_to_delete
+
+    db.session.delete(post)
+    db.session.commit()
+
+    return {"success": True}
