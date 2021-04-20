@@ -1,3 +1,21 @@
+function login(){
+    function reqListener() {
+        var response = this.response;
+        console.log(response);
+    }
+    var xhttp = new XMLHttpRequest();
+    xhttp.addEventListener("load", reqListener);
+    xhttp.open("POST", "/users/login", true);
+    xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    xhttp.responseType = "json";
+    var obj = {
+        "email": "Max.Mustermann1@mail.de",
+        "password":"123456"
+    }
+    
+    xhttp.send(JSON.stringify(obj));
+}
+
 function bio_edit() {
     if (document.getElementById("head_description").hasAttribute('readonly')) {
         document.getElementById("head_description").removeAttribute('readonly');
@@ -85,22 +103,22 @@ function get_access_token() {
     var tokenlist = document.getElementById("acces_tokens");
     function reqListener() {
         var response = this.response;
-        while (tokenlist.lastChild) {
+    while (tokenlist.lastChild) {
             tokenlist.removeChild(tokenlist.lastChild);
         }
-        response.forEach(function (element) {
+        response.tokens.forEach(function (element) {
             var token = document.createElement("a");
             token.innerHTML = element;
-            var button = document.createElement("button");
+            /*var button = document.createElement("button");
             button.type = "button";
             button.classList.add("btn");
             button.classList.add("btn-secondary");
             button.classList.add("ml-2");
             button.setAttribute("onclick", "delete_access_token(this);");
-            button.innerHTML = "Löschen";
+            button.innerHTML = "Löschen";*/
             var listItem = document.createElement("li");
             listItem.classList.add("list-group-item");
-            listItem.appendChild(button);
+            //listItem.appendChild(button);
             listItem.appendChild(token);
             tokenlist.appendChild(listItem);
         });
@@ -112,9 +130,10 @@ function get_access_token() {
     xhttp.responseType = "json";
     xhttp.send();
 }
-function delete_access_token(elem) {
+/*function delete_access_token(elem) {
     function reqListener() {
         var response = this.response;
+        console.log(response);
         if (response.success = true) {
             get_access_token();
         }
@@ -127,7 +146,7 @@ function delete_access_token(elem) {
     request["token"] = elem.parentElement.getElementsByTagName("a")[0].innerHTML;
     xhttp.responseType = "json";
     xhttp.send();
-}
+}*/
 function get_user_info() {
     function reqListener() {
         var response = this.response;
@@ -146,4 +165,5 @@ window.addEventListener('popstate', function (popstateEvent) {
 });
 window.onload = function () {
     get_user_info();
+    login();
 };
