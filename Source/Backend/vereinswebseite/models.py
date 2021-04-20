@@ -3,9 +3,9 @@ from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 
 
-class Article(db.Model):
+class BlogPost(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String)
+    title = db.Column(db.UnicodeText)
     content = db.Column(db.UnicodeText)
     author_id = db.Column(db.String, db.ForeignKey('user.id'))
 
@@ -21,7 +21,7 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String, unique=True, nullable=False)
     password = db.Column(db.String, nullable=False)
 
-    articles = db.relationship("Article")
+    blog_posts = db.relationship("BlogPost")
 
     def set_password(self, password):
         self.password = generate_password_hash(password, method='sha256')
@@ -53,7 +53,7 @@ class UserSchema(ma.Schema):
         fields = ('id', 'name', 'email')
 
 
-class ArticleSchema(ma.Schema):
+class BlogPostSchema(ma.Schema):
     class Meta:
         fields = ('id', 'title', 'content', 'author_id')
 
