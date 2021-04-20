@@ -15,7 +15,7 @@ content_invalid = generate_error("Inhalt ungültig", HTTPStatus.BAD_REQUEST.valu
 user_invalid = generate_error("Benutzer Id ungültig", HTTPStatus.BAD_REQUEST.value)
 
 
-@app.route('/blog_post', methods=['POST'])
+@app.route('/blog_posts', methods=['POST'])
 @login_required
 def add_blog_post():
     title = request.json.get('title')
@@ -39,7 +39,7 @@ def add_blog_post():
     return {"success": True}
 
 
-@app.route('/blog_post', methods=['GET'])
+@app.route('/blog_posts', methods=['GET'])
 def get_all_blog_posts():
     all_articles = BlogPost.query.all()
     result = jsonify({"success": True, "blog_posts": ManyBlogPost.dump(all_articles)})
