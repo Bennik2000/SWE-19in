@@ -1,3 +1,4 @@
+var frontendHelper = new FrontendHelper();
 function login() {
     var email = document.getElementById("email");
     var password = document.getElementById("password");
@@ -6,28 +7,23 @@ function login() {
         return;
     }
     if (email.value != "" && password.value != "") {
-        var obj = {};
-        obj["email"] = email.value;
-        obj["password"] = password.value;
-        var myJSON = JSON.stringify(obj);
-        var xhttp = new XMLHttpRequest();
-        xhttp.open("POST", "/users/login", true);
-        xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-        xhttp.responseType = "json";
-        xhttp.send(myJSON);
+        var jsonObj = {};
+        jsonObj["email"] = email.value;
+        jsonObj["password"] = password.value;
         // Read the backend-response
-        xhttp.onload = function (e) {
-            if (this.response == null) {
+        function myOnloadFunction(response) {
+            if (response == null) {
                 alert("Kommunikation mit Server fehlgeschlagen!");
                 return;
             }
-            else if (this.response.success) { // The response accesses "success:" of the responded JSON Object
+            else if (response.success) { // The response accesses "success:" of the responded JSON Object
                 window.location.href = "/#";
             }
             else {
-                alert("Login fehlgeschlagen!" + "\n➔ " + this.response.errors[0].title + ".");
+                alert("Benutzername oder Passwort falsch.");
             }
-        };
+        }
+        frontendHelper.makeHttpRequest("POST", "/users/login", jsonObj, myOnloadFunction);
     }
 }
 function validateEmail(email) {

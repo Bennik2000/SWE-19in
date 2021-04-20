@@ -38,5 +38,5 @@ function createAccount() {
     }
 }
 function cancelCreateAccount() {
-    window.location.href = "/#";
+    window.history.back();
 }
