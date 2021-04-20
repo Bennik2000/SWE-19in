@@ -47,6 +47,7 @@ def get_all_blog_posts():
         user = User.query.get(post.author_id)
 
         post_obj = {
+            "id": post.id,
             "title": post.title,
             "content": post.content,
             "author": user.name,

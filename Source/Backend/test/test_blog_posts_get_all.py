@@ -22,3 +22,5 @@ class GetAllBlogPostsTest(unittest.TestCase):
         self.assertEqual(response.json["blog_posts"][0]["content"], "Content")
         self.assertEqual(response.json["blog_posts"][0]["author"], TestUserName)
         self.assertEqual(response.json["blog_posts"][0]["author_id"], "1")
+        self.assertEqual(response.json["blog_posts"][0]["id"], 1)
+        self.assertEqual(response.json["blog_posts"][1]["id"], 2)
