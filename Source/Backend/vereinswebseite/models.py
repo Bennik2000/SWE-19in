@@ -5,7 +5,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 class BlogPost(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String)
+    title = db.Column(db.UnicodeText)
     content = db.Column(db.UnicodeText)
     author_id = db.Column(db.String, db.ForeignKey('user.id'))
 
