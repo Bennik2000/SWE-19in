@@ -1,7 +1,6 @@
-function login(){
+function login() {
     function reqListener() {
         var response = this.response;
-        console.log(response);
     }
     var xhttp = new XMLHttpRequest();
     xhttp.addEventListener("load", reqListener);
@@ -10,12 +9,10 @@ function login(){
     xhttp.responseType = "json";
     var obj = {
         "email": "Max.Mustermann1@mail.de",
-        "password":"123456"
-    }
-    
+        "password": "123456"
+    };
     xhttp.send(JSON.stringify(obj));
 }
-
 function bio_edit() {
     if (document.getElementById("head_description").hasAttribute('readonly')) {
         document.getElementById("head_description").removeAttribute('readonly');
@@ -96,6 +93,7 @@ function reload(x) {
             if (window.history.state != x) {
                 history.pushState('4', 'Berechtigung');
             }
+            get_users();
             break;
     }
 }
@@ -103,19 +101,19 @@ function get_access_token() {
     var tokenlist = document.getElementById("acces_tokens");
     function reqListener() {
         var response = this.response;
-    while (tokenlist.lastChild) {
+        while (tokenlist.lastChild) {
             tokenlist.removeChild(tokenlist.lastChild);
         }
         response.tokens.forEach(function (element) {
             var token = document.createElement("a");
             token.innerHTML = element;
-            /*var button = document.createElement("button");
-            button.type = "button";
+            /*let button=document.createElement("button");
+            button.type="button";
             button.classList.add("btn");
             button.classList.add("btn-secondary");
             button.classList.add("ml-2");
-            button.setAttribute("onclick", "delete_access_token(this);");
-            button.innerHTML = "Löschen";*/
+            button.setAttribute("onclick","delete_access_token(this);");
+            button.innerHTML="Löschen";*/
             var listItem = document.createElement("li");
             listItem.classList.add("list-group-item");
             //listItem.appendChild(button);
@@ -130,22 +128,71 @@ function get_access_token() {
     xhttp.responseType = "json";
     xhttp.send();
 }
-/*function delete_access_token(elem) {
+function get_users() {
+    var userList = document.getElementById("berechtigung_template");
     function reqListener() {
         var response = this.response;
-        console.log(response);
-        if (response.success = true) {
-            get_access_token();
+        while (userList.lastChild) {
+            userList.removeChild(userList.lastChild);
         }
+        response.forEach(function (element) {
+            var username = document.createElement("p");
+            var nh5 = document.createElement("h6");
+            var na = document.createElement("a");
+            nh5.innerHTML = "Name: ";
+            nh5.style.display = "inline";
+            username.appendChild(nh5);
+            na.innerHTML = element.name;
+            username.appendChild(na);
+            var usermail = document.createElement("p");
+            var eh5 = document.createElement("h6");
+            var ea = document.createElement("a");
+            eh5.innerHTML = "Email: ";
+            eh5.style.display = "inline";
+            usermail.appendChild(eh5);
+            ea.innerHTML = element.email;
+            usermail.appendChild(ea);
+            var userid = document.createElement("p");
+            var ih5 = document.createElement("h6");
+            var ia = document.createElement("a");
+            ih5.innerHTML = "ID: ";
+            ih5.style.display = "inline";
+            userid.appendChild(ih5);
+            ia.innerHTML = element.id;
+            userid.appendChild(ia);
+            var listItem = document.createElement("li");
+            listItem.classList.add("list-group-item");
+            listItem.appendChild(username);
+            listItem.appendChild(usermail);
+            listItem.appendChild(userid);
+            userList.appendChild(listItem);
+        });
+        console.log(userList);
     }
     var xhttp = new XMLHttpRequest();
     xhttp.addEventListener("load", reqListener);
-    xhttp.open("DELETE", "/accessToken/delete", true);
+    xhttp.open("GET", "/users", true);
     xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-    var request = {};
-    request["token"] = elem.parentElement.getElementsByTagName("a")[0].innerHTML;
     xhttp.responseType = "json";
     xhttp.send();
+}
+/*function delete_access_token(elem: Element ){
+    function reqListener(){
+        let response = this.response
+        if (response.success=true){
+            get_access_token();
+        }
+        
+    }
+    let xhttp = new XMLHttpRequest();
+    xhttp.addEventListener("load",reqListener)
+    xhttp.open("DELETE","/accessToken/delete",true);
+    xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    let request={};
+    request["token"]=elem.parentElement.getElementsByTagName("a")[0].innerHTML
+    xhttp.responseType="json";
+    xhttp.send();
+
 }*/
 function get_user_info() {
     function reqListener() {

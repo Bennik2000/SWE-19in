@@ -1,3 +1,20 @@
+function login(){
+    function reqListener() {
+        var response = this.response;
+    }
+    var xhttp = new XMLHttpRequest();
+    xhttp.addEventListener("load", reqListener);
+    xhttp.open("POST", "/users/login", true);
+    xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    xhttp.responseType = "json";
+    var obj = {
+        "email": "Max.Mustermann1@mail.de",
+        "password":"123456"
+    }
+    
+    xhttp.send(JSON.stringify(obj));
+}
+
 function bio_edit() {
     if (document.getElementById("head_description").hasAttribute('readonly')) {
         document.getElementById("head_description").removeAttribute('readonly');
@@ -46,6 +63,7 @@ function email_save() {
 }
 
 function password_save() {
+
 }
 
 function reload(x:number){
@@ -85,6 +103,7 @@ function reload(x:number){
             if(window.history.state!=x){
                 history.pushState('4', 'Berechtigung');
             }
+            get_users();
             break;
     }
 
@@ -100,21 +119,21 @@ function get_access_token(){
             tokenlist.removeChild(tokenlist.lastChild);
         }
 
-        response.forEach(element => {
+        response.tokens.forEach(element => {
             let token=document.createElement("a");
             token.innerHTML=element;
     
-            let button=document.createElement("button");
+            /*let button=document.createElement("button");
             button.type="button";
             button.classList.add("btn");
             button.classList.add("btn-secondary");
             button.classList.add("ml-2");
             button.setAttribute("onclick","delete_access_token(this);");
-            button.innerHTML="Löschen";
+            button.innerHTML="Löschen";*/
     
             let listItem=document.createElement("li");
             listItem.classList.add("list-group-item");
-            listItem.appendChild(button);
+            //listItem.appendChild(button);
             listItem.appendChild(token);
     
             tokenlist.appendChild(listItem);
@@ -129,7 +148,66 @@ function get_access_token(){
     xhttp.send();
 
 }
-function delete_access_token(elem: Element ){
+function get_users(){
+
+    let userList=document.getElementById("berechtigung_template");
+
+    function reqListener(){
+        let response = this.response
+
+        while(userList.lastChild){
+            userList.removeChild(userList.lastChild);
+        }
+
+        response.forEach(element => {
+            let username=document.createElement("p");
+            let nh5=document.createElement("h6");
+            let na=document.createElement("a");
+            nh5.innerHTML="Name: ";
+            nh5.style.display="inline";
+            username.appendChild(nh5);
+            na.innerHTML=element.name;
+            username.appendChild(na);
+
+            let usermail=document.createElement("p");
+            let eh5=document.createElement("h6");
+            let ea=document.createElement("a");
+            eh5.innerHTML="Email: ";
+            eh5.style.display="inline";
+            usermail.appendChild(eh5);
+            ea.innerHTML=element.email;
+            usermail.appendChild(ea);
+
+            let userid=document.createElement("p");
+            let ih5=document.createElement("h6");
+            let ia=document.createElement("a");
+            ih5.innerHTML="ID: ";
+            ih5.style.display="inline";
+            userid.appendChild(ih5);
+            ia.innerHTML=element.id;
+            userid.appendChild(ia);
+
+    
+            let listItem=document.createElement("li");
+            listItem.classList.add("list-group-item");
+            listItem.appendChild(username);
+            listItem.appendChild(usermail);
+            listItem.appendChild(userid);
+
+            userList.appendChild(listItem);
+        });
+        console.log(userList);
+        
+    }
+    let xhttp = new XMLHttpRequest();
+    xhttp.addEventListener("load",reqListener)
+    xhttp.open("GET","/users",true);
+    xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    xhttp.responseType="json";
+    xhttp.send();
+
+}
+/*function delete_access_token(elem: Element ){
     function reqListener(){
         let response = this.response
         if (response.success=true){
@@ -146,7 +224,7 @@ function delete_access_token(elem: Element ){
     xhttp.responseType="json";
     xhttp.send();
 
-}
+}*/
 function get_user_info(){
     function reqListener(){
         let response = this.response
@@ -168,4 +246,5 @@ window.addEventListener('popstate', function (popstateEvent) {
 
 window.onload=function(){
     get_user_info();
+    login();
 }
