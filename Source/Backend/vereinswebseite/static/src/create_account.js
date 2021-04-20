@@ -23,16 +23,20 @@ function createAccount() {
         obj["token"] = newToken.value;
         var myJSON = JSON.stringify(obj);
         var xhttp = new XMLHttpRequest();
-        xhttp.open("POST", "/user", true);
+        xhttp.open("POST", "/users", true);
         xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        xhttp.responseType = "json";
         xhttp.send(myJSON);
-        if (true) {
-            alert("Account erfolgreich angelegt!");
-            window.location.href = "/#";
-        }
-        else {
-            alert("Account anlegen fehlgeschlagen!");
-        }
+        // Read the backend-response
+        xhttp.onload = function (e) {
+            if (this.response.success) { // The response accesses "success:" of the responded JSON Object
+                alert("Account erfolgreich angelegt!");
+                window.location.href = "/#";
+            }
+            else {
+                alert("Account anlegen fehlgeschlagen!" + "\n➔ " + this.response.errors[0].title + ".");
+            }
+        };
     }
 }
 function cancelCreateAccount() {
