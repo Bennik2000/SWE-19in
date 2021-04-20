@@ -15,7 +15,6 @@ class BlogPostTest(unittest.TestCase):
         response = self.app.post("/blog_posts", json={
             "title": self.POST_TITLE,
             "content": self.POST_CONTENT,
-            "author_user_id": 1
         })
 
         self.assertFalse(response.json["success"])
@@ -26,7 +25,6 @@ class BlogPostTest(unittest.TestCase):
         response = self.app.post("/blog_posts", json={
             "title": self.POST_TITLE,
             "content": self.POST_CONTENT,
-            "author_user_id": 1
         })
 
         self.assertTrue(response.json["success"])
@@ -42,7 +40,6 @@ class BlogPostTest(unittest.TestCase):
 
         response = self.app.post("/blog_posts", json={
             "content": self.POST_CONTENT,
-            "author_user_id": 1
         })
 
         self.assertFalse(response.json["success"])
@@ -52,28 +49,6 @@ class BlogPostTest(unittest.TestCase):
 
         response = self.app.post("/blog_posts", json={
             "title": self.POST_TITLE,
-            "author_user_id": 1
-        })
-
-        self.assertFalse(response.json["success"])
-
-    def test_given_user_id_missing_when_create_blog_post_then_error(self):
-        create_and_login_test_user(self.app)
-
-        response = self.app.post("/blog_posts", json={
-            "title": self.POST_TITLE,
-            "content": self.POST_CONTENT,
-        })
-
-        self.assertFalse(response.json["success"])
-
-    def test_given_user_id_wrong_when_create_blog_post_then_error(self):
-        create_and_login_test_user(self.app)
-
-        response = self.app.post("/blog_posts", json={
-            "title": self.POST_TITLE,
-            "content": self.POST_CONTENT,
-            "author_user_id": 999
         })
 
         self.assertFalse(response.json["success"])

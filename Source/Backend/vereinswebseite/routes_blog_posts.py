@@ -1,6 +1,6 @@
 from http import HTTPStatus
 
-from flask_login import login_required
+from flask_login import login_required, current_user
 
 from vereinswebseite import app, db
 from vereinswebseite.errors import generate_error
@@ -20,7 +20,6 @@ user_invalid = generate_error("Benutzer Id ungültig", HTTPStatus.BAD_REQUEST.va
 def add_blog_post():
     title = request.json.get('title')
     content = request.json.get('content')
-    author_user_id = request.json.get('author_user_id')
 
     if title is None or title == "":
         return title_invalid
@@ -28,11 +27,10 @@ def add_blog_post():
     if content is None or content == "":
         return content_invalid
 
-    user = User.query.get(author_user_id)
-    if user is None:
+    if current_user is None:
         return user_invalid
 
-    new_article = BlogPost(title, content, author_user_id)
+    new_article = BlogPost(title, content, current_user.id)
 
     db.session.add(new_article)
     db.session.commit()
