@@ -7,12 +7,16 @@ class BlogPost(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.UnicodeText)
     content = db.Column(db.UnicodeText)
-    author_id = db.Column(db.String, db.ForeignKey('user.id'))
+    author_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __init__(self, title, content, author_id):
         self.title = title
         self.content = content
         self.author_id = author_id
+
+    def __repr__(self):
+        return f'BlogPost(id={self.id}, author_id={self.author_id},\n' \
+               f'\ttitle="{self.title}",\n\tcontent="{self.content}")'
 
 
 class User(UserMixin, db.Model):
