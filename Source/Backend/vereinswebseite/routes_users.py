@@ -104,7 +104,7 @@ def load_user(user_id):
 
 @login_manager.unauthorized_handler
 def unauthorized():
-    abort(HTTPStatus.UNAUTHORIZED)
+    return {"success": False}, HTTPStatus.UNAUTHORIZED
 
 
 @app.route('/users/personal_info', methods=['GET'])
