@@ -10,10 +10,13 @@ from flask import request, jsonify
 OneBlogPost = BlogPostSchema()
 ManyBlogPost = BlogPostSchema(many=True)
 
-title_invalid = generate_error("Titel ungültig", HTTPStatus.BAD_REQUEST.value)
-content_invalid = generate_error("Inhalt ungültig", HTTPStatus.BAD_REQUEST.value)
-user_invalid = generate_error("Benutzer Id ungültig", HTTPStatus.BAD_REQUEST.value)
-not_permitted_to_delete = generate_error("Dieser Post gehört zu einem anderen Benutzer. Daher kann er nicht gelöscht werden.", HTTPStatus.BAD_REQUEST.value)
+title_invalid = generate_error("Titel ungültig", HTTPStatus.BAD_REQUEST)
+content_invalid = generate_error("Inhalt ungültig", HTTPStatus.BAD_REQUEST)
+user_invalid = generate_error("Benutzer ID ungültig", HTTPStatus.BAD_REQUEST)
+blog_post_id_invalid = generate_error("Blog Post ID ungültig", HTTPStatus.BAD_REQUEST)
+not_permitted_to_edit_or_delete = generate_error("Dieser Post gehört zu einem anderen Benutzer. "
+                                                 "Daher kann er nicht bearbeitet oder gelöscht werden.",
+                                                 HTTPStatus.FORBIDDEN)
 
 
 @app.route('/blog_posts', methods=['POST'])
@@ -35,6 +38,36 @@ def add_blog_post():
 
     db.session.add(new_article)
     db.session.commit()
+    return {"success": True}
+
+
+@app.route('/blog_posts/update', methods=['PUT'])
+@login_required
+def update_blog_post():
+    id_ = request.json.get('id')
+    title = request.json.get('title')
+    content = request.json.get('content')
+
+    if id_ is None or title == "":
+        return blog_post_id_invalid
+
+    if title is None or title == "":
+        return title_invalid
+
+    if content is None or content == "":
+        return content_invalid
+
+    post = BlogPost.query.get(id_)
+    if post is None:
+        return blog_post_id_invalid
+
+    if post.author_id != current_user.id:
+        return not_permitted_to_edit_or_delete
+
+    post.title = title
+    post.content = content
+    db.session.commit()
+
     return {"success": True}
 
 
@@ -66,8 +99,8 @@ def delete_blog_post():
 
     post = BlogPost.query.get(post_id)
 
-    if int(post.author_id) != current_user.id:
-        return not_permitted_to_delete
+    if post.author_id != current_user.id:
+        return not_permitted_to_edit_or_delete
 
     db.session.delete(post)
     db.session.commit()
