@@ -1,3 +1,4 @@
+var frontendHelper = new FrontendHelper();
 function login() {
     function reqListener() {
         var response = this.response;
@@ -58,6 +59,30 @@ function email_save() {
     xhttp.send();*/
 }
 function password_save() {
+    var renamenewPassword = document.getElementById("rename_new_password");
+    var renamenewPassword2 = document.getElementById("rename_new_password2");
+    if (renamenewPassword.value != renamenewPassword2.value) {
+        alert("Passwörter stimmen nicht überein. \n Bitte überprüfen!");
+        return;
+    }
+    if (renamenewPassword.value != "" && renamenewPassword2.value != "" && renamenewPassword.value == renamenewPassword2.value) {
+        var jsonObj = {};
+        jsonObj["password"] = renamenewPassword.value;
+        function myOnloadFunction(response) {
+            if (response == null) {
+                alert("Kommunikation mit Server fehlgeschlagen!");
+                return;
+            }
+            else if (response.success) { // The response accesses "success:" of the responded JSON Object
+                alert("Passwort erfolgreich geändert");
+                window.location.href = "/#";
+            }
+            else {
+                alert("Passwort ändern fehlgeschlagen!" + "\n➔ " + response.errors[0].title + ".");
+            }
+        }
+        frontendHelper.makeHttpRequest("POST", "/users/change_password", jsonObj, myOnloadFunction);
+    }
 }
 function reload(x) {
     var templates = [document.getElementById("base_template"), document.getElementById("password_template"),

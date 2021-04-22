@@ -17,8 +17,13 @@
     integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
     crossorigin="anonymous"></script>
 
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
+  <script>var exports = {};</script>
+  <script src= "/static/src/FrontendHelper.js"></script>
   <script src= "/static/src/personal_account_space.js"></script>
 
   <title>My Account Space</title>
@@ -90,11 +95,12 @@
         <!--End right_body-->
         <div class="col-md-10 d-none" id="password_template"><!-------------------------------Password------------------------------------->
 
-          <p>Neues Passwort:</p>
-          <textarea class="form-control form-control-md" id="new_password" placeholder="Neues Passwort" rows="1"></textarea>
-          <p class="mt-1">Neue Email:</p>
-          <textarea class="form-control form-control-md" id="new_password" placeholder="Neues Passwort wiederholen" rows="1"></textarea>
-          <button type="button" class="btn btn-primary mt-2" id="password_save"  onclick="password_save();">Speichern</button>
+          <h1>Passwort ändern?</h1>
+          <p>Hier kannst du dein aktuelles Passwort neu vergeben.</p>
+          <input id="rename_new_password" placeholder="Neues Passwort" class="form-control form-control-md"  type="password"  required="true">
+          <input id="rename_new_password2" placeholder="Neues Passwort wiederholen" class="form-control form-control-md"  type="password" required="true">
+
+          <button type="submit" class="btn btn-primary mt-2" id="password_save"  onclick="password_save()">Speichern</button>
 
         </div>
         <!--End right_body-->
