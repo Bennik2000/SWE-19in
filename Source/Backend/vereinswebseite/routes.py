@@ -24,6 +24,10 @@ def ping_handler():
 def create_account():
     return render_template('create_account.jinja2')
 
+@app.route('/login')
+def render_login():
+    return render_template('login.jinja2')
+
 
 @app.route('/account')
 def personal_account_space():
@@ -44,4 +48,8 @@ def unauthorized_handler(e):
     response.data = json.dumps(unauthorized[0])
     response.content_type = "application/json"
     return response
+
+@app.route('/reset_password')
+def render_reset_password():
+    return render_template('reset_password.jinja2')
 

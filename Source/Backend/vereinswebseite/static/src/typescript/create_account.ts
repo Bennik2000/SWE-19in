@@ -1,6 +1,5 @@
-var text = '{"email": "jonas1.hille@email.com", "name": "Jonas1 Hille 2","password": "123456"}';
+let frontendHelper = new FrontendHelper()
 function createAccount() {
-
     var newEmail = document.getElementById("email") as HTMLInputElement;
     var firstName = document.getElementById("firstname") as HTMLInputElement;
     var secondName = document.getElementById("secondname") as HTMLInputElement;
@@ -13,47 +12,38 @@ function createAccount() {
         return;  
     }
 
-    if (!validateEmail(newEmail.value)) {
+    if (!frontendHelper.validateEmail(newEmail.value)) {
         alert("Email nicht valide! Bitte überprüfen");
         return;
     }
 
     if (newEmail.value != "" && firstName.value != "" && secondName.value != "" &&
         newPassword.value != "" && newPassword2.value != "" && newToken.value != "") {
-        var obj = {};
-        obj["email"] = newEmail.value;
+        var jsonObj = {};
+        jsonObj["email"] = newEmail.value;
 
-        obj["name"] = firstName.value + " " + secondName.value;
-        obj["password"] = newPassword.value;
-        obj["token"] = newToken.value;
-        var myJSON = JSON.stringify(obj);
-    
-        var xhttp = new XMLHttpRequest();
-        xhttp.open("POST", "/users", true);
-        xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-        xhttp.responseType = "json";
-        xhttp.send(myJSON);
-        
-        // Read the backend-response
-        xhttp.onload = function(e) {
-            if(this.response.success) { // The response accesses "success:" of the responded JSON Object
+        jsonObj["name"] = firstName.value + " " + secondName.value;
+        jsonObj["password"] = newPassword.value;
+        jsonObj["token"] = newToken.value;
+
+        function myOnloadFunction(response) {
+            if (response == null) {
+                alert("Kommunikation mit Server fehlgeschlagen!");
+                return;
+            }
+            else if(response.success) { // The response accesses "success:" of the responded JSON Object
                 alert("Account erfolgreich angelegt!"); 
                 window.location.href = "/#";
             }
             else
             {
-                alert("Account anlegen fehlgeschlagen!" + "\n➔ " + this.response.errors[0].title + ".");
+                alert("Account anlegen fehlgeschlagen!" + "\n➔ " + response.errors[0].title + ".");
             }
-        } 
         }
-
+        frontendHelper.makeHttpRequest("POST", "/users", jsonObj, myOnloadFunction); 
+    }
 }
 
-function cancelCreateAccount(){
-    window.location.href = "/#";
-}
-
-function validateEmail(email) {
-    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(email).toLowerCase());
+function cancelCreateAccount() {
+    window.history.back();
 }

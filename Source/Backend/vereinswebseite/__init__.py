@@ -3,10 +3,10 @@ import datetime
 from flask import Flask
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
+from flask_mail import Mail
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from flask_login import LoginManager
-
 
 app = Flask("VereinSWEbseite",
             template_folder="vereinswebseite/templates",
@@ -18,6 +18,14 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SECRET_KEY"] = "M2JjYjU2NDZmYzUJhMIgIC0K"
 app.config["REMEMBER_COOKIE_DURATION"] = datetime.timedelta(weeks=12)
 app.config['JSON_AS_ASCII'] = False
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = 'vereinSWEbseite@gmail.com'
+app.config['MAIL_PASSWORD'] = '2021SWEsem4'
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+
+mail = Mail(app)
 
 limiter = Limiter(
     app,
@@ -34,7 +42,7 @@ login_manager = LoginManager(app)
 from vereinswebseite import routes  # noqa: E402
 from vereinswebseite import routes_users  # noqa: E402
 from vereinswebseite import routes_accss_token  # noqa: E402
-from vereinswebseite import routes_articles  # noqa: E402
+from vereinswebseite import routes_blog_posts  # noqa: E402
 from vereinswebseite import routes_static  # noqa: E402
 
 db.create_all()
