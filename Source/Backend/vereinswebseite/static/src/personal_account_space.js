@@ -1,3 +1,20 @@
+
+var frontendHelper = new FrontendHelper();
+function login() {
+    function reqListener() {
+        var response = this.response;
+    }
+    var xhttp = new XMLHttpRequest();
+    xhttp.addEventListener("load", reqListener);
+    xhttp.open("POST", "/users/login", true);
+    xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    xhttp.responseType = "json";
+    var obj = {
+        "email": "Max.Mustermann1@mail.de",
+        "password": "123456"
+    };
+    xhttp.send(JSON.stringify(obj));
+}
 function bio_edit() {
     if (document.getElementById("head_description").hasAttribute('readonly')) {
         document.getElementById("head_description").removeAttribute('readonly');
@@ -57,6 +74,30 @@ function email_save() {
     xhttp.send();*/
 }
 function password_save() {
+    var renamenewPassword = document.getElementById("rename_new_password");
+    var renamenewPassword2 = document.getElementById("rename_new_password2");
+    if (renamenewPassword.value != renamenewPassword2.value) {
+        alert("Passwörter stimmen nicht überein. \n Bitte überprüfen!");
+        return;
+    }
+    if (renamenewPassword.value != "" && renamenewPassword2.value != "" && renamenewPassword.value == renamenewPassword2.value) {
+        var jsonObj = {};
+        jsonObj["password"] = renamenewPassword.value;
+        function myOnloadFunction(response) {
+            if (response == null) {
+                alert("Kommunikation mit Server fehlgeschlagen!");
+                return;
+            }
+            else if (response.success) { // The response accesses "success:" of the responded JSON Object
+                alert("Passwort erfolgreich geändert");
+                window.location.href = "/#";
+            }
+            else {
+                alert("Passwort ändern fehlgeschlagen!" + "\n➔ " + response.errors[0].title + ".");
+            }
+        }
+        frontendHelper.makeHttpRequest("POST", "/users/change_password", jsonObj, myOnloadFunction);
+    }
 }
 function reload(x) {
     var templates = [document.getElementById("base_template"), document.getElementById("password_template"),
