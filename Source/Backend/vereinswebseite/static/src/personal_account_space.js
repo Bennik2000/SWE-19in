@@ -14,47 +14,35 @@ function bio_save() {
     }
 }
 function delete_account() {
-    function reqListener() {
-        var response = this.response;
+    function myOnloadFunction(response) {
         if (response.success != true) {
         }
         window.location.href = "/";
     }
-    var xhttp = new XMLHttpRequest();
-    xhttp.addEventListener("load", reqListener);
-    xhttp.open("DELETE", "/users/delete", true);
-    xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-    xhttp.send();
+    var jsonObj = {};
+    frontendHelper.makeHttpRequest("DELETE", "/users/delete", jsonObj, myOnloadFunction);
 }
 function logout() {
-    function reqListener() {
-        var response = this.response;
+    function myOnloadFunction(response) {
         if (response.success = true) {
             //window.location.href="/login"
         }
     }
-    var xhttp = new XMLHttpRequest();
-    xhttp.addEventListener("load", reqListener);
-    xhttp.open("POST", "/users/logout", true);
-    xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-    xhttp.send();
+    var jsonObj = {};
+    frontendHelper.makeHttpRequest("POST", "/users/logout", jsonObj, myOnloadFunction);
 }
 function email_save() {
     /*let newEmail=document.getElementById("current_email_new");
-    function reqListener(){
-        let response = this.response
+    function myOnloadFunction(response){
         document.getElementById("Username").innerHTML=response.name;
         document.getElementById("current_email").innerHTML=response.email;
         
     }
-    let xhttp = new XMLHttpRequest();
-    xhttp.addEventListener("load",reqListener)
-    xhttp.open("GET","/users/personal_info",true);
-    xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-    let request={};
-    request["email"]=
-    xhttp.responseType="json";
-    xhttp.send();*/
+    let jsonObj={};
+    jsonObj["email"]=
+
+    frontendHelper.makeHttpRequest("GET", "/users/personal_info", jsonObj, myOnloadFunction);
+*/ 
 }
 function password_save() {
     var renamenewPassword = document.getElementById("rename_new_password");
@@ -73,7 +61,6 @@ function password_save() {
             }
             else if (response.success) { // The response accesses "success:" of the responded JSON Object
                 alert("Passwort erfolgreich geändert");
-                window.location.href = "/#";
             }
             else {
                 alert("Passwort ändern fehlgeschlagen!" + "\n➔ " + response.errors[0].title + ".");
@@ -122,8 +109,7 @@ function reload(x) {
 }
 function get_access_token() {
     var tokenlist = document.getElementById("acces_tokens");
-    function reqListener() {
-        var response = this.response;
+    function myOnloadFunction(response) {
         while (tokenlist.lastChild) {
             tokenlist.removeChild(tokenlist.lastChild);
         }
@@ -144,17 +130,12 @@ function get_access_token() {
             tokenlist.appendChild(listItem);
         });
     }
-    var xhttp = new XMLHttpRequest();
-    xhttp.addEventListener("load", reqListener);
-    xhttp.open("GET", "/accessToken", true);
-    xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-    xhttp.responseType = "json";
-    xhttp.send();
+    var jsonObj = {};
+    frontendHelper.makeHttpRequest("GET", "/accessToken", jsonObj, myOnloadFunction);
 }
 function get_users() {
     var userList = document.getElementById("berechtigung_template");
-    function reqListener() {
-        var response = this.response;
+    function myOnloadFunction(response) {
         while (userList.lastChild) {
             userList.removeChild(userList.lastChild);
         }
@@ -191,43 +172,28 @@ function get_users() {
             userList.appendChild(listItem);
         });
     }
-    var xhttp = new XMLHttpRequest();
-    xhttp.addEventListener("load", reqListener);
-    xhttp.open("GET", "/users", true);
-    xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-    xhttp.responseType = "json";
-    xhttp.send();
+    var jsonObj = {};
+    frontendHelper.makeHttpRequest("GET", "/users", jsonObj, myOnloadFunction);
 }
-/*function delete_access_token(elem: Element ){
-    function reqListener(){
-        let response = this.response
-        if (response.success=true){
-            get_access_token();
-        }
-        
-    }
-    let xhttp = new XMLHttpRequest();
-    xhttp.addEventListener("load",reqListener)
-    xhttp.open("DELETE","/accessToken/delete",true);
-    xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-    let request={};
-    request["token"]=elem.parentElement.getElementsByTagName("a")[0].innerHTML
-    xhttp.responseType="json";
-    xhttp.send();
-
-}*/
+function delete_access_token(elem) {
+    /*  function myOnloadFunction(response){
+          if (response.success=true){
+              get_access_token();
+          }
+      }
+  
+      let jsonObj={};
+      jsonObj["token"]=elem.parentElement.getElementsByTagName("a")[0].innerHTML
+      frontendHelper.makeHttpRequest("DELETE", "/accessToken/delete", jsonObj, myOnloadFunction);
+  */ 
+}
 function get_user_info() {
-    function reqListener() {
-        var response = this.response;
+    function myOnloadFunction(response) {
         document.getElementById("Username").innerHTML = response.name;
         document.getElementById("current_email").innerHTML = response.email;
     }
-    var xhttp = new XMLHttpRequest();
-    xhttp.addEventListener("load", reqListener);
-    xhttp.open("GET", "/users/personal_info", true);
-    xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-    xhttp.responseType = "json";
-    xhttp.send();
+    var jsonObj = {};
+    frontendHelper.makeHttpRequest("GET", "/users/personal_info", jsonObj, myOnloadFunction);
 }
 window.addEventListener('popstate', function (popstateEvent) {
     reload(Number(window.history.state));
