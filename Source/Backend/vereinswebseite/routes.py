@@ -48,3 +48,12 @@ def unauthorized_handler(e):
 @app.route('/reset_password')
 def render_reset_password():
     return render_template('reset_password.jinja2')
+
+
+@app.route('/post_form')
+def render_post_form():
+    return render_template('post_form.jinja2')
+
+@app.route('/create_blog_post')
+def render_create_blog_post():
+    return render_template('create_blog_post.jinja2')
