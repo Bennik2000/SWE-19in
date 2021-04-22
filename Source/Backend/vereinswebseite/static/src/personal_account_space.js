@@ -1,18 +1,3 @@
-function login() {
-    function reqListener() {
-        var response = this.response;
-    }
-    var xhttp = new XMLHttpRequest();
-    xhttp.addEventListener("load", reqListener);
-    xhttp.open("POST", "/users/login", true);
-    xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-    xhttp.responseType = "json";
-    var obj = {
-        "email": "Max.Mustermann1@mail.de",
-        "password": "123456"
-    };
-    xhttp.send(JSON.stringify(obj));
-}
 function bio_edit() {
     if (document.getElementById("head_description").hasAttribute('readonly')) {
         document.getElementById("head_description").removeAttribute('readonly');
@@ -37,6 +22,20 @@ function delete_account() {
     var xhttp = new XMLHttpRequest();
     xhttp.addEventListener("load", reqListener);
     xhttp.open("DELETE", "/users/delete", true);
+    xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    xhttp.send();
+}
+function logout() {
+    function reqListener() {
+        var response = this.response;
+        if (response.success = true) {
+            console.log(response);
+            //window.location.href="/login"
+        }
+    }
+    var xhttp = new XMLHttpRequest();
+    xhttp.addEventListener("load", reqListener);
+    xhttp.open("POST", "/users/logout", true);
     xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     xhttp.send();
 }
@@ -167,7 +166,6 @@ function get_users() {
             listItem.appendChild(userid);
             userList.appendChild(listItem);
         });
-        console.log(userList);
     }
     var xhttp = new XMLHttpRequest();
     xhttp.addEventListener("load", reqListener);
@@ -212,5 +210,4 @@ window.addEventListener('popstate', function (popstateEvent) {
 });
 window.onload = function () {
     get_user_info();
-    login();
 };
