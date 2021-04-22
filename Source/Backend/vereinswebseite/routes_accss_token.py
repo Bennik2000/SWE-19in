@@ -11,7 +11,7 @@ ManyAccessToken = AccessTokenSchema(many=True)
 
 AccessTokenLength = 8
 
-token_invalid = generate_error("Registrierungscode existiert nicht", HTTPStatus.NOT_FOUND.value)
+token_invalid = generate_error("Registrierungscode existiert nicht", HTTPStatus.NOT_FOUND)
 
 
 @app.route('/accessToken/validate')
