@@ -24,8 +24,9 @@
             <textarea class="form-control" required name="markdown" id="markdown"></textarea>
         </div>
         <button id="swapShowingPreview_button" class="btn btn-primary" type="button" onclick="swapShowingPreview()">Vorschau anzeigen</button>
-        <label for="preview">Vorschau</label>
-        <div class="form-group" style="border:1px solid black" id="markdown_preview">
+        <div id="preview_div">
+            <label for="preview">Vorschau</label>
+            <div class="form-group" style="border:1px solid black" id="markdown_preview"></div>
         </div>
         <a href="/" class="btn btn-secondary">Abbrechen</a>
         <button class="btn btn-primary" type="submit">Speichern</button>
