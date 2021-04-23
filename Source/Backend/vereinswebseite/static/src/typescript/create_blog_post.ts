@@ -6,14 +6,7 @@ function swapShowingPreview() {
     var jsonObj = {};
         jsonObj["content"] = markdown.value;
 
-
-
     if(!isShowingPreview && markdown.value != "") {
-        /*document.getElementById("markdown_preview").innerHTML =
-        marked(markdown.value);        
-        document.getElementById("swapShowingPreview_button").innerHTML = "Vorschau ausblenden";
-        document.getElementById("preview_div").style.display = "block";
-        isShowingPreview = true;*/
         
         function myOnloadFunction(response) {
             if(response == null) {

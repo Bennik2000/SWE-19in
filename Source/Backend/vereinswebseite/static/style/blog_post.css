@@ -8,12 +8,19 @@ form {
 #markdown {
     height: 20vw;
 }
-#markdown_preview{
-    overflow: auto;
-    height: 20vw;
-}
+
 #preview_div {
     display: none;
+    margin-top: 1.5%;
+}
+
+#markdown_preview { 
+    overflow: auto;
+    height: 20vw;
+    border:1px solid rgb(214, 213, 212);
+    border-radius: 5px;
+    padding: 10px;
+    background-color: white;
 }
 
 label {
