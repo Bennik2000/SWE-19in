@@ -3,7 +3,7 @@ def generate_error(error_title: str, http_status_code: int, error_details=None):
         "errors": [
             {
                "title": error_title,
-               "status": str(http_status_code),
+               "status": http_status_code,
             }
         ],
         "success": False

@@ -30,16 +30,19 @@ def setup_test_app(limiter_enabled=False, email_enabled=False):
     return app.test_client()
 
 
-def add_test_user():
-    user = User(name=TestUserName, email=TestEmail)
-    user.set_password(TestPassword)
-    db.session.add(user)
+def add_test_user() -> User:
+    test_user = User(name=TestUserName, email=TestEmail)
+    test_user.set_password(TestPassword)
+    db.session.add(test_user)
     db.session.commit()
+    return test_user
 
 
-def create_and_login_test_user(test_app):
-    add_test_user()
+def create_and_login_test_user(test_app) -> User:
+    test_user = add_test_user()
     test_app.post("/users/login", json={
         "email": TestEmail,
         "password": TestPassword
     })
+
+    return test_user

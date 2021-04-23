@@ -13,14 +13,14 @@ OneUser = UserSchema()
 ManyUsers = UserSchema(many=True)
 
 # Errors
-username_invalid = generate_error("Name ungültig", HTTPStatus.BAD_REQUEST.value)
-email_invalid = generate_error("Email ungültig", HTTPStatus.BAD_REQUEST.value)
-password_invalid = generate_error("Passwort ungültig", HTTPStatus.BAD_REQUEST.value)
-user_already_exists = generate_error("Account existiert bereits", HTTPStatus.CONFLICT.value)
-already_authenticated = generate_error("Bereits eingeloggt", HTTPStatus.BAD_REQUEST.value)
-email_or_password_wrong = generate_error("Email und/oder Passwort falsch", HTTPStatus.UNAUTHORIZED.value)
-token_invalid = generate_error("Registrierungscode ungültig", HTTPStatus.UNAUTHORIZED.value)
-reset_token_invalid = generate_error("Code ungültig", HTTPStatus.UNAUTHORIZED.value)
+username_invalid = generate_error("Name ungültig", HTTPStatus.BAD_REQUEST)
+email_invalid = generate_error("Email ungültig", HTTPStatus.BAD_REQUEST)
+password_invalid = generate_error("Passwort ungültig", HTTPStatus.BAD_REQUEST)
+user_already_exists = generate_error("Account existiert bereits", HTTPStatus.CONFLICT)
+already_authenticated = generate_error("Bereits eingeloggt", HTTPStatus.BAD_REQUEST)
+email_or_password_wrong = generate_error("Email und/oder Passwort falsch", HTTPStatus.UNAUTHORIZED)
+token_invalid = generate_error("Registrierungscode ungültig", HTTPStatus.UNAUTHORIZED)
+reset_token_invalid = generate_error("Code ungültig", HTTPStatus.UNAUTHORIZED)
 
 
 success_response = {"success": True}
@@ -104,7 +104,7 @@ def load_user(user_id):
 
 @login_manager.unauthorized_handler
 def unauthorized():
-    abort(HTTPStatus.UNAUTHORIZED)
+    return {"success": False}, HTTPStatus.UNAUTHORIZED
 
 
 @app.route('/users/personal_info', methods=['GET'])
