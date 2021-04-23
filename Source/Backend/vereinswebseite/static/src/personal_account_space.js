@@ -108,7 +108,7 @@ function reload(x) {
     }
 }
 function get_access_token() {
-    var tokenlist = document.getElementById("acces_tokens");
+    var tokenlist = document.getElementById("acces_tokens_list");
     function myOnloadFunction(response) {
         while (tokenlist.lastChild) {
             tokenlist.removeChild(tokenlist.lastChild);
@@ -134,7 +134,7 @@ function get_access_token() {
     frontendHelper.makeHttpRequest("GET", "/accessToken", jsonObj, myOnloadFunction);
 }
 function get_users() {
-    var userList = document.getElementById("berechtigung_template");
+    var userList = document.getElementById("user_list");
     function myOnloadFunction(response) {
         while (userList.lastChild) {
             userList.removeChild(userList.lastChild);

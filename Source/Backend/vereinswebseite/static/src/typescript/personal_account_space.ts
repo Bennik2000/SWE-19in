@@ -128,7 +128,7 @@ function reload(x:number){
 }
 function get_access_token(){
 
-    let tokenlist=document.getElementById("acces_tokens");
+    let tokenlist=document.getElementById("acces_tokens_list");
 
     function myOnloadFunction(response){
 
@@ -163,7 +163,7 @@ function get_access_token(){
 }
 function get_users(){
 
-    let userList=document.getElementById("berechtigung_template");
+    let userList=document.getElementById("user_list");
 
     function myOnloadFunction(response){
 
