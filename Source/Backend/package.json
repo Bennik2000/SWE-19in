@@ -1,5 +1,6 @@
 {
-    "scripts": {
-      "test": "jest"
-    }
-  }
+  "scripts": {
+    "test": "jest"
+  },
+  "dependencies": {}
+}
