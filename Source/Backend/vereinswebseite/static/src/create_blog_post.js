@@ -1,33 +1,60 @@
 var frontendHelper = new FrontendHelper();
 var isShowingPreview = false;
 function swapShowingPreview() {
+    if (isShowingPreview) {
+        document.getElementById("markdown_preview").innerHTML = "";
+        document.getElementById("swapShowingPreview_button").innerHTML = "Vorschau anzeigen";
+        document.getElementById("updatePreview_button").style.display = "none";
+        document.getElementById("preview_div").style.display = "none";
+        isShowingPreview = false;
+        return;
+    }
     var markdown = document.getElementById("markdown");
     var jsonObj = {};
     jsonObj["content"] = markdown.value;
-    if (!isShowingPreview && markdown.value != "") {
-        function myOnloadFunction(response) {
-            if (response == null) {
-                alert("Kommunikation mit Server fehlgeschlagen!");
-                return;
-            }
-            else if (response.success) {
-                document.getElementById("markdown_preview").innerHTML = response.html;
-                document.getElementById("swapShowingPreview_button").innerHTML = "Vorschau ausblenden";
-                document.getElementById("preview_div").style.display = "block";
-                isShowingPreview = true;
-            }
-            else {
-                alert("Anzeigen der Vorschau fehlgeschlagen!" + "\n➔ " + response.errors[0].title + ".");
-            }
+    if (!markdown.value.trim()) { // Check if the markdown is only containing whitespaces
+        alert("Um eine Vorschau anzeigen zu lassen bitte Markdown angeben!");
+        return;
+    }
+    function myOnloadFunction(response) {
+        if (response == null) {
+            alert("Kommunikation mit Server fehlgeschlagen!");
+            return;
         }
-        frontendHelper.makeHttpRequest("POST", "/blog_posts/render_preview", jsonObj, myOnloadFunction);
+        else if (response.success) {
+            document.getElementById("markdown_preview").innerHTML = response.html;
+            document.getElementById("swapShowingPreview_button").innerHTML = "Vorschau ausblenden";
+            document.getElementById("updatePreview_button").style.display = "block";
+            document.getElementById("preview_div").style.display = "block";
+            isShowingPreview = true;
+        }
+        else {
+            alert("Anzeigen der Vorschau fehlgeschlagen!");
+        }
     }
-    else {
-        document.getElementById("markdown_preview").innerHTML = "";
-        document.getElementById("swapShowingPreview_button").innerHTML = "Vorschau anzeigen";
-        document.getElementById("preview_div").style.display = "none";
-        isShowingPreview = false;
+    frontendHelper.makeHttpRequest("POST", "/blog_posts/render_preview", jsonObj, myOnloadFunction);
+}
+function updatePreview() {
+    var markdown = document.getElementById("markdown");
+    var jsonObj = {};
+    jsonObj["content"] = markdown.value;
+    if (!markdown.value.trim() && !isShowingPreview) {
+        alert("Um eine Vorschau anzeigen zu lassen bitte Markdown angeben!");
+        return;
     }
+    function myOnloadFunction(response) {
+        if (response == null) {
+            alert("Kommunikation mit Server fehlgeschlagen!");
+            return;
+        }
+        else if (response.success) {
+            document.getElementById("markdown_preview").innerHTML = response.html;
+        }
+        else {
+            alert("Aktualisieren der Vorschau fehlgeschlagen!");
+        }
+    }
+    frontendHelper.makeHttpRequest("POST", "/blog_posts/render_preview", jsonObj, myOnloadFunction);
 }
 function saveCreatedBlogPost() {
     var title = document.getElementById("title");
