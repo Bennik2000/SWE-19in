@@ -55,12 +55,3 @@ def style_login():
 @app.route('/static/src/login.js')
 def src_login():
     return app.send_static_file('src/login.js')
-
-#rename password
-@app.route('/static/style/rename_password.css')
-def style_rename_password():
-    return app.send_static_file('style/rename_password.css')
-
-@app.route('/static/src/rename_password.js')
-def src_rename_password():
-    return app.send_static_file('src/rename_password.js')
