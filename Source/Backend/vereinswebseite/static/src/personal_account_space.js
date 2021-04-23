@@ -27,8 +27,16 @@ function delete_account() {
 }
 function logout() {
     function myOnloadFunction(response) {
-        if (response.success = true) {
-            //window.location.href="/login"
+        if (response) {
+            if (response.success = true) {
+                window.location.href = "/login";
+            }
+            else {
+                alert("Logout fehlgeschlagen! Bitte versuchen Sie es erneut!");
+            }
+        }
+        else {
+            alert("Server fehler!");
         }
     }
     var jsonObj = {};
