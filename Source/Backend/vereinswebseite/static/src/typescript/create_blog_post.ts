@@ -34,3 +34,26 @@ function swapShowingPreview() {
         isShowingPreview = false;
     }
 }
+
+function saveCreatedBlogPost() {
+    var title = document.getElementById("title") as HTMLInputElement;
+    var markdown = document.getElementById("markdown") as HTMLInputElement;
+    var jsonObj = {};
+    jsonObj["title"] = title.value;
+    jsonObj["content"] = markdown.value;
+
+    function myOnloadFunction(response) {
+        if(response == null)
+        {
+            alert("Kommunikation mit Server fehlgeschlagen!");
+            return;
+        }
+        else if (response.success) {
+            window.location.href = "/#"; //TODO: Link to the blog post overview of all post
+        }
+        else {
+            alert("Speichern fehlgeschlagen!");
+        }
+    }
+    frontendHelper.makeHttpRequest("POST", "/blog_posts", jsonObj, myOnloadFunction);
+}

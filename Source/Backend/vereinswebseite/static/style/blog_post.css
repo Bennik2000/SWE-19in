@@ -6,7 +6,7 @@ form {
     }
 
 #markdown {
-    height: 20vw;
+    height: 15vw;
 }
 
 #preview_div {
@@ -16,11 +16,12 @@ form {
 
 #markdown_preview { 
     overflow: auto;
-    height: 20vw;
+    height: 15vw;
     border:1px solid rgb(214, 213, 212);
     border-radius: 5px;
     padding: 10px;
     background-color: white;
+    resize: vertical;
 }
 
 label {
