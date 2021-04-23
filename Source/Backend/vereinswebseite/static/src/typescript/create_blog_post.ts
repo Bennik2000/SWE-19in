@@ -38,22 +38,30 @@ function swapShowingPreview() {
 function saveCreatedBlogPost() {
     var title = document.getElementById("title") as HTMLInputElement;
     var markdown = document.getElementById("markdown") as HTMLInputElement;
-    var jsonObj = {};
-    jsonObj["title"] = title.value;
-    jsonObj["content"] = markdown.value;
+    
+    if (title.value.trim() && markdown.value.trim()) // Checking if the strings are containing only whitespaces
+    {
+        var jsonObj = {};
+        jsonObj["title"] = title.value;
+        jsonObj["content"] = markdown.value;
 
-    function myOnloadFunction(response) {
-        if(response == null)
-        {
-            alert("Kommunikation mit Server fehlgeschlagen!");
-            return;
+        function myOnloadFunction(response) {
+            if(response == null)
+            {
+                alert("Kommunikation mit Server fehlgeschlagen!");
+                return;
+            }
+            else if (response.success) {
+                window.location.href = "/#"; //TODO: Link to the blog post overview of all post
+            }
+            else {
+                alert("Speichern fehlgeschlagen!");
+            }
         }
-        else if (response.success) {
-            window.location.href = "/#"; //TODO: Link to the blog post overview of all post
-        }
-        else {
-            alert("Speichern fehlgeschlagen!");
-        }
+        frontendHelper.makeHttpRequest("POST", "/blog_posts", jsonObj, myOnloadFunction); 
     }
-    frontendHelper.makeHttpRequest("POST", "/blog_posts", jsonObj, myOnloadFunction);
+    else {
+        title.value = title.value.trim();
+        markdown.value = markdown.value.trim();
+    }
 }
