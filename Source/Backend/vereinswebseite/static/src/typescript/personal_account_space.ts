@@ -19,9 +19,12 @@ function bio_save() {
 function delete_account(){
     function myOnloadFunction(response){
         if (response.success!=true){
-            
+            window.location.href="/login"
         }
-        window.location.href="/"
+        else{
+        alert("Account löschen fehlgeschlagen! Bitte versuchen Sie es erneut!"); 
+        }
+        
     }
     let jsonObj={};
     frontendHelper.makeHttpRequest("DELETE", "/users/delete", jsonObj, myOnloadFunction);
@@ -31,7 +34,7 @@ function logout(){
         if (response.success=true){
             //window.location.href="/login"
             
-        }
+        }        
     }
     let jsonObj={};
     frontendHelper.makeHttpRequest("POST", "/users/logout", jsonObj, myOnloadFunction);
