@@ -125,3 +125,18 @@ def render_blog_post(post_id):
         author_name = author.name
 
     return render_template("blog_post.jinja2", post=html, title=post.title, author=author_name)
+
+
+@app.route('/blog_posts/render_preview', methods=['POST'])
+def render_blog_post_preview():
+    content = request.json.get("content")
+
+    if content is None:
+        return content_invalid
+
+    html = markdown.markdown(content)
+
+    return {
+        "success": True,
+        "html": html
+    }
