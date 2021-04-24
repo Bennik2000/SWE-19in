@@ -5,8 +5,11 @@ form {
     position: center;
     }
 
+
 #markdown {
     height: 15vw;
+    font-size: 1vw;
+    padding: 0.4vw;
 }
 
 #preview_div {
@@ -14,22 +17,52 @@ form {
     margin-top: 1.5%;
 }
 
+#title {
+    font-size: 1vw;
+    height: 2vw;
+    padding: 0.4vw;
+}
+
 #markdown_preview { 
     overflow: auto;
     height: 15vw;
     border:1px solid rgb(214, 213, 212);
     border-radius: 5px;
-    padding: 10px;
+    padding: 0.4vw;
+    font-size: 1vw;
     background-color: white;
     resize: vertical;
 }
 
-label {
-    font-size: 1.5vw;
+label {    
+    font-size: 1.5vw !important;
     font-weight: bold;
 }
 
 h1 {
     text-align: center;
-    padding-bottom: 3%;
+    padding-bottom: 2vw;
+    font-size: 2.6vw !important;
+}
+
+@media (max-width: 768px) 
+{
+   label {
+       font-size: 2.5vw !important; 
+   }
+   h1 {
+       font-size: 3.5vw !important;
+       padding-bottom: 1vw;
+   }
+   #markdown_preview, #markdown {
+    font-size: 2.5vw;
+    padding: 1vw;
+    height: 18vw;
+  }
+  #title {
+    font-size: 2vw;
+    height: 4vw;
+    padding: 1vw;
+  }
+  
 }
