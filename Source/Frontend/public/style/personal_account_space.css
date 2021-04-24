@@ -1,0 +1,57 @@
+*{
+  margin:0px;
+  padding: 0px;
+}
+#page{
+position: fixed;
+  background-color: lightblue;
+  height: 100%;
+  width: 100%;
+}
+html{
+  height: 100%;
+}
+body{
+  height: 100%;
+}
+
+.container{
+  padding: 0px;
+
+}
+#user_icon {
+  height: 50px;
+}
+
+.navbar {
+  height: 10%;
+}
+
+#account_space {
+  border: 5px ;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  margin-top: 100px;
+  padding: 10px;
+  background-color: white;
+  padding-bottom: 5%;
+  height: auto;
+  
+}
+#head_description{
+  max-height: 150px;
+}
+#left_body{
+  margin-bottom: 20px;
+}
+#profilbild{
+  max-height: 150px;
+  margin-top: 40px;
+}
+#current_email{
+  resize: none;
+}
+#new_password{
+  resize: none;
+}
+
