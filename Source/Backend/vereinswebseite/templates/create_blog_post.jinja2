@@ -24,15 +24,18 @@
             <textarea class="form-control" required name="markdown" id="markdown"></textarea>
         </div>
         <div id="preview_div">
-            <button class="btn btn-primary" id="hidePreview_button" type="button" onclick="hideShowingPreview()">Vorschau ausblenden</button>
-            <button class="btn btn-primary" id="updatePreview_button" type="button" style="display: none" onclick="updatePreview()">Vorschau aktualisieren</button>
+            <div  id="preview-button-group">
+                <button class="btn btn-primary btn-sm" id="hidePreview_button" type="button" onclick="swapShowingPreview()">Vorschau ausblenden</button>
+                <button class="btn btn-primary btn-sm" id="updatePreview_button" type="button" style="display: none" onclick="updatePreview()">Vorschau aktualisieren</button>
+            </div>
+        <br>
             <label for="preview">Vorschau</label>
             <div class="form-group" id="markdown_preview"></div>
         </div>
-        <div id="bottomButtons">
-            <button class="btn btn-primary" id="cancel" type="submit" onclick="cancelCreateBlogPost()" href="/" class="btn btn-danger">Abbrechen</button>
-            <button class="btn btn-primary" id="save" type="submit" onclick="saveCreatedBlogPost()">Speichern</button>
-            <button class="btn btn-primary" id="swapShowingPreview_button" type="button" onclick="swapShowingPreview()">Vorschau anzeigen</button>
+        <div id="bottom-button-group">
+            <button class="btn btn-primary btn-sm" id="swapShowingPreview_button" type="button" onclick="swapShowingPreview()">Vorschau anzeigen</button>
+            <button class="btn btn-success btn-sm" id="save" type="submit" onclick="saveCreatedBlogPost()">Speichern</button>
+            <button class="btn btn-danger btn-sm" id="cancel" type="button" onclick="cancelCreateBlogPost()">Abbrechen</button>
         </div>
     </form>
 </body>

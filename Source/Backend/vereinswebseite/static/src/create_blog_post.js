@@ -4,16 +4,17 @@ function swapShowingPreview() {
     var markdown = document.getElementById("markdown");
     if (isShowingPreview) {
         document.getElementById("markdown_preview").innerHTML = "";
-        document.getElementById("swapShowingPreview_button").innerHTML = "Vorschau anzeigen";
         document.getElementById("updatePreview_button").style.display = "none";
-        document.getElementById("swapShowingPreview_button").style.display = "block";
         document.getElementById("preview_div").style.display = "none";
+        document.getElementById("hidePreview_button").style.display = "none";
+        document.getElementById("swapShowingPreview_button").style.display = "block";
         isShowingPreview = false;
         return;
     }
-    else if (markdown.value != "") {
+    else if (markdown.value.trim()) { // Check if the markdown is only containing whitespaces
         document.getElementById("swapShowingPreview_button").style.display = "none";
         document.getElementById("hidePreview_button").style.display = "block";
+        document.getElementById("updatePreview_button").style.display = "block";
     }
     var markdown = document.getElementById("markdown");
     var jsonObj = {};
@@ -60,15 +61,6 @@ function updatePreview() {
         }
     }
     frontendHelper.makeHttpRequest("POST", "/blog_posts/render_preview", jsonObj, myOnloadFunction);
-}
-function hideShowingPreview() {
-    document.getElementById("hidePreview_button").style.display = "none";
-    document.getElementById("swapShowingPreview_button").style.display = "block";
-    document.getElementById("markdown_preview").innerHTML = "";
-    document.getElementById("updatePreview_button").style.display = "none";
-    document.getElementById("swapShowingPreview_button").style.display = "block";
-    document.getElementById("preview_div").style.display = "none";
-    isShowingPreview = false;
 }
 function saveCreatedBlogPost() {
     var title = document.getElementById("title");
