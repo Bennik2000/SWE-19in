@@ -55,3 +55,12 @@ def style_login():
 @app.route('/static/src/login.js')
 def src_login():
     return app.send_static_file('src/login.js')
+
+@app.route('/static/style/blog_overview.css')
+def style_blog_overview():
+    return app.send_static_file('style/blog_overview.css')
+
+@app.route('/static/src/blog_overview.js')
+def src_blog_overview():
+    return app.send_static_file('src/blog_overview.js')
+

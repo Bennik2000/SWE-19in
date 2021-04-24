@@ -53,3 +53,6 @@ def unauthorized_handler(e):
 def render_reset_password():
     return render_template('reset_password.jinja2')
 
+@app.route('/blog_overview')
+def render_blog_overview():
+    return render_template('blog_overview.jinja2')
