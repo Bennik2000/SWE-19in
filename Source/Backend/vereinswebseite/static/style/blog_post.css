@@ -4,25 +4,25 @@ form {
     width: 80%;
     position: center;
     }
-
-
+ 
+ 
 #markdown {
     height: 15vw;
     font-size: 1vw;
     padding: 0.4vw;
 }
-
+ 
 #preview_div {
     display: none;
     margin-top: 1.5%;
 }
-
+ 
 #title {
     font-size: 1vw;
     height: 2vw;
     padding: 0.4vw;
 }
-
+ 
 #markdown_preview { 
     overflow: auto;
     height: 15vw;
@@ -33,18 +33,72 @@ form {
     background-color: white;
     resize: vertical;
 }
+ 
+#cancel{
+    font-size: 1vw;
+    padding: 0.5% 2% 0.5% 2%;
+    margin-top: 2%;
+    background-color: #dc3545;
+    border-color: #dc3545;
+  }
+
+#save {
+    font-size: 1vw;
+    margin-top: 2%;
+    margin-left: 1%;
+    padding: 0.5% 2% 0.5% 2%;
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+#swapShowingPreview_button {
+    font-size: 1vw;
+    margin-top: 2%;
+    margin-left: 1%;
+    padding: 0.5% 2% 0.5% 2%;
+}
+
+#updatePreview_button {
+    font-size: 1vw;
+    margin-top: 2%;
+    margin-left: 2%;
+    margin-right: 1%;
+    padding: 0.5% 2% 0.5% 2%;
+    width: 15.5vw;
+    background-color: goldenrod;
+    border-color: goldenrod;
+}
+
+#hidePreview_button {
+    font-size: 1vw;
+    margin-top: 2%;
+    margin-left: 2%;
+    padding: 0.5% 2% 0.5% 2%;
+    width: 15.5vw;
+}
 
 label {    
     font-size: 1.5vw !important;
     font-weight: bold;
 }
-
+ 
 h1 {
     text-align: center;
     padding-bottom: 2vw;
     font-size: 2.6vw !important;
 }
 
+input[type=submit], [type=button] {
+    background-color: #56baed;
+    border: none;
+    color: white;
+    padding: 2% 40%;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 110%;
+  }
+ 
 @media (max-width: 768px) 
 {
    label {
@@ -64,5 +118,5 @@ h1 {
     height: 4vw;
     padding: 1vw;
   }
-  
+ 
 }

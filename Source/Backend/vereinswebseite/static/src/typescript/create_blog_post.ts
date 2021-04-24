@@ -2,13 +2,18 @@ let frontendHelper = new FrontendHelper()
 var isShowingPreview: Boolean = false;
 
 function swapShowingPreview() {
+    var markdown = document.getElementById("markdown") as HTMLInputElement;
     if(isShowingPreview) {
         document.getElementById("markdown_preview").innerHTML = "";
         document.getElementById("swapShowingPreview_button").innerHTML = "Vorschau anzeigen";
-        document.getElementById("updatePreview_button").style.display = "none";        
+        document.getElementById("updatePreview_button").style.display = "none"; 
+        document.getElementById("swapShowingPreview_button").style.display = "block";       
         document.getElementById("preview_div").style.display = "none";
         isShowingPreview = false;
         return;
+    } else if(markdown.value != "") {
+        document.getElementById("swapShowingPreview_button").style.display = "none";
+        document.getElementById("hidePreview_button").style.display = "block";
     }
     
     var markdown = document.getElementById("markdown") as HTMLInputElement;
@@ -28,7 +33,6 @@ function swapShowingPreview() {
         else if (response.success)
         {
             document.getElementById("markdown_preview").innerHTML = response.html;
-            document.getElementById("swapShowingPreview_button").innerHTML = "Vorschau ausblenden";
             document.getElementById("updatePreview_button").style.display = "block";
             document.getElementById("preview_div").style.display = "block";
             isShowingPreview = true;
@@ -67,6 +71,16 @@ function updatePreview() {
 
 }
 
+function hideShowingPreview {
+    document.getElementById("hidePreview_button").style.display = "none";  
+    document.getElementById("swapShowingPreview_button").style.display = "block"; 
+    document.getElementById("markdown_preview").innerHTML = "";
+    document.getElementById("updatePreview_button").style.display = "none"; 
+    document.getElementById("swapShowingPreview_button").style.display = "block";       
+    document.getElementById("preview_div").style.display = "none";
+    isShowingPreview = false;    
+}
+
 function saveCreatedBlogPost() {
     var title = document.getElementById("title") as HTMLInputElement;
     var markdown = document.getElementById("markdown") as HTMLInputElement;
@@ -95,5 +109,13 @@ function saveCreatedBlogPost() {
     else {
         title.value = title.value.trim();
         markdown.value = markdown.value.trim();
+    }
+}
+
+function cancelCreateBlogPost() {
+    let wantsToCancel = confirm("Der neue Blog Post wird nicht gespeichert. \nTrotzdem fortfahren?");
+    if (wantsToCancel)
+    {
+        window.history.back();
     }
 }

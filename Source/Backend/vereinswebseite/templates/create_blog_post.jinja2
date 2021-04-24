@@ -23,14 +23,17 @@
             <label for="markdown">Markdown <a href="https://www.markdownguide.org/basic-syntax/"><span>&#9432;</span></a></label>
             <textarea class="form-control" required name="markdown" id="markdown"></textarea>
         </div>
-        <button id="swapShowingPreview_button" class="btn btn-primary" type="button" onclick="swapShowingPreview()">Vorschau anzeigen</button>
-        <button id="updatePreview_button" class="btn btn-success" type="button" style="display: none" onclick="updatePreview()">Vorschau aktualisieren</button>
         <div id="preview_div">
+            <button class="btn btn-primary" id="hidePreview_button" type="button" onclick="hideShowingPreview()">Vorschau ausblenden</button>
+            <button class="btn btn-primary" id="updatePreview_button" type="button" style="display: none" onclick="updatePreview()">Vorschau aktualisieren</button>
             <label for="preview">Vorschau</label>
             <div class="form-group" id="markdown_preview"></div>
         </div>
-        <a href="/" class="btn btn-danger">Abbrechen</a>
-        <button class="btn btn-primary" type="submit" onclick="saveCreatedBlogPost()">Speichern</button>
+        <div id="bottomButtons">
+            <button class="btn btn-primary" id="cancel" type="submit" onclick="cancelCreateBlogPost()" href="/" class="btn btn-danger">Abbrechen</button>
+            <button class="btn btn-primary" id="save" type="submit" onclick="saveCreatedBlogPost()">Speichern</button>
+            <button class="btn btn-primary" id="swapShowingPreview_button" type="button" onclick="swapShowingPreview()">Vorschau anzeigen</button>
+        </div>
     </form>
 </body>
 </html>

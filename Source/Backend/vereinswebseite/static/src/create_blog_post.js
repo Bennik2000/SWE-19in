@@ -1,13 +1,19 @@
 var frontendHelper = new FrontendHelper();
 var isShowingPreview = false;
 function swapShowingPreview() {
+    var markdown = document.getElementById("markdown");
     if (isShowingPreview) {
         document.getElementById("markdown_preview").innerHTML = "";
         document.getElementById("swapShowingPreview_button").innerHTML = "Vorschau anzeigen";
         document.getElementById("updatePreview_button").style.display = "none";
+        document.getElementById("swapShowingPreview_button").style.display = "block";
         document.getElementById("preview_div").style.display = "none";
         isShowingPreview = false;
         return;
+    }
+    else if (markdown.value != "") {
+        document.getElementById("swapShowingPreview_button").style.display = "none";
+        document.getElementById("hidePreview_button").style.display = "block";
     }
     var markdown = document.getElementById("markdown");
     var jsonObj = {};
@@ -23,7 +29,6 @@ function swapShowingPreview() {
         }
         else if (response.success) {
             document.getElementById("markdown_preview").innerHTML = response.html;
-            document.getElementById("swapShowingPreview_button").innerHTML = "Vorschau ausblenden";
             document.getElementById("updatePreview_button").style.display = "block";
             document.getElementById("preview_div").style.display = "block";
             isShowingPreview = true;
@@ -56,6 +61,15 @@ function updatePreview() {
     }
     frontendHelper.makeHttpRequest("POST", "/blog_posts/render_preview", jsonObj, myOnloadFunction);
 }
+function hideShowingPreview() {
+    document.getElementById("hidePreview_button").style.display = "none";
+    document.getElementById("swapShowingPreview_button").style.display = "block";
+    document.getElementById("markdown_preview").innerHTML = "";
+    document.getElementById("updatePreview_button").style.display = "none";
+    document.getElementById("swapShowingPreview_button").style.display = "block";
+    document.getElementById("preview_div").style.display = "none";
+    isShowingPreview = false;
+}
 function saveCreatedBlogPost() {
     var title = document.getElementById("title");
     var markdown = document.getElementById("markdown");
@@ -81,5 +95,11 @@ function saveCreatedBlogPost() {
     else {
         title.value = title.value.trim();
         markdown.value = markdown.value.trim();
+    }
+}
+function cancelCreateBlogPost() {
+    var wantsToCancel = confirm("Der neue Blog Post wird nicht gespeichert. \nTrotzdem fortfahren?");
+    if (wantsToCancel) {
+        window.history.back();
     }
 }
