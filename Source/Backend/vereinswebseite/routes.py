@@ -62,4 +62,4 @@ def render_create_blog_post():
 
 @app.route('/edit_blog_post')
 def render_edit_blog_post():
-    return render_template('edit_blog_post.jinja2')
+    return render_template('edit_blog_post.jinja2', title="Title", content="Content", id="123")

@@ -1,11 +1,5 @@
 var frontendHelper = new FrontendHelper();
 var isShowingPreview = false;
-function loadDesiredBlogPost() {
-    var title = document.getElementById("title");
-    var content = document.getElementById("markdown");
-    title.value = document.getElementById("titleOfDesiredBlogPost").innerHTML;
-    content.value = document.getElementById("contentOfDesiredBlogPost").innerHTML;
-}
 function swapShowingPreview() {
     var markdown = document.getElementById("markdown");
     if (isShowingPreview) {
@@ -93,7 +87,7 @@ function saveEditedBlogPost() {
     }
 }
 function cancelEditBlogPost() {
-    var wantsToCancel = confirm("Der neue Blog Post wird nicht gespeichert. \nTrotzdem fortfahren?");
+    var wantsToCancel = confirm("Die Änderungen werden nicht gespeichert. \nTrotzdem fortfahren?");
     if (wantsToCancel) {
         window.history.back();
     }

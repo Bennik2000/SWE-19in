@@ -11,17 +11,17 @@
     <title>Blog Post bearbeiten</title>
 </head>
 
-<body onload="loadDesiredBlogPost()">
+<body>
     <form action="#" onsubmit="return false" class ='card p-3 bg-light'> 
     
         <h1>Blog Post bearbeiten</h1>
         <div class="form-group">
             <label for="title">Titel</label>
-            <input class="form-control" required type="text" name="title" id="title">
+            <input class="form-control" required type="text" name="title" id="title" value="{{ title }}">
         </div>
         <div class="form-group" id="markdown_div">
             <label for="markdown">Markdown <a href="https://www.markdownguide.org/basic-syntax/"><span>&#9432;</span></a></label>
-            <textarea class="form-control" required name="markdown" id="markdown"></textarea>
+            <textarea class="form-control" required name="markdown" id="markdown">{{ content }}</textarea>
         </div>
         <div id="preview_div">
             <div  id="preview-button-group">
@@ -38,11 +38,7 @@
             <button class="btn btn-danger btn-sm" id="cancel" type="button" onclick="cancelEditBlogPost()">Abbrechen</button>
         </div>
     </form>
-<div style="display: none;">
-    <div id="id">{{ id }}</div>
-    <div id="titleOfDesiredBlogPost">{{ title }}</div>
-    <div id="contentOfDesiredBlogPost">{{ content }}</div>
-</div>
+<div style="display: none;" id="id">{{ id }}</div>
 </body>
 </html>
 

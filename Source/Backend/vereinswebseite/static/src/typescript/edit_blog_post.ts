@@ -1,14 +1,6 @@
 let frontendHelper = new FrontendHelper()
 var isShowingPreview: Boolean = false;
 
-function loadDesiredBlogPost() {
-    var title = document.getElementById("title") as HTMLInputElement;
-    var content = document.getElementById("markdown") as HTMLInputElement;
-
-    title.value = document.getElementById("titleOfDesiredBlogPost").innerHTML;
-    content.value = document.getElementById("contentOfDesiredBlogPost").innerHTML;
-}
-
 function swapShowingPreview() {
     var markdown = document.getElementById("markdown") as HTMLInputElement;
     if(isShowingPreview) {
@@ -110,7 +102,7 @@ function saveEditedBlogPost() {
 }
 
 function cancelEditBlogPost() {
-    let wantsToCancel = confirm("Der neue Blog Post wird nicht gespeichert. \nTrotzdem fortfahren?");
+    let wantsToCancel = confirm("Die Änderungen werden nicht gespeichert. \nTrotzdem fortfahren?");
     if (wantsToCancel)
     {
         window.history.back();
