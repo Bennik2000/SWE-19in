@@ -12,6 +12,10 @@ form {
     padding: 0.4vw;
 }
  
+#markdown_div {
+    margin-bottom: 1vw;
+}
+
 #preview_div {
     display: none;
 }

@@ -48,7 +48,7 @@ def src_login():
 
 @app.route('/static/style/blog_post.css')
 def style_blog_post():
-    return app.send_static_file('style/blog_post.css')
+    return app.send_static_file('style/create_and_edit_blog_post.css')
 
 @app.route('/static/src/create_blog_post.js')
 def src_create_blog_post():

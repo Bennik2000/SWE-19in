@@ -11,18 +11,12 @@ function swapShowingPreview() {
         isShowingPreview = false;
         return;
     }
-    else if (markdown.value.trim()) { // Check if the markdown is only containing whitespaces
-        document.getElementById("swapShowingPreview_button").style.display = "none";
-        document.getElementById("hidePreview_button").style.display = "block";
-        document.getElementById("updatePreview_button").style.display = "block";
-    }
-    var markdown = document.getElementById("markdown");
-    var jsonObj = {};
-    jsonObj["content"] = markdown.value;
     if (!markdown.value.trim()) { // Check if the markdown is only containing whitespaces
         alert("Um eine Vorschau anzeigen zu lassen bitte Markdown angeben!");
         return;
     }
+    var jsonObj = {};
+    jsonObj["content"] = markdown.value;
     function myOnloadFunction(response) {
         if (response == null) {
             alert("Kommunikation mit Server fehlgeschlagen!");
@@ -32,6 +26,8 @@ function swapShowingPreview() {
             document.getElementById("markdown_preview").innerHTML = response.html;
             document.getElementById("updatePreview_button").style.display = "block";
             document.getElementById("preview_div").style.display = "block";
+            document.getElementById("swapShowingPreview_button").style.display = "none";
+            document.getElementById("hidePreview_button").style.display = "block";
             isShowingPreview = true;
         }
         else {
