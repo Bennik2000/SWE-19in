@@ -109,6 +109,25 @@ def delete_blog_post():
     return {"success": True}
 
 
+@app.route('/blog_posts/create')
+def render_create_blog_post():
+    return render_template('create_blog_post.jinja2')
+
+
+@app.route('/blog_posts/edit/<post_id>')
+@login_required
+def render_edit_blog_post(post_id):
+    post = BlogPost.query.get(post_id)
+
+    if post is None:
+        abort(HTTPStatus.NOT_FOUND)
+
+    return render_template('edit_blog_post.jinja2',
+                           title=post.title,
+                           content=post.content,
+                           id=post.id)
+
+
 @app.route('/blog_posts/render/<post_id>', methods=['GET'])
 def render_blog_post(post_id):
     post = BlogPost.query.get(post_id)

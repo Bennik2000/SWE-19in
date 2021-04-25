@@ -53,13 +53,3 @@ def unauthorized_handler(e):
 @app.route('/reset_password')
 def render_reset_password():
     return render_template('reset_password.jinja2')
-
-
-@app.route('/create_blog_post')
-def render_create_blog_post():
-    return render_template('create_blog_post.jinja2')
-
-
-@app.route('/edit_blog_post')
-def render_edit_blog_post():
-    return render_template('edit_blog_post.jinja2', title="Title", content="Content", id="123")
