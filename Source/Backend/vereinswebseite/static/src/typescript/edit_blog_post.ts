@@ -90,7 +90,7 @@ function saveEditedBlogPost() {
                 window.location.href = "/#"; //TODO: Link to the blog post overview of all post
             }
             else {
-                alert("Speichern fehlgeschlagen!");
+                alert("Speichern fehlgeschlagen!" + "\n➔ " + response.errors[0].title + ".");
             }
         }
         frontendHelper.makeHttpRequest("PUT", "/blog_posts/update", jsonObj, myOnloadFunction); 
