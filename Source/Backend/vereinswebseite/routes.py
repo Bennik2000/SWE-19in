@@ -2,9 +2,8 @@ import json
 from http import HTTPStatus
 
 from vereinswebseite import app
-from flask import render_template
-
 from vereinswebseite.errors import generate_error
+from flask import render_template
 
 too_many_requests = generate_error("Too many requests", HTTPStatus.TOO_MANY_REQUESTS)
 unauthorized = generate_error("Unauthorized", HTTPStatus.UNAUTHORIZED)
@@ -23,6 +22,7 @@ def ping_handler():
 @app.route('/create_account')
 def create_account():
     return render_template('create_account.jinja2')
+
 
 @app.route('/login')
 def render_login():
