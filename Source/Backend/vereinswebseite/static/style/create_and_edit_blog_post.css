@@ -97,10 +97,29 @@ label {
     font-weight: bold;
 }
  
-h1 {
+#page_h1 {
     text-align: center;
     padding-bottom: 2vw;
     font-size: 2.6vw !important;
+}
+
+h1 {
+    font-size: 2.6vw !important;
+}
+h2 {
+    font-size: 2.3vw !important;
+}
+h3 {
+    font-size: 2vw !important;
+}
+h4 {
+    font-size: 1.7vw !important;
+}
+h5 {
+    font-size: 1.4vw !important;
+}
+h6 {
+    font-size: 1.1vw !important;
 }
 
  
@@ -113,12 +132,12 @@ h1 {
        height: 3vw !important;
        font-size: 1.2vw !important;
    }
-   h1 {
+   #page_h1 {
        font-size: 3.5vw !important;
        padding-bottom: 1vw;
    }
    #markdown_preview, #markdown {
-    font-size: 2.5vw;
+    font-size: 2.5vw !important;
     padding: 1vw;
     height: 18vw;
   }
@@ -127,5 +146,23 @@ h1 {
     height: 4vw;
     padding: 1vw;
   }
- 
+
+  h1 {
+    font-size: 3.5vw !important;
+  }
+  h2 {
+    font-size: 3.2vw !important;
+  }
+  h3 {
+    font-size: 2.9vw !important;
+  }
+  h4 {
+    font-size: 2.6vw !important;
+  }
+  h5 {
+    font-size: 2.3vw !important;
+  }
+  h6 {
+    font-size: 2vw !important;
+  }
 }
