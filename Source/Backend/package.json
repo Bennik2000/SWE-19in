@@ -1,6 +1,5 @@
 {
   "scripts": {
     "test": "jest"
-  },
-  "dependencies": {}
+  }
 }
