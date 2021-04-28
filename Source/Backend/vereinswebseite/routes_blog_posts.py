@@ -1,11 +1,12 @@
 from http import HTTPStatus
 
+import markdown
 from flask_login import login_required, current_user
 
 from vereinswebseite import app, db
 from vereinswebseite.errors import generate_error
 from vereinswebseite.models import BlogPost, BlogPostSchema, User
-from flask import request, jsonify
+from flask import request, jsonify, abort, render_template
 
 OneBlogPost = BlogPostSchema()
 ManyBlogPost = BlogPostSchema(many=True)
@@ -106,3 +107,36 @@ def delete_blog_post():
     db.session.commit()
 
     return {"success": True}
+
+
+@app.route('/blog_posts/render/<post_id>', methods=['GET'])
+def render_blog_post(post_id):
+    post = BlogPost.query.get(post_id)
+
+    if post is None:
+        abort(HTTPStatus.NOT_FOUND)
+
+    html = markdown.markdown(post.content)
+
+    author = User.query.get(post.author_id)
+    author_name = ""
+
+    if author is not None:
+        author_name = author.name
+
+    return render_template("blog_post.jinja2", post=html, title=post.title, author=author_name)
+
+
+@app.route('/blog_posts/render_preview', methods=['POST'])
+def render_blog_post_preview():
+    content = request.json.get("content")
+
+    if content is None:
+        return content_invalid
+
+    html = markdown.markdown(content)
+
+    return {
+        "success": True,
+        "html": html
+    }

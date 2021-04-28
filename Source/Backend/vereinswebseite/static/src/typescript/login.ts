@@ -22,11 +22,11 @@ function login() {
                 return;
             }
             else if(response.success) { // The response accesses "success:" of the responded JSON Object
-                window.location.href = "/#";
+                window.location.href = "/account";
             }
             else 
             {
-                alert("Benutzername oder Passwort falsch.");
+                alert("Login fehlgeschlagen!" + "\n➔ " + response.errors[0].title + ".");
             }
         }
         frontendHelper.makeHttpRequest("POST", "/users/login", jsonObj, myOnloadFunction); 

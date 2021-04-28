@@ -29,6 +29,11 @@ def render_login():
     return render_template('login.jinja2')
 
 
+@app.route('/account')
+def personal_account_space():
+    return render_template('personal_account_space.jinja2')
+
+  
 @app.errorhandler(HTTPStatus.TOO_MANY_REQUESTS)
 def rate_limit_handler(e):
     response = e.get_response()
@@ -43,8 +48,8 @@ def unauthorized_handler(e):
     response.data = json.dumps(unauthorized[0])
     response.content_type = "application/json"
     return response
-    
-    
+
 @app.route('/reset_password')
 def render_reset_password():
     return render_template('reset_password.jinja2')
+
