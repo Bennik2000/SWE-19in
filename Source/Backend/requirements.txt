@@ -15,3 +15,4 @@ marshmallow-sqlalchemy==0.24.2
 six==1.15.0
 SQLAlchemy==1.4.2
 Werkzeug==1.0.1
+markdown==3.3.4
