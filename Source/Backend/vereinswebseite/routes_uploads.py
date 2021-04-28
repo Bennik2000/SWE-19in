@@ -17,19 +17,19 @@ no_image_given = generate_error("Keine Bilddatei im Request vorhanden", HTTPStat
 @app.route('/upload_image', methods=['POST'])
 @login_required
 def upload_image():
-    if 'image' in request.files:
-        image = request.files['image']
-        file_extension = os.path.splitext(image.filename)[1]
-        random_filename = str(uuid.uuid4())[:8] + file_extension
-        image.filename = random_filename
+    if 'image' not in request.files:
+        return no_image_given
 
-        try:
-            filename = images.save(image)
-            return {
-                "success": True,
-                "filename": filename
-            }, HTTPStatus.CREATED
-        except flask_uploads.UploadNotAllowed:
-            return wrong_file_type
+    image = request.files['image']
+    file_extension = os.path.splitext(image.filename)[1]
+    random_filename = str(uuid.uuid4())[:8] + file_extension
+    image.filename = random_filename
 
-    return no_image_given
+    try:
+        filename = images.save(image)
+        return {
+            "success": True,
+            "filename": filename
+        }, HTTPStatus.CREATED
+    except flask_uploads.UploadNotAllowed:
+        return wrong_file_type
