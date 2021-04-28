@@ -22,17 +22,17 @@ class BlogPostRoutesTest(unittest.TestCase):
         db.session.add(blog_post)
         db.session.commit()
 
-        response = self.app.get("/blog_posts/edit/" + str(blog_post.id))
+        response = self.app.get("/blog_posts/edit?post_id=" + str(blog_post.id))
 
         self.assertEqual(response.status_code, HTTPStatus.OK)
 
     def test_given_blog_posts_does_not_exist_when_edit_then_error(self):
         create_and_login_test_user(self.app)
-        response = self.app.get("/blog_posts/edit/1")
+        response = self.app.get("/blog_posts/edit?post_id=1")
 
         self.assertEqual(response.status_code, HTTPStatus.NOT_FOUND)
 
     def test_given_not_logged_in_when_edit_then_error(self):
-        response = self.app.get("/blog_posts/edit/1")
+        response = self.app.get("/blog_posts/edit?post_id=1")
 
         self.assertEqual(response.status_code, HTTPStatus.UNAUTHORIZED)

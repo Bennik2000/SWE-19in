@@ -114,9 +114,10 @@ def render_create_blog_post():
     return render_template('create_blog_post.jinja2')
 
 
-@app.route('/blog_posts/edit/<post_id>')
+@app.route('/blog_posts/edit', methods=['GET'])
 @login_required
-def render_edit_blog_post(post_id):
+def render_edit_blog_post():
+    post_id = get_int_from_request("post_id")
     post = BlogPost.query.get(post_id)
 
     if post is None:
@@ -128,8 +129,9 @@ def render_edit_blog_post(post_id):
                            id=post.id)
 
 
-@app.route('/blog_posts/render/<post_id>', methods=['GET'])
-def render_blog_post(post_id):
+@app.route('/blog_posts/render', methods=['GET'])
+def render_blog_post():
+    post_id = get_int_from_request("post_id")
     post = BlogPost.query.get(post_id)
 
     if post is None:
@@ -144,6 +146,17 @@ def render_blog_post(post_id):
         author_name = author.name
 
     return render_template("blog_post.jinja2", post=html, title=post.title, author=author_name)
+
+
+def get_int_from_request(key):
+    value_str = request.args.get(key, default=None)
+    if value_str is None:
+        return None
+
+    try:
+        return int(value_str)
+    except:
+        return None
 
 
 @app.route('/blog_posts/render_preview', methods=['POST'])
