@@ -24,11 +24,15 @@ html, body,#background{
 #post{
     background-color: white;
     overflow:hidden;
-    
+    box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    padding-top: 5px;
 }
 #post_meta{
     font-weight: 200;
-    color:grey;
+    color:rgb(169, 169, 169);
+}
+#post_content{
+    color: gray;
 }
 #add_post:hover,#post_more:hover{
     background-color: lightgray;
@@ -37,4 +41,6 @@ html, body,#background{
 #post_more{
     color: blue;
     text-align: left;
+    width: min-content;
+    border-radius: 0;
 }

@@ -4,19 +4,19 @@ function get_all_blogs(){
 
     let post_list = document.getElementById("post_list");
     function myOnloadFunction(response){
+        
         if(response){
 
             if(response.success==true){
                 
                 response.blog_posts.forEach(post => {
-                
+                    
                     let col = document.createElement("div");
                     col.classList.add("col-md-12");
                     col.classList.add("mb-3");
 
                     let container = document.createElement("div");
                     container.classList.add("container");
-                    container.classList.add("rounded");
                     container.classList.add("position-relative");
                     container.setAttribute("id","post");
 
@@ -47,8 +47,8 @@ function get_all_blogs(){
                         post_content.innerHTML=post.content;
                     }
                     
-                    let post_more = document.createElement("span");
-                    post_more.classList.add("col-md-12");
+                    let post_more = document.createElement("div");
+                    post_more.classList.add("col-md-1");
                     post_more.classList.add("btn");
                     post_more.setAttribute("id","post_more");
                     post_more.setAttribute("href","#")

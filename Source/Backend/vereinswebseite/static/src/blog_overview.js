@@ -10,7 +10,6 @@ function get_all_blogs() {
                     col.classList.add("mb-3");
                     var container = document.createElement("div");
                     container.classList.add("container");
-                    container.classList.add("rounded");
                     container.classList.add("position-relative");
                     container.setAttribute("id", "post");
                     var row = document.createElement("div");
@@ -35,8 +34,8 @@ function get_all_blogs() {
                     else {
                         post_content.innerHTML = post.content;
                     }
-                    var post_more = document.createElement("span");
-                    post_more.classList.add("col-md-12");
+                    var post_more = document.createElement("div");
+                    post_more.classList.add("col-md-1");
                     post_more.classList.add("btn");
                     post_more.setAttribute("id", "post_more");
                     post_more.setAttribute("href", "#");
