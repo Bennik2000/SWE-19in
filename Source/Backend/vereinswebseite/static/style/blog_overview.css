@@ -11,6 +11,10 @@ html, body,#background{
     height: auto;
     width: 100%;
 }
+::-webkit-scrollbar{
+    display: none;
+    width: 0;
+}
 #background{
     background-color: #f3f3f3;
 
@@ -26,6 +30,10 @@ html, body,#background{
     overflow:hidden;
     box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     padding-top: 5px;
+}
+#post hr{
+    width:100%;
+    margin: 0;
 }
 #post_meta{
     font-weight: 200;
