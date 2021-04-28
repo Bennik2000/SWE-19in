@@ -1,6 +1,7 @@
 import os
 import unittest
 import filecmp
+import pathlib
 
 import vereinswebseite
 import flask_uploads
@@ -11,10 +12,12 @@ from test.test_utils import setup_test_app, create_and_login_test_user
 
 
 class UploadsTest(unittest.TestCase):
-    # The root_path is Backend/test when a test is run. So we have to adjust it here.
-    UPLOADS_DIRECTORY = os.path.join(vereinswebseite.app.root_path, "..", "uploads")
-    TEST_FILE_PATH = "upload_test.jpeg"
-    TEST_TEXT_FILE_PATH = "upload_test.txt"
+    # pathlib.Path(__file__).parent.absolute() gives us the directory where the current script is located.
+    # We use this as a reference for relative file paths since vereinswebseite.app.root_path
+    # depends on how the unit tests are started
+    UPLOADS_DIRECTORY = os.path.join(pathlib.Path(__file__).parent.absolute(), "..", "uploads")
+    TEST_FILE_PATH = os.path.join(pathlib.Path(__file__).parent.absolute(), "upload_test.jpeg")
+    TEST_TEXT_FILE_PATH = os.path.join(pathlib.Path(__file__).parent.absolute(), "upload_test.txt")
 
     def setUp(self) -> None:
         vereinswebseite.app.config['UPLOADED_IMAGES_DEST'] = self.UPLOADS_DIRECTORY
