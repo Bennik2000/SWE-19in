@@ -13,8 +13,8 @@ from test.test_utils import setup_test_app, create_and_login_test_user
 class UploadsTest(unittest.TestCase):
     # The root_path is Backend/test when a test is run. So we have to adjust it here.
     UPLOADS_DIRECTORY = os.path.join(vereinswebseite.app.root_path, "..", "uploads")
-    TEST_FILE_PATH = "upload_test.jpeg"
-    TEST_TEXT_FILE_PATH = "upload_test.txt"
+    TEST_FILE_PATH = os.path.join(vereinswebseite.app.root_path, "upload_test.jpeg")
+    TEST_TEXT_FILE_PATH = os.path.join(vereinswebseite.app.root_path, "upload_test.txt")
 
     def setUp(self) -> None:
         vereinswebseite.app.config['UPLOADED_IMAGES_DEST'] = self.UPLOADS_DIRECTORY
