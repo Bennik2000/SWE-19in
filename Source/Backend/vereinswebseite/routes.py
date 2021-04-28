@@ -49,7 +49,7 @@ def unauthorized_handler(e):
     response.content_type = "application/json"
     return response
 
+
 @app.route('/reset_password')
 def render_reset_password():
     return render_template('reset_password.jinja2')
-
