@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="/static/style/create_and_edit_blog_post.css"  type="text/css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous" />    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>Neuen Blog Post erstellen</title>
+</head>
+
+<body>
+    <form action="#" onsubmit="return false" class ='card p-3 bg-light'> 
+    
+        <h1 id="page_h1">Neuer Blog Post</h1>
+        <div class="form-group">
+            <label for="title">Titel</label>
+            <input class="form-control" required type="text" name="title" id="title">
+        </div>
+        <div class="form-group" id="markdown_div">
+            <label for="markdown">Markdown <a href="https://www.markdownguide.org/basic-syntax/" target="_blank"><span>&#9432;</span></a></label>
+            <textarea class="form-control" required name="markdown" id="markdown"></textarea>
+        </div>
+        <div id="preview_div">
+            <div  id="preview-button-group">
+                <button class="btn btn-primary btn-sm" id="hidePreview_button" type="button" onclick="swapShowingPreview()">Vorschau ausblenden</button>
+                <button class="btn btn-primary btn-sm" id="updatePreview_button" type="button" style="display: none" onclick="updatePreview()">Vorschau aktualisieren</button>
+            </div>
+        <br>
+            <label for="preview">Vorschau</label>
+            <div class="form-group" id="markdown_preview"></div>
+        </div>
+        <div id="bottom-button-group">
+            <button class="btn btn-primary btn-sm" id="swapShowingPreview_button" type="button" onclick="swapShowingPreview()">Vorschau anzeigen</button>
+            <button class="btn btn-success btn-sm" id="save" type="submit" onclick="saveCreatedBlogPost()">Speichern</button>
+            <button class="btn btn-danger btn-sm" id="cancel" type="button" onclick="cancelCreateBlogPost()">Abbrechen</button>
+        </div>
+    </form>
+
+<script>var exports = {};</script>
+<script src= "/static/src/FrontendHelper.js"></script>
+<script src= "/static/src/create_blog_post.js"></script>
+</body>
+</html>
