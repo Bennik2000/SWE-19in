@@ -3,7 +3,7 @@ from http import HTTPStatus
 import markdown
 from flask_login import login_required, current_user
 
-from vereinswebseite import app, db
+from vereinswebseite import app, db, limiter
 from vereinswebseite.models import BlogPost, BlogPostSchema, User
 from flask import request, abort, render_template
 
@@ -152,6 +152,7 @@ def render_blog_post():
 
 
 @app.route('/api/blog_posts/render_preview', methods=['POST'])
+@limiter.limit("2 per second")
 def render_blog_post_preview():
     content = request.json.get("content")
 
