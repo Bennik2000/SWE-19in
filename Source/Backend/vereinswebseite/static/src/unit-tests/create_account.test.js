@@ -21,7 +21,7 @@ test('correct API call', () => {
 
   function requestCallback(request, route, json) {
       expect(request).toBe("POST");
-      expect(route).toBe("/users");
+      expect(route).toBe("/api/users");
       expect(json).toMatchObject({
           email: "test@test.com",
           name: "Test User",
@@ -43,7 +43,7 @@ test('correct API call', () => {
     expect(response.success).toBe(true)
   }
 
-  frontendHelper.makeHttpRequest("POST", "/users", jsonObj, myOnloadFunction);
+  frontendHelper.makeHttpRequest("POST", "/api/users", jsonObj, myOnloadFunction);
 
   expect(requestMade).toBe(true)
 });

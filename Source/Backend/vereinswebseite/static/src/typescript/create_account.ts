@@ -40,7 +40,7 @@ function createAccount() {
                 alert("Account anlegen fehlgeschlagen!" + "\n➔ " + response.errors[0].title + ".");
             }
         }
-        frontendHelper.makeHttpRequest("POST", "/users", jsonObj, myOnloadFunction); 
+        frontendHelper.makeHttpRequest("POST", "/api/users", jsonObj, myOnloadFunction); 
     }
 }
 

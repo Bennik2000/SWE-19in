@@ -23,7 +23,7 @@ function delete_account() {
         }
     }
     var jsonObj = {};
-    frontendHelper.makeHttpRequest("DELETE", "/users/delete", jsonObj, myOnloadFunction);
+    frontendHelper.makeHttpRequest("DELETE", "/api/users/delete", jsonObj, myOnloadFunction);
 }
 function logout() {
     function myOnloadFunction(response) {
@@ -40,7 +40,7 @@ function logout() {
         }
     }
     var jsonObj = {};
-    frontendHelper.makeHttpRequest("POST", "/users/logout", jsonObj, myOnloadFunction);
+    frontendHelper.makeHttpRequest("POST", "/api/users/logout", jsonObj, myOnloadFunction);
 }
 function email_save() {
     /*let newEmail=document.getElementById("current_email_new");
@@ -52,7 +52,7 @@ function email_save() {
     let jsonObj={};
     jsonObj["email"]=
 
-    frontendHelper.makeHttpRequest("GET", "/users/personal_info", jsonObj, myOnloadFunction);
+    frontendHelper.makeHttpRequest("GET", "/api/users/personal_info", jsonObj, myOnloadFunction);
 */ 
 }
 function password_save() {
@@ -77,7 +77,7 @@ function password_save() {
                 alert("Passwort ändern fehlgeschlagen!" + "\n➔ " + response.errors[0].title + ".");
             }
         }
-        frontendHelper.makeHttpRequest("POST", "/users/change_password", jsonObj, myOnloadFunction);
+        frontendHelper.makeHttpRequest("POST", "/api/users/change_password", jsonObj, myOnloadFunction);
     }
 }
 function reload(x) {
@@ -142,7 +142,7 @@ function get_access_token() {
         });
     }
     var jsonObj = {};
-    frontendHelper.makeHttpRequest("GET", "/accessToken", jsonObj, myOnloadFunction);
+    frontendHelper.makeHttpRequest("GET", "/api/accessToken", jsonObj, myOnloadFunction);
 }
 function get_users() {
     var userList = document.getElementById("user_list");
@@ -184,7 +184,7 @@ function get_users() {
         });
     }
     var jsonObj = {};
-    frontendHelper.makeHttpRequest("GET", "/users", jsonObj, myOnloadFunction);
+    frontendHelper.makeHttpRequest("GET", "/api/users", jsonObj, myOnloadFunction);
 }
 function delete_access_token(elem) {
     /*  function myOnloadFunction(response){
@@ -195,7 +195,7 @@ function delete_access_token(elem) {
   
       let jsonObj={};
       jsonObj["token"]=elem.parentElement.getElementsByTagName("a")[0].innerHTML
-      frontendHelper.makeHttpRequest("DELETE", "/accessToken/delete", jsonObj, myOnloadFunction);
+      frontendHelper.makeHttpRequest("DELETE", "/api/accessToken/delete", jsonObj, myOnloadFunction);
   */ 
 }
 function get_user_info() {
@@ -204,7 +204,7 @@ function get_user_info() {
         document.getElementById("current_email").innerHTML = response.email;
     }
     var jsonObj = {};
-    frontendHelper.makeHttpRequest("GET", "/users/personal_info", jsonObj, myOnloadFunction);
+    frontendHelper.makeHttpRequest("GET", "/api/users/personal_info", jsonObj, myOnloadFunction);
 }
 window.addEventListener('popstate', function (popstateEvent) {
     reload(Number(window.history.state));

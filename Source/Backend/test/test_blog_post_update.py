@@ -58,7 +58,7 @@ class BlogPostTest(unittest.TestCase):
         return blog_post.id
 
     def _send_update_request(self, blog_post_id) -> flask.Response:
-        response = self.app.put("/blog_posts/update", json={
+        response = self.app.put("/api/blog_posts/update", json={
             "id": blog_post_id,
             "title": self.NEW_POST_TITLE,
             "content": self.NEW_POST_CONTENT,
@@ -81,7 +81,7 @@ class BlogPostTest(unittest.TestCase):
         db.session.add(test_user2)
         db.session.commit()
 
-        self.app.post("/users/login", json={
+        self.app.post("/api/users/login", json={
             "email": email,
             "password": TestPassword
         })

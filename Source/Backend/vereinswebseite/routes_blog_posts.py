@@ -21,7 +21,7 @@ not_permitted_to_edit_or_delete = generate_error("Dieser Post gehört zu einem a
                                                  HTTPStatus.FORBIDDEN)
 
 
-@app.route('/blog_posts', methods=['POST'])
+@app.route('/api/blog_posts', methods=['POST'])
 @login_required
 def add_blog_post():
     title = request.json.get('title')
@@ -43,7 +43,7 @@ def add_blog_post():
     return success_response
 
 
-@app.route('/blog_posts/update', methods=['PUT'])
+@app.route('/api/blog_posts/update', methods=['PUT'])
 @login_required
 def update_blog_post():
     id_ = request.json.get('id')
@@ -73,7 +73,7 @@ def update_blog_post():
     return success_response
 
 
-@app.route('/blog_posts', methods=['GET'])
+@app.route('/api/blog_posts', methods=['GET'])
 def get_all_blog_posts():
     posts = BlogPost.query.all()
 
@@ -96,7 +96,7 @@ def get_all_blog_posts():
     })
 
 
-@app.route('/blog_posts/delete', methods=['DELETE'])
+@app.route('/api/blog_posts/delete', methods=['DELETE'])
 @login_required
 def delete_blog_post():
     post_id = request.json.get("id")
@@ -151,7 +151,7 @@ def render_blog_post():
     return render_template("blog_post.jinja2", post=html, title=post.title, author=author_name)
 
 
-@app.route('/blog_posts/render_preview', methods=['POST'])
+@app.route('/api/blog_posts/render_preview', methods=['POST'])
 def render_blog_post_preview():
     content = request.json.get("content")
 

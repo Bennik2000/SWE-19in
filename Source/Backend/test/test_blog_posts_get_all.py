@@ -14,7 +14,7 @@ class GetAllBlogPostsTest(unittest.TestCase):
     def test_given_not_logged_in_when_create_blog_post_then_created_in_db(self):
         db.session.add(BlogPost("Title", "Content", 1))
         db.session.add(BlogPost("Title1", "Content1", 1))
-        response = self.app.get("/blog_posts")
+        response = self.app.get("/api/blog_posts")
 
         self.assertTrue(response.json["success"])
         self.assertEqual(len(response.json["blog_posts"]), 2)
