@@ -181,7 +181,7 @@ def request_new_password():
     return success_response
 
 
-@app.route('/api/users/reset_password/<reset_token>', methods=['GET'])
+@app.route('/users/reset_password/<reset_token>', methods=['GET'])
 def reset_password_page(reset_token):
     token = PasswordResetToken.query.filter_by(token=reset_token).first()
 

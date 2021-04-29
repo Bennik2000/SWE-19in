@@ -30,13 +30,13 @@ class UserPasswordResetTest(unittest.TestCase):
     def test_given_correct_token_when_reset_password_then_success(self):
         self.insert_test_token()
 
-        response = self.app.get("/api/users/reset_password/" + self.TestToken)
+        response = self.app.get("/users/reset_password/" + self.TestToken)
         self.assertTrue(response.status, HTTPStatus.OK)
 
     def test_given_incorrect_token_when_reset_password_then_not_found(self):
         self.insert_test_token()
 
-        response = self.app.get("/api/users/reset_password/" + "invalidToken")
+        response = self.app.get("/users/reset_password/" + "invalidToken")
         self.assertTrue(response.status, HTTPStatus.NOT_FOUND)
 
     def test_given_correct_token_when_reset_password_then_new_password_set(self):
