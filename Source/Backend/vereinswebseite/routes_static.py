@@ -48,6 +48,8 @@ def style_set_new_password():
 @app.route('/static/src/set_new_password.js')
 def src_set_new_password():
     return app.send_static_file('src/set_new_password.js')
+
+    
 @app.route('/static/style/login.css')
 def style_login():
     return app.send_static_file('style/login.css')
@@ -67,3 +69,12 @@ def src_create_blog_post():
 @app.route('/static/src/edit_blog_post.js')
 def src_edit_blog_post():
     return app.send_static_file('src/edit_blog_post.js')
+
+#Page to show the whole blog post
+@app.route('/static/style/whole_blog_post.css')
+def style_whole_blog_post():
+    return app.send_static_file('style/whole_blog_post.css')
+
+@app.route('/static/src/whole_blog_post.js')
+def src_whole_blog_post():
+    return app.send_static_file('src/whole_blog_post.js')
