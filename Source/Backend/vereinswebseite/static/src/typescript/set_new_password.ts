@@ -29,7 +29,7 @@ function setNewPassword() {
             }
         }
 
-        frontendHelper.makeHttpRequest("POST", "/users/reset_password", obj, myOnLoadFunction);
+        frontendHelper.makeHttpRequest("POST", "/api/users/reset_password", obj, myOnLoadFunction);
 }
 
 function showPassword() {

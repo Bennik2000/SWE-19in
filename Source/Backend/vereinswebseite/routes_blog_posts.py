@@ -4,9 +4,10 @@ import markdown
 from flask_login import login_required, current_user
 
 from vereinswebseite import app, db
-from vereinswebseite.errors import generate_error
 from vereinswebseite.models import BlogPost, BlogPostSchema, User
-from flask import request, jsonify, abort, render_template
+from flask import request, abort, render_template
+
+from vereinswebseite.request_utils import get_int_from_request, success_response, generate_error, generate_success
 
 OneBlogPost = BlogPostSchema()
 ManyBlogPost = BlogPostSchema(many=True)
@@ -20,7 +21,7 @@ not_permitted_to_edit_or_delete = generate_error("Dieser Post gehört zu einem a
                                                  HTTPStatus.FORBIDDEN)
 
 
-@app.route('/blog_posts', methods=['POST'])
+@app.route('/api/blog_posts', methods=['POST'])
 @login_required
 def add_blog_post():
     title = request.json.get('title')
@@ -39,10 +40,10 @@ def add_blog_post():
 
     db.session.add(new_article)
     db.session.commit()
-    return {"success": True}
+    return success_response
 
 
-@app.route('/blog_posts/update', methods=['PUT'])
+@app.route('/api/blog_posts/update', methods=['PUT'])
 @login_required
 def update_blog_post():
     id_ = request.json.get('id')
@@ -69,10 +70,10 @@ def update_blog_post():
     post.content = content
     db.session.commit()
 
-    return {"success": True}
+    return success_response
 
 
-@app.route('/blog_posts', methods=['GET'])
+@app.route('/api/blog_posts', methods=['GET'])
 def get_all_blog_posts():
     posts = BlogPost.query.all()
 
@@ -90,10 +91,12 @@ def get_all_blog_posts():
         }
         all_posts.append(post_obj)
 
-    return jsonify({"success": True, "blog_posts": all_posts})
+    return generate_success({
+        "blog_posts": all_posts
+    })
 
 
-@app.route('/blog_posts/delete', methods=['DELETE'])
+@app.route('/api/blog_posts/delete', methods=['DELETE'])
 @login_required
 def delete_blog_post():
     post_id = request.json.get("id")
@@ -106,7 +109,7 @@ def delete_blog_post():
     db.session.delete(post)
     db.session.commit()
 
-    return {"success": True}
+    return success_response
 
 
 @app.route('/blog_posts/create')
@@ -148,18 +151,7 @@ def render_blog_post():
     return render_template("blog_post.jinja2", post=html, title=post.title, author=author_name)
 
 
-def get_int_from_request(key):
-    value_str = request.args.get(key, default=None)
-    if value_str is None:
-        return None
-
-    try:
-        return int(value_str)
-    except:
-        return None
-
-
-@app.route('/blog_posts/render_preview', methods=['POST'])
+@app.route('/api/blog_posts/render_preview', methods=['POST'])
 def render_blog_post_preview():
     content = request.json.get("content")
 
@@ -168,7 +160,6 @@ def render_blog_post_preview():
 
     html = markdown.markdown(content)
 
-    return {
-        "success": True,
+    return generate_success({
         "html": html
-    }
+    })

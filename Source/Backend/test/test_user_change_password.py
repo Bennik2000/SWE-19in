@@ -12,13 +12,13 @@ class UserChangePasswordTest(unittest.TestCase):
         self.app = setup_test_app()
     
     def test_change_password_request_not_logged_in(self):
-        response: Response = self.app.post("/users/change_password")
+        response: Response = self.app.post("/api/users/change_password")
         self.assertEqual(response.status_code, HTTPStatus.UNAUTHORIZED)
     
     def test_logged_in_change_password_valid(self):
         create_and_login_test_user(self.app)
         newPassword = "newPassword"
-        self.app.post("/users/change_password", json={
+        self.app.post("/api/users/change_password", json={
             "password": newPassword
         })
         existing_user = User.query.filter_by(email=TestEmail).first()

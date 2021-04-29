@@ -39,7 +39,7 @@ function swapShowingPreview() {
             alert("Anzeigen der Vorschau fehlgeschlagen!");
         }
     }
-    frontendHelper.makeHttpRequest("POST", "/blog_posts/render_preview", jsonObj, myOnloadFunction);
+    frontendHelper.makeHttpRequest("POST", "/api/blog_posts/render_preview", jsonObj, myOnloadFunction);
 }
 
 function updatePreview() {
@@ -65,7 +65,7 @@ function updatePreview() {
             alert("Aktualisieren der Vorschau fehlgeschlagen!");
         }
     }
-    frontendHelper.makeHttpRequest("POST", "/blog_posts/render_preview", jsonObj, myOnloadFunction);
+    frontendHelper.makeHttpRequest("POST", "/api/blog_posts/render_preview", jsonObj, myOnloadFunction);
 
 }
 
@@ -93,7 +93,7 @@ function saveEditedBlogPost() {
                 alert("Speichern fehlgeschlagen!" + "\n➔ " + response.errors[0].title + ".");
             }
         }
-        frontendHelper.makeHttpRequest("PUT", "/blog_posts/update", jsonObj, myOnloadFunction); 
+        frontendHelper.makeHttpRequest("PUT", "/api/blog_posts/update", jsonObj, myOnloadFunction); 
     }
     else {
         title.value = title.value.trim();
