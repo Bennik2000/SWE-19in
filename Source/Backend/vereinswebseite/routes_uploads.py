@@ -14,7 +14,7 @@ wrong_file_type = generate_error("Dieser Dateityp kann nicht hochgeladen werden.
 no_image_given = generate_error("Keine Bilddatei im Request vorhanden", HTTPStatus.BAD_REQUEST)
 
 
-@app.route('/upload_image', methods=['POST'])
+@app.route('/api/upload_image', methods=['POST'])
 @login_required
 def upload_image():
     if 'image' not in request.files:

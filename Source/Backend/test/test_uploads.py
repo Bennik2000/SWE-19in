@@ -70,7 +70,7 @@ class UploadsTest(unittest.TestCase):
         test_file = FileStorage(stream=open(self.TEST_TEXT_FILE_PATH, "rb"))
 
         response = self.app.post(
-            "/upload_image",
+            "/api/upload_image",
             data={"image": test_file},
             content_type='multipart/form-data'
         )
@@ -82,7 +82,7 @@ class UploadsTest(unittest.TestCase):
 
     def test_given_no_files_in_request_then_success_false(self):
         create_and_login_test_user(self.app)
-        response = self.app.post("/upload_image", content_type='multipart/form-data')
+        response = self.app.post("/api/upload_image", content_type='multipart/form-data')
 
         print(f"JSON response: {response.json}")
         success = response.json["success"]
@@ -93,7 +93,7 @@ class UploadsTest(unittest.TestCase):
         test_file = FileStorage(stream=open(self.TEST_FILE_PATH, "rb"))
 
         response = self.app.post(
-            "/upload_image",
+            "/api/upload_image",
             data={"image": test_file},
             content_type='multipart/form-data'
         )
