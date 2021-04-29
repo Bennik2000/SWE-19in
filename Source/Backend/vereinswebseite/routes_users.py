@@ -86,23 +86,11 @@ def login():
     return success_response
 
 
-@app.route("/api/users/logout")
+@app.route("/api/users/logout", methods=['POST'])
 @login_required
 def logout():
     logout_user()
     return success_response
-
-
-@login_manager.user_loader
-def load_user(user_id):
-    if user_id is not None:
-        return User.query.get(user_id)
-    return None
-
-
-@login_manager.unauthorized_handler
-def unauthorized():
-    return unauthorized_response
 
 
 @app.route('/api/users/personal_info', methods=['GET'])
@@ -179,16 +167,6 @@ def request_new_password():
     return success_response
 
 
-@app.route('/users/reset_password/<reset_token>', methods=['GET'])
-def reset_password_page(reset_token):
-    token = PasswordResetToken.query.filter_by(token=reset_token).first()
-
-    if token is None:
-        return abort(HTTPStatus.NOT_FOUND)
-    else:
-        return render_template('set_new_password.jinja2', token=reset_token)
-
-
 @app.route('/api/users/reset_password', methods=['POST'])
 def reset_password():
     password = request.json.get("password")
@@ -207,3 +185,25 @@ def reset_password():
     db.session.commit()
 
     return success_response
+
+
+@app.route('/users/reset_password/<reset_token>', methods=['GET'])
+def reset_password_page(reset_token):
+    token = PasswordResetToken.query.filter_by(token=reset_token).first()
+
+    if token is None:
+        return abort(HTTPStatus.NOT_FOUND)
+    else:
+        return render_template('set_new_password.jinja2', token=reset_token)
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    if user_id is not None:
+        return User.query.get(user_id)
+    return None
+
+
+@login_manager.unauthorized_handler
+def unauthorized():
+    return unauthorized_response
