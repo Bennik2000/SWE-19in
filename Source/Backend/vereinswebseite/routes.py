@@ -55,7 +55,4 @@ def unauthorized_handler(e):
 def render_reset_password():
     return render_template('reset_password.jinja2')
 
-#Page to show the whole blog post
-@app.route('/whole_blog_post')
-def render_whole_blog_post():
-    return render_template('whole_blog_post.jinja2')
+

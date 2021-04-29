@@ -22,25 +22,13 @@
         <div class="container" id="post">
             <div id="post_head">
 
-                <h1 id="title">Post Titel</h1>
-                <h4 id="author">Max Mustermann</h4>
-                <p id="date">24.04.2021</p>
+                <h1 id="title">{{title}}</h1>
+                <h4 id="author">{{author}}</h4>
+                <p id="date">{{date}}</p>
 
 
                 <div id="content">
-                    <p id="post_text">Die Geschichte des Tauchens beginnt ca. 4500 v. Chr. 
-                    mit der Ernte von Schwämmen, Perlen und Korallen. In der Antike sollen 
-                    auch Taucher bei Kampfeinsätzen gegen feindliche Schiffe eingesetzt worden sein. 
-                    Gegen Ende des 18. Jahrhunderts beginnt die Verwendung von Helmtauchgeräten am 
-                    Grund des Gewässers. Die ersten leichteren Schwimmtauchgeräte gab es in der 
-                    ersten Hälfte des 20. Jahrhunderts.
-
-                    Die Geburtsstunde des heute praktizierten Sporttauchens liegt in den 1950er/60er 
-                    Jahren, nachdem in den Jahren davor Forscher und Erfinder wie Hans Hass und 
-                    Jacques-Yves Cousteau die ersten praxistauglichen Tauchgeräte entwickelt hatten.
-                    Zu dieser Zeit ging der Tauchsport immer mehr vom Freitauchen (Luftanhalten bzw. 
-                    Apnoetauchen) zum Gerätetauchen über und die ersten Tauchorganisationen wurden 
-                    gegründet.</p>
+                    <p id="post_text">{{post}}</p>
 
                 </div>
 
@@ -60,17 +48,20 @@
                     
                 <div class="d-md-flex flex-md-row justify-content-md mt-1">
                     <button type="button" class="btn btn-secondary" id="button_edit_post" onclick="post_edit();">Beitrag Bearbeiten</button>
-                    <button type="button" class="btn btn-secondary" id="button_post_delite" onclick="post_delite();">Beitrag Löschen</button>
                 </div>
 
             </div> 
         </div>
-        <div class="container" id="new_post">
-            <button type="button" class="btn btn-primary" id="button_new_post" onclick="new_post();">Neuen Beitrag erstellen</button>
 
-        </div>
+        {%if cancreatenew == False%}
+            <div class="container" id="new_post">
+                <button type="button" class="btn btn-primary" id="button_new_post" onclick="new_post();">Neuen Beitrag erstellen</button>
 
-        <div class="container" id="comments">
+            </div>
+        {% endif %}
+
+
+        <div class="container" id="comments" style="display:none;">
 
             <h1 id="comment_title">Kommentare</h1>
 

@@ -1,6 +1,5 @@
 var frontendHelper = new FrontendHelper();
 function get_post_info() {
-    frontendHelper.makeHttpRequest("POST", "", jsonObj, myOnloadFunction);
 }
 function post_edit() {
 }
