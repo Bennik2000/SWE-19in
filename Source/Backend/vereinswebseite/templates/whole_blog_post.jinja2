@@ -48,20 +48,15 @@
                 {%if cancreatenew == False%}   
                     <div class="d-md-flex flex-md-row justify-content-md mt-1">
                         <button type="button" class="btn btn-secondary" id="button_edit_post" onclick="post_edit();">Beitrag Bearbeiten</button>
+                        {%if False%}
+                        <button type="button" class="btn btn-secondary" id="button_delite_post" onclick="post_delite();">Beitrag löschen</button>
+                        {%endif%}
                     </div>
                 {% endif %}
 
             </div> 
         </div>
-
-        
-            <div class="container" id="new_post">
-                <button type="button" class="btn btn-primary" id="button_new_post" onclick="new_post();">Neuen Beitrag erstellen</button>
-
-            </div>
-        
-
-
+                
         <div class="container" id="comments" style="display:none;">
 
             <h1 id="comment_title">Kommentare</h1>
