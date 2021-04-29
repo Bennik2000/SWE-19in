@@ -56,21 +56,35 @@ function get_all_blogs(){
                         post_more.setAttribute("id","post_more");
                         post_more.setAttribute("href","#");
                         post_more.innerHTML = "mehr...";
+
+                        let post_edit = document.createElement("div");
+                        post_edit.classList.add("col-md-1")
+                        post_edit.classList.add("offset-md-10") 
+                        post_edit.classList.add("btn");
+                        post_edit.classList.add("btn-primary");
+                        post_edit.setAttribute("id","post_edit");
+                        post_edit.setAttribute("href","#");
+                        post_edit.innerHTML = "edit";
+
                         post_meta.appendChild(post_author);
-    
                         row.appendChild(post_titel);
                         row.appendChild(post_meta);
                         row.appendChild(post_separator);
                         row.appendChild(post_content);
                         row.appendChild(post_more);
+                        row.appendChild(post_edit);
                         container.appendChild(row);
                         col.appendChild(container);
     
                         post_list.appendChild(col);
                     }
                     let jsonObj ={};
-                    jsonObj["content"]=post.content
-                    
+                    if (post.content.length > 300) {
+                        jsonObj["content"] = ((String)(post.content)).substr(0, 300) + "...";
+                    }
+                    else {
+                        jsonObj["content"] = post.content;
+                    }
                     frontendHelper.makeHttpRequest("POST", "/blog_posts/render_preview", jsonObj, myOnloadFunction);
                     
                    
