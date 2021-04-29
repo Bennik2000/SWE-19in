@@ -2,8 +2,9 @@ import json
 from http import HTTPStatus
 
 from vereinswebseite import app
-from vereinswebseite.errors import generate_error
 from flask import render_template
+
+from vereinswebseite.request_utils import success_response, generate_error
 
 too_many_requests = generate_error("Too many requests", HTTPStatus.TOO_MANY_REQUESTS)
 unauthorized = generate_error("Unauthorized", HTTPStatus.UNAUTHORIZED)
@@ -16,7 +17,7 @@ def index():
 
 @app.route('/ping')
 def ping_handler():
-    return {"success": True}
+    return success_response
 
 
 @app.route('/create_account')

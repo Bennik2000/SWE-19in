@@ -2,12 +2,12 @@ import uuid
 import os.path
 from http import HTTPStatus
 
-
 from vereinswebseite import app, images
-from vereinswebseite.errors import generate_error
 from flask_login import login_required
 from flask import request
 import flask_uploads
+
+from vereinswebseite.request_utils import generate_error, generate_success
 
 wrong_file_type = generate_error("Dieser Dateityp kann nicht hochgeladen werden. "
                                  "Nur Bilder sind erlaubt.", HTTPStatus.BAD_REQUEST)
@@ -27,9 +27,8 @@ def upload_image():
 
     try:
         filename = images.save(image)
-        return {
-            "success": True,
+        return generate_success({
             "filename": filename
-        }, HTTPStatus.CREATED
+        }, status=HTTPStatus.CREATED)
     except flask_uploads.UploadNotAllowed:
         return wrong_file_type
