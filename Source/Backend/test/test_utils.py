@@ -1,4 +1,5 @@
 import jinja2
+import os
 
 from vereinswebseite import limiter, app, db
 import vereinswebseite
