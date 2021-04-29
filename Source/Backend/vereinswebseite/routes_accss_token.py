@@ -1,10 +1,11 @@
 from http import HTTPStatus
 
 from vereinswebseite import app, db
-from vereinswebseite.errors import generate_error
 from vereinswebseite.models import AccessTokenSchema, AccessToken
 from flask import request
 from uuid import uuid4
+
+from vereinswebseite.request_utils import success_response, generate_error, generate_success
 
 OneAccessToken = AccessTokenSchema()
 ManyAccessToken = AccessTokenSchema(many=True)
@@ -19,9 +20,9 @@ def validate_access_token():
     token = request.json['token']
     access_token = AccessToken.query.get(token)
 
-    return {
+    return generate_success({
         "valid": access_token is not None
-    }, 200
+    })
 
 
 @app.route('/accessToken/delete')
@@ -34,10 +35,7 @@ def delete_access_token():
 
     db.session.delete(access_token)
     db.session.commit()
-    return \
-        {
-            "success": True
-        }, 200
+    return success_response
 
 
 @app.route('/accessToken', methods=["POST"])

@@ -3,10 +3,10 @@ from uuid import uuid4
 from vereinswebseite import app, db, login_manager
 from vereinswebseite.email_utils import send_reset_password_email
 from vereinswebseite.models import User, UserSchema, AccessToken, PasswordResetToken
-from vereinswebseite.errors import generate_error
 from flask import request, jsonify, abort, render_template
 from flask_login import current_user, login_user, logout_user, login_required
 from http import HTTPStatus
+from vereinswebseite.request_utils import success_response, generate_error
 
 # Init Schemas
 OneUser = UserSchema()
@@ -21,9 +21,7 @@ already_authenticated = generate_error("Bereits eingeloggt", HTTPStatus.BAD_REQU
 email_or_password_wrong = generate_error("Email und/oder Passwort falsch", HTTPStatus.UNAUTHORIZED)
 token_invalid = generate_error("Registrierungscode ungültig", HTTPStatus.UNAUTHORIZED)
 reset_token_invalid = generate_error("Code ungültig", HTTPStatus.UNAUTHORIZED)
-
-
-success_response = {"success": True}
+unauthorized_response = generate_error("Nicht authorisiert", HTTPStatus.UNAUTHORIZED)
 
 
 @app.route('/users', methods=['POST'])
@@ -104,7 +102,7 @@ def load_user(user_id):
 
 @login_manager.unauthorized_handler
 def unauthorized():
-    return {"success": False}, HTTPStatus.UNAUTHORIZED
+    return unauthorized_response
 
 
 @app.route('/users/personal_info', methods=['GET'])
