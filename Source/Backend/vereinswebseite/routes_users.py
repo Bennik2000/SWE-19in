@@ -138,7 +138,7 @@ def change_email():
 
     current_user.email = email
     db.session.commit()
-    return {"success": True}, 200
+    return success_response
 
 
 
