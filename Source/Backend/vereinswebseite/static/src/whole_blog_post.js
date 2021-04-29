@@ -5,7 +5,7 @@ function post_edit() {
 }
 function post_save() {
 }
-function post_delite() {
+function post_delete() {
 }
 function new_post() {
 }

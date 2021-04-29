@@ -148,7 +148,15 @@ def render_blog_post():
     if author is not None:
         author_name = author.name
 
-    return render_template("whole_blog_post.jinja2",cancreatenew=True, post=html, title=post.title, author=author_name)
+    can_edit = current_user.is_authenticated
+    can_delete = current_user.is_authenticated and current_user.id == post.id
+
+    return render_template("whole_blog_post.jinja2",
+                           can_edit_post=can_edit,
+                           can_delete_post=can_delete,
+                           post=html,
+                           title=post.title,
+                           author=author_name)
 
 
 @app.route('/blog_posts/render_preview', methods=['POST'])

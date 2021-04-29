@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <link rel="stylesheet" type="text/css" href="/style/whole_blog_post.css">
@@ -12,13 +12,13 @@
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script> scr="https://kit.frontawesome.com/b99e675b6e.js"</script>
-    
-    <title>Profil</title>
+
+    <title>{{ title }}</title>
 
 </head>
 <body>
     <div id="whole_post_page">
-               
+
         <div class="container" id="post">
             <div id="post_head">
 
@@ -45,18 +45,21 @@
 
                 </div>
 
-                {%if cancreatenew == False%}   
-                    <div class="d-md-flex flex-md-row justify-content-md mt-1">
-                        <button type="button" class="btn btn-secondary" id="button_edit_post" onclick="post_edit();">Beitrag Bearbeiten</button>
-                        {%if False%}
-                        <button type="button" class="btn btn-secondary" id="button_delite_post" onclick="post_delite();">Beitrag löschen</button>
-                        {%endif%}
-                    </div>
-                {% endif %}
+                <div class="d-md-flex flex-md-row justify-content-md mt-1">
 
-            </div> 
+            {% if can_edit_post %}
+                    <button type="button" class="btn btn-secondary" id="button_edit_post" onclick="post_edit();">Beitrag Bearbeiten</button>
+            {% endif %}
+
+            {% if can_delete_post %}
+                    <button type="button" class="btn btn-secondary" id="button_delete_post" onclick="post_delete();">Beitrag löschen</button>
+            {% endif %}
+                </div>
+
+            </div>
         </div>
-                
+
+
         <div class="container" id="comments" style="display:none;">
 
             <h1 id="comment_title">Kommentare</h1>
