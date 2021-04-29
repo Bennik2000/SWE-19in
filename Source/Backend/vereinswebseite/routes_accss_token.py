@@ -14,7 +14,7 @@ AccessTokenLength = 8
 token_invalid = generate_error("Registrierungscode existiert nicht", HTTPStatus.NOT_FOUND)
 
 
-@app.route('/accessToken/validate')
+@app.route('/api/accessToken/validate')
 def validate_access_token():
     token = request.json['token']
     access_token = AccessToken.query.get(token)
@@ -24,7 +24,7 @@ def validate_access_token():
     }, 200
 
 
-@app.route('/accessToken/delete')
+@app.route('/api/accessToken/delete')
 def delete_access_token():
     token = request.json['token']
     access_token = AccessToken.query.get(token)
@@ -40,7 +40,7 @@ def delete_access_token():
         }, 200
 
 
-@app.route('/accessToken', methods=["POST"])
+@app.route('/api/accessToken', methods=["POST"])
 def create_access_token():
     access_token = str(uuid4())[0:AccessTokenLength].upper()
     token = AccessToken(access_token)
@@ -53,7 +53,7 @@ def create_access_token():
     return result
 
 
-@app.route('/accessToken', methods=['GET'])
+@app.route('/api/accessToken', methods=['GET'])
 def all_access_token():
     all_tokens = AccessToken.query.all()
 

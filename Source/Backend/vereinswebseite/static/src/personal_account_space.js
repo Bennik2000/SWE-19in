@@ -142,7 +142,7 @@ function get_access_token() {
         });
     }
     var jsonObj = {};
-    frontendHelper.makeHttpRequest("GET", "/accessToken", jsonObj, myOnloadFunction);
+    frontendHelper.makeHttpRequest("GET", "/api/accessToken", jsonObj, myOnloadFunction);
 }
 function get_users() {
     var userList = document.getElementById("user_list");
@@ -195,7 +195,7 @@ function delete_access_token(elem) {
   
       let jsonObj={};
       jsonObj["token"]=elem.parentElement.getElementsByTagName("a")[0].innerHTML
-      frontendHelper.makeHttpRequest("DELETE", "/accessToken/delete", jsonObj, myOnloadFunction);
+      frontendHelper.makeHttpRequest("DELETE", "/api/accessToken/delete", jsonObj, myOnloadFunction);
   */ 
 }
 function get_user_info() {

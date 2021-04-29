@@ -167,7 +167,7 @@ function get_access_token(){
         
     }
     let jsonObj={};
-    frontendHelper.makeHttpRequest("GET", "/accessToken", jsonObj, myOnloadFunction);
+    frontendHelper.makeHttpRequest("GET", "/api/accessToken", jsonObj, myOnloadFunction);
 
 }
 function get_users(){
@@ -231,7 +231,7 @@ function delete_access_token(elem: Element ){
 
     let jsonObj={};
     jsonObj["token"]=elem.parentElement.getElementsByTagName("a")[0].innerHTML
-    frontendHelper.makeHttpRequest("DELETE", "/accessToken/delete", jsonObj, myOnloadFunction);
+    frontendHelper.makeHttpRequest("DELETE", "/api/accessToken/delete", jsonObj, myOnloadFunction);
 */}
 function get_user_info(){
     function myOnloadFunction(response){
