@@ -45,20 +45,21 @@
 
                 </div>
 
-                    
-                <div class="d-md-flex flex-md-row justify-content-md mt-1">
-                    <button type="button" class="btn btn-secondary" id="button_edit_post" onclick="post_edit();">Beitrag Bearbeiten</button>
-                </div>
+                {%if cancreatenew == False%}   
+                    <div class="d-md-flex flex-md-row justify-content-md mt-1">
+                        <button type="button" class="btn btn-secondary" id="button_edit_post" onclick="post_edit();">Beitrag Bearbeiten</button>
+                    </div>
+                {% endif %}
 
             </div> 
         </div>
 
-        {%if cancreatenew == False%}
+        
             <div class="container" id="new_post">
                 <button type="button" class="btn btn-primary" id="button_new_post" onclick="new_post();">Neuen Beitrag erstellen</button>
 
             </div>
-        {% endif %}
+        
 
 
         <div class="container" id="comments" style="display:none;">
