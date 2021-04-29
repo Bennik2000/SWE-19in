@@ -92,3 +92,10 @@ function cancelEditBlogPost() {
         window.history.back();
     }
 }
+function getCurrentDate() {
+    var date = new Date();
+    // var year = date.getFullYear
+    var d = document.getElementById("datePicker");
+    var currentDate = date.getFullYear() + "-0" + (date.getMonth() + 1) + "-" + date.getDate();
+    d.setAttribute("min", currentDate);
+}

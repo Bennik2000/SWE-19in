@@ -32,6 +32,10 @@
             <label for="preview">Vorschau</label>
             <div class="form-group" id="markdown_preview"></div>
         </div>
+        <p>
+            Bis wann soll der Post sichtbar sein? (Kein Pflichtfeld):<br>
+            <input id="datePicker" type="date" min="2021-03-29" onclick="getCurrentDate()">
+        </p>
         <div id="bottom-button-group">
             <button class="btn btn-primary btn-sm" id="swapShowingPreview_button" type="button" onclick="swapShowingPreview()">Vorschau anzeigen</button>
             <button class="btn btn-success btn-sm" id="save" type="submit" onclick="saveCreatedBlogPost()">Speichern</button>
