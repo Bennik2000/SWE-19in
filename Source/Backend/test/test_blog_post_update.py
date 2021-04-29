@@ -81,7 +81,7 @@ class BlogPostTest(unittest.TestCase):
         db.session.add(test_user2)
         db.session.commit()
 
-        self.app.post("/users/login", json={
+        self.app.post("/api/users/login", json={
             "email": email,
             "password": TestPassword
         })

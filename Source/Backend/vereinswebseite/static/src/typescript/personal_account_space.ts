@@ -27,7 +27,7 @@ function delete_account(){
         
     }
     let jsonObj={};
-    frontendHelper.makeHttpRequest("DELETE", "/users/delete", jsonObj, myOnloadFunction);
+    frontendHelper.makeHttpRequest("DELETE", "/api/users/delete", jsonObj, myOnloadFunction);
 }
 function logout(){
     function myOnloadFunction(response){
@@ -43,7 +43,7 @@ function logout(){
         }      
     }
     let jsonObj={};
-    frontendHelper.makeHttpRequest("POST", "/users/logout", jsonObj, myOnloadFunction);
+    frontendHelper.makeHttpRequest("POST", "/api/users/logout", jsonObj, myOnloadFunction);
 }
 
 function email_save() {
@@ -56,7 +56,7 @@ function email_save() {
     let jsonObj={};
     jsonObj["email"]=
 
-    frontendHelper.makeHttpRequest("GET", "/users/personal_info", jsonObj, myOnloadFunction);
+    frontendHelper.makeHttpRequest("GET", "/api/users/personal_info", jsonObj, myOnloadFunction);
 */}
 
 function password_save() {
@@ -87,7 +87,7 @@ function password_save() {
             alert("Passwort ändern fehlgeschlagen!" + "\n➔ " + response.errors[0].title + ".");
         }
     }
-    frontendHelper.makeHttpRequest("POST", "/users/change_password", jsonObj, myOnloadFunction);
+    frontendHelper.makeHttpRequest("POST", "/api/users/change_password", jsonObj, myOnloadFunction);
     }
 }
 
@@ -220,7 +220,7 @@ function get_users(){
         
     }
     let jsonObj={};
-    frontendHelper.makeHttpRequest("GET", "/users", jsonObj, myOnloadFunction);
+    frontendHelper.makeHttpRequest("GET", "/api/users", jsonObj, myOnloadFunction);
 }
 function delete_access_token(elem: Element ){
   /*  function myOnloadFunction(response){
@@ -240,7 +240,7 @@ function get_user_info(){
         
     }
     let jsonObj ={};
-    frontendHelper.makeHttpRequest("GET", "/users/personal_info", jsonObj, myOnloadFunction);
+    frontendHelper.makeHttpRequest("GET", "/api/users/personal_info", jsonObj, myOnloadFunction);
 }
 window.addEventListener('popstate', function (popstateEvent) {
     reload(Number(window.history.state));
