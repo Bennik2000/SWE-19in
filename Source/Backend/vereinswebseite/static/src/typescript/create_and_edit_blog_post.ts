@@ -84,22 +84,28 @@ function updateLivePreview() {
 
     function myOnloadFunction(response) {
         if(response == null) {
-            alert("Live-Vorschau: Kommunikation mit Server fehlgeschlagen!")
+            handleErrorResponseDuringLiveMarkdownRendering("Live-Vorschau: Kommunikation mit Server fehlgeschlagen!");
+            return;
         }
         else if (response.success)
         {
             document.getElementById("markdown_preview").innerHTML = response.html;
             timer = setInterval(updateLivePreview, 1000);  // restart timer if the request for rendering the preview was successfull
-            return;
         }
-
-        var checkBox = document.getElementById("livePreviewCheckbox") as HTMLInputElement;
-        checkBox.checked = false;
-        swapShowingLivePreview(checkBox);
-        alert("Live-Vorschau: Anzeigen/Aktualisieren fehlgeschlagen!");
+        else {
+            handleErrorResponseDuringLiveMarkdownRendering("Live-Vorschau: Anzeigen/Aktualisieren fehlgeschlagen!");
+        }
     }
     clearInterval(timer);   // stop the timer as long as the server needs to respond
     frontendHelper.makeHttpRequest("POST", "/api/blog_posts/render_preview", jsonObj, myOnloadFunction);
+}
+
+// If the response of the server while rendering the live preview is null or success is false, this function gets called
+function handleErrorResponseDuringLiveMarkdownRendering(alertMessage) {
+    var checkBox = document.getElementById("livePreviewCheckbox") as HTMLInputElement;
+    checkBox.checked = false;
+    swapShowingLivePreview(checkBox);
+    alert(alertMessage);
 }
 
 // onclick function of the live preview checkbox
