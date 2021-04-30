@@ -24,6 +24,12 @@ class BlogPost(db.Model):
         return f'BlogPost(id={self.id}, author_id={self.author_id},\n' \
                f'\ttitle="{self.title}",\n\tcontent="{self.content}")'
 
+    def is_expired(self):
+        if self.expiration_date is None:
+            return False
+
+        return self.expiration_date.date() < datetime.today().date()
+
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)

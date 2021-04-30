@@ -42,3 +42,10 @@ class GetBlogPostsTest(unittest.TestCase):
         response = self.app.get("/blog_posts/render?post_id=1")
 
         self.assertEqual(response.status_code, HTTPStatus.NOT_FOUND)
+
+    def test_not_expired_blog_post_when_render_blog_post_then_no_error_dates_same_day(self):
+        db.session.add(BlogPost("Title", "Content", 1, expiration_date=datetime.today()))
+        db.session.commit()
+        response = self.app.get("/blog_posts/render?post_id=1")
+
+        self.assertEqual(response.status_code, HTTPStatus.OK)

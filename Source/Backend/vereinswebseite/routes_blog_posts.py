@@ -95,7 +95,7 @@ def get_all_blog_posts():
     all_posts = []
 
     for post in posts:
-        if post.expiration_date is not None and datetime.now() > post.expiration_date:
+        if post.is_expired():
             continue
 
         user = User.query.get(post.author_id)
@@ -162,7 +162,7 @@ def render_blog_post():
     if post is None:
         abort(HTTPStatus.NOT_FOUND)
 
-    if post.expiration_date is not None and datetime.now() > post.expiration_date:
+    if post.is_expired():
         abort(HTTPStatus.NOT_FOUND)
 
     html = markdown.markdown(post.content)
