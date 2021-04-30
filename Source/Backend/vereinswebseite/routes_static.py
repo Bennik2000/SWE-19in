@@ -60,10 +60,6 @@ def src_login():
 def style_blog_post():
     return app.send_static_file('style/create_and_edit_blog_post.css')
 
-@app.route('/static/src/create_blog_post.js')
+@app.route('/static/src/create_and_edit_blog_post.js')
 def src_create_blog_post():
-    return app.send_static_file('src/create_blog_post.js')
-
-@app.route('/static/src/edit_blog_post.js')
-def src_edit_blog_post():
-    return app.send_static_file('src/edit_blog_post.js')
+    return app.send_static_file('src/create_and_edit_blog_post.js')

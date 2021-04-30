@@ -20,7 +20,13 @@
             <input class="form-control" required type="text" name="title" id="title" value="{{ title }}">
         </div>
         <div class="form-group" id="markdown_div">
-            <label for="markdown">Markdown <a href="https://www.markdownguide.org/basic-syntax/" target="_blank"><span>&#9432;</span></a></label>
+            <label for="markdown">Markdown <a href="https://www.markdownguide.org/basic-syntax/" target="_blank"><span>&#9432;</span></a>
+                <div id="livePreviewCheckbox_div">
+                    <input id="livePreviewCheckbox" type="checkbox" onclick="swapShowingLivePreview(this)">
+                    <span class="checkmark"></span>                   
+                    <label class="checkbox-primary text-primary" id="livePreviewCheckbox_label">Live-Vorschau</label>
+                </div>
+            </label>
             <textarea class="form-control" required name="markdown" id="markdown">{{ content }}</textarea>
         </div>
         <div id="preview_div">
@@ -35,13 +41,13 @@
         <div id="bottom-button-group">
             <button class="btn btn-primary btn-sm" id="swapShowingPreview_button" type="button" onclick="swapShowingPreview()">Vorschau anzeigen</button>
             <button class="btn btn-success btn-sm" id="save" type="submit" onclick="saveEditedBlogPost()">Speichern</button>
-            <button class="btn btn-danger btn-sm" id="cancel" type="button" onclick="cancelEditBlogPost()">Abbrechen</button>
+            <button class="btn btn-danger btn-sm" id="cancel" type="button" onclick="cancelCreatingOrEditing('Die Änderungen werden nicht gespeichert. \nTrotzdem fortfahren?')">Abbrechen</button>
         </div>
     </form>
 <div style="display: none;" id="id">{{ id }}</div>
 
 <script>var exports = {};</script>
 <script src= "/static/src/FrontendHelper.js"></script>
-<script src= "/static/src/edit_blog_post.js"></script>
+<script src= "/static/src/create_and_edit_blog_post.js"></script>
 </body>
 </html>
