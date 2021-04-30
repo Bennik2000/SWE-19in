@@ -18,18 +18,15 @@
 
         <div class="container" id="post">
             <div id="post_head">
-
                 <h1 id="title">{{title}}</h1>
                 <div id = "authorAndDate_div">
                     <p>{{author}} <br> {{date}} </p>
-                </div>
+                </div>            
+            </div>
 
                 <div id="content">
                     {{post}}
-                </div>
-
-                
-            </div>
+                </div> 
                     {% if can_edit_post %}
                             <button type="button" class="btn btn-secondary" id="button_edit_post" onclick="editBlogPost();">Beitrag bearbeiten</button>
                     {% endif %}
