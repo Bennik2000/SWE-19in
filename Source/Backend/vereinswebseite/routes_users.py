@@ -114,6 +114,19 @@ def change_password():
     db.session.commit()
     return success_response
 
+@app.route('/users/change_email', methods = ['POST'])
+@login_required
+def change_email():
+    email = request.json.get("email")
+
+    if email is None or email == "":
+        return email_invalid
+
+    current_user.email = email
+    db.session.commit()
+    return success_response
+
+
 
 @app.route('/api/users', methods=['GET'])
 @login_required
