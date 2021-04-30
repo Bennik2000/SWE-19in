@@ -86,7 +86,7 @@ def get_all_blog_posts():
             "id": post.id,
             "title": post.title,
             "content": post.make_post_summary(),
-            "author": "user.name",
+            "author": user.name,
             "author_id": post.author_id
         }
         all_posts.append(post_obj)
