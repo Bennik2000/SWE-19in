@@ -70,6 +70,7 @@ function updatePreview() {
 function updateLivePreview() {
     var markdown = document.getElementById("markdown");
     if (!markdown.value.trim()) {
+        document.getElementById("markdown_preview").innerHTML = "";
         return; // if the markdown is only containing whitespaces, dont send a request to the server
     }
     var jsonObj = {};
