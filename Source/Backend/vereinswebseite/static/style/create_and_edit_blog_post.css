@@ -97,6 +97,11 @@ label {
     font-weight: bold;
 }
  
+#livePreviewCheckbox_label {
+    font-size: 1vw !important;
+    font-weight: normal;
+}
+
 #page_h1 {
     text-align: center;
     padding-bottom: 2vw;
@@ -123,10 +128,28 @@ h6 {
 }
 
  
+@media (max-width: 1200px) 
+{
+    #livePreviewCheckbox_label
+    {
+     font-size: 1.5vw !important; 
+    }
+    
+    input[type=checkbox]
+    {
+      transform: scale(1);  
+    }
+}
+
+
 @media (max-width: 768px) 
 {
    label {
        font-size: 2.5vw !important; 
+   }
+   #livePreviewCheckbox_label
+   {
+    font-size: 2vw !important; 
    }
    button {
        height: 3vw !important;
@@ -165,4 +188,21 @@ h6 {
   h6 {
     font-size: 2vw !important;
   }
+  input[type=checkbox]
+  {
+    transform: scale(1);  
+  }
+}
+
+
+@media (max-width: 500px) 
+{
+    #livePreviewCheckbox_label
+    {
+     font-size: 2.4vw !important; 
+    }
+    input[type=checkbox]
+    {
+      transform: scale(0.7);  
+    }
 }

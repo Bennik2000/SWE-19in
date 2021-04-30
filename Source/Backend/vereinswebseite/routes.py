@@ -3,6 +3,7 @@ from http import HTTPStatus
 
 from vereinswebseite import app
 from flask import render_template
+from flask_login import login_required
 
 from vereinswebseite.request_utils import success_response, generate_error
 
@@ -31,6 +32,7 @@ def render_login():
 
 
 @app.route('/account')
+@login_required
 def personal_account_space():
     return render_template('personal_account_space.jinja2')
 

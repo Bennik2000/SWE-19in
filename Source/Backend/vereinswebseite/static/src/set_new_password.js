@@ -23,7 +23,7 @@ function setNewPassword() {
             alert("Passwort ändern fehlgeschlagen!" + "\n➔ " + response.errors[0].title + ".");
         }
     }
-    frontendHelper.makeHttpRequest("POST", "/users/reset_password", obj, myOnLoadFunction);
+    frontendHelper.makeHttpRequest("POST", "/api/users/reset_password", obj, myOnLoadFunction);
 }
 function showPassword() {
     var x = document.getElementById("newPassword1");
