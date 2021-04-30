@@ -80,13 +80,13 @@ def get_all_blog_posts():
     all_posts = []
 
     for post in posts:
-        user = User.query.get(post.author_id)
+#        user = User.query.get(post.author_id)
 
         post_obj = {
             "id": post.id,
             "title": post.title,
-            "content": post.content,
-            "author": user.name,
+            "content": post.make_post_summary(),
+            "author": "user.name",
             "author_id": post.author_id
         }
         all_posts.append(post_obj)

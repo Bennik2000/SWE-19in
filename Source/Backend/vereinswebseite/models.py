@@ -18,6 +18,15 @@ class BlogPost(db.Model):
         return f'BlogPost(id={self.id}, author_id={self.author_id},\n' \
                f'\ttitle="{self.title}",\n\tcontent="{self.content}")'
 
+    def make_post_summary(self):
+        summary_length_in_words = 100
+
+        words = self.content.split(' ')
+
+        if len(words) > summary_length_in_words:
+            return ' '.join(words[0:summary_length_in_words]) + "..."
+        return self.content
+
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
