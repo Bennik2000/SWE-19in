@@ -1,12 +1,16 @@
 let frontendHelper = new FrontendHelper()
 
 function editBlogPost() {
-    let id = document.getElementById("id").innerHTML.toString();
-    window.location.href = "/blog_posts/edit?posts_id="+ id;
+    let id = document.getElementById("id").innerHTML;
+    window.location.href = "/blog_posts/edit?post_id="+ id;
 }
 
 function deleteBlogPost() {
-    var jsonObj = {};
+
+    let wantsToCancel = confirm("Soll der Beitrag wirklich gelöscht werden?");
+    if (wantsToCancel) 
+    {
+        var jsonObj = {};
         jsonObj["id"] = document.getElementById("id").innerHTML;
 
         function myOnloadFunction(response) {
@@ -24,4 +28,5 @@ function deleteBlogPost() {
             }
         }
         frontendHelper.makeHttpRequest("DELETE", "/blog_posts/delete", jsonObj, myOnloadFunction); 
+    }
 }

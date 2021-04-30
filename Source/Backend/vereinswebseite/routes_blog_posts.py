@@ -181,7 +181,8 @@ def render_blog_post():
                            can_delete_post=can_delete,
                            post=html,
                            title=post.title,
-                           author=author_name)
+                           author=author_name, 
+                           id = post_id)
 
 
 @app.route('/api/blog_posts/render_preview', methods=['POST'])
