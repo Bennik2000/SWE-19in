@@ -1,6 +1,12 @@
 var frontendHelper = new FrontendHelper();
 var isShowingPreview = false;
 var timer;
+var errorMessageCommunicationWithServer = "Kommunikation mit Server fehlgeschlagen!";
+var errorMessageSaving = "Speichern fehlgeschlagen!";
+var errorMessageNoMarkdownEntered = "Um eine Vorschau anzeigen zu lassen bitte Markdown angeben!";
+var errorMessageShowingPreview = "Anzeigen der Vorschau fehlgeschlagen!";
+var errorMessageUpdatingPreview = "Aktualisieren der Vorschau fehlgeschlagen!";
+var errorMessageUpdatingOrShowingLivePreview = "Live-Vorschau: Anzeigen/Aktualisieren fehlgeschlagen!";
 function swapShowingPreview() {
     var markdown = document.getElementById("markdown");
     if (isShowingPreview) {
@@ -13,14 +19,14 @@ function swapShowingPreview() {
         return;
     }
     if (!markdown.value.trim()) { // Check if the markdown is only containing whitespaces
-        alert("Um eine Vorschau anzeigen zu lassen bitte Markdown angeben!");
+        alert(errorMessageNoMarkdownEntered);
         return;
     }
     var jsonObj = {};
     jsonObj["content"] = markdown.value;
     function myOnloadFunction(response) {
         if (response == null) {
-            alert("Kommunikation mit Server fehlgeschlagen!");
+            alert(errorMessageCommunicationWithServer);
             return;
         }
         else if (response.success) {
@@ -32,7 +38,7 @@ function swapShowingPreview() {
             isShowingPreview = true;
         }
         else {
-            alert("Anzeigen der Vorschau fehlgeschlagen!");
+            alert(errorMessageShowingPreview);
         }
     }
     frontendHelper.makeHttpRequest("POST", "/api/blog_posts/render_preview", jsonObj, myOnloadFunction);
@@ -43,19 +49,19 @@ function updatePreview() {
     var jsonObj = {};
     jsonObj["content"] = markdown.value;
     if (!markdown.value.trim()) {
-        alert("Um eine Vorschau anzeigen zu lassen bitte Markdown angeben!");
+        alert(errorMessageNoMarkdownEntered);
         return;
     }
     function myOnloadFunction(response) {
         if (response == null) {
-            alert("Kommunikation mit Server fehlgeschlagen!");
+            alert(errorMessageCommunicationWithServer);
             return;
         }
         else if (response.success) {
             document.getElementById("markdown_preview").innerHTML = response.html;
         }
         else {
-            alert("Aktualisieren der Vorschau fehlgeschlagen!");
+            alert(errorMessageUpdatingPreview);
         }
     }
     frontendHelper.makeHttpRequest("POST", "/api/blog_posts/render_preview", jsonObj, myOnloadFunction);
@@ -70,7 +76,7 @@ function updateLivePreview() {
     jsonObj["content"] = markdown.value;
     function myOnloadFunction(response) {
         if (response == null) {
-            handleErrorResponseDuringLiveMarkdownRendering("Live-Vorschau: Kommunikation mit Server fehlgeschlagen!");
+            handleErrorResponseDuringLiveMarkdownRendering("Live-Vorschau: " + errorMessageCommunicationWithServer);
             return;
         }
         else if (response.success) {
@@ -78,7 +84,7 @@ function updateLivePreview() {
             timer = setInterval(updateLivePreview, 1000); // restart timer if the request for rendering the preview was successfull
         }
         else {
-            handleErrorResponseDuringLiveMarkdownRendering("Live-Vorschau: Anzeigen/Aktualisieren fehlgeschlagen!");
+            handleErrorResponseDuringLiveMarkdownRendering(errorMessageUpdatingOrShowingLivePreview);
         }
     }
     clearInterval(timer); // stop the timer as long as the server needs to respond
@@ -120,14 +126,14 @@ function saveCreatedBlogPost() {
         jsonObj["content"] = markdown.value;
         function myOnloadFunction(response) {
             if (response == null) {
-                alert("Kommunikation mit Server fehlgeschlagen!");
+                alert(errorMessageCommunicationWithServer);
                 return;
             }
             else if (response.success) {
                 window.location.href = "/#"; //TODO: Link to the blog post overview of all post
             }
             else {
-                alert("Speichern fehlgeschlagen!" + "\n➔ " + response.errors[0].title + ".");
+                alert(errorMessageSaving + "\n➔ " + response.errors[0].title + ".");
             }
         }
         frontendHelper.makeHttpRequest("POST", "/api/blog_posts", jsonObj, myOnloadFunction);
@@ -148,14 +154,14 @@ function saveEditedBlogPost() {
         jsonObj["content"] = markdown.value;
         function myOnloadFunction(response) {
             if (response == null) {
-                alert("Kommunikation mit Server fehlgeschlagen!");
+                alert(errorMessageCommunicationWithServer);
                 return;
             }
             else if (response.success) {
                 window.location.href = "/#"; //TODO: Link to the blog post overview of all post
             }
             else {
-                alert("Speichern fehlgeschlagen!" + "\n➔ " + response.errors[0].title + ".");
+                alert(errorMessageSaving + "\n➔ " + response.errors[0].title + ".");
             }
         }
         frontendHelper.makeHttpRequest("PUT", "/api/blog_posts/update", jsonObj, myOnloadFunction);
