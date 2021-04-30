@@ -1,5 +1,6 @@
 var frontendHelper = new FrontendHelper();
 var isShowingPreview = false;
+var lastRenderedMarkdown;
 var timer;
 var errorMessageCommunicationWithServer = "Kommunikation mit Server fehlgeschlagen!";
 var errorMessageSaving = "Speichern fehlgeschlagen!";
@@ -73,6 +74,9 @@ function updateLivePreview() {
         document.getElementById("markdown_preview").innerHTML = "";
         return; // if the markdown is only containing whitespaces, dont send a request to the server
     }
+    if (lastRenderedMarkdown == markdown.value) {
+        return; // if the user didnt change the markdown, dont send a request to the server
+    }
     var jsonObj = {};
     jsonObj["content"] = markdown.value;
     function myOnloadFunction(response) {
@@ -81,6 +85,7 @@ function updateLivePreview() {
             return;
         }
         else if (response.success) {
+            lastRenderedMarkdown = markdown.value;
             document.getElementById("markdown_preview").innerHTML = response.html;
             timer = setInterval(updateLivePreview, 1000); // restart timer if the request for rendering the preview was successfull
         }
@@ -107,6 +112,7 @@ function swapShowingLivePreview(checkBox) {
         document.getElementById("hidePreview_button").style.display = "none";
         document.getElementById("swapShowingPreview_button").style.display = "none";
         document.getElementById("preview-button-group").style.height = "0";
+        lastRenderedMarkdown = "";
         scroll(0, 400);
         timer = setInterval(updateLivePreview, 1000);
     }
