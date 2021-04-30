@@ -52,3 +52,25 @@ class BlogPostTest(unittest.TestCase):
         })
 
         self.assertFalse(response.json["success"])
+
+    def test_given_correct_expiration_date_when_create_blog_post_then_no_error(self):
+        create_and_login_test_user(self.app)
+
+        response = self.app.post("/api/blog_posts", json={
+            "title": self.POST_TITLE,
+            "content": self.POST_CONTENT,
+            "expiration_date": "2021-04-30"
+        })
+
+        self.assertTrue(response.json["success"])
+
+    def test_given_wrong_expiration_date_when_create_blog_post_then_error(self):
+        create_and_login_test_user(self.app)
+
+        response = self.app.post("/api/blog_posts", json={
+            "title": self.POST_TITLE,
+            "content": self.POST_CONTENT,
+            "expiration_date": "202.04.30"
+        })
+
+        self.assertFalse(response.json["success"])

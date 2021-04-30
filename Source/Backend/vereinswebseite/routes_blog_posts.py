@@ -1,3 +1,4 @@
+from datetime import datetime
 from http import HTTPStatus
 
 import markdown
@@ -7,7 +8,8 @@ from vereinswebseite import app, db
 from vereinswebseite.models import BlogPost, BlogPostSchema, User
 from flask import request, abort, render_template
 
-from vereinswebseite.request_utils import get_int_from_request, success_response, generate_error, generate_success
+from vereinswebseite.request_utils import get_int_from_request, success_response, generate_error, generate_success, \
+    parse_date
 
 OneBlogPost = BlogPostSchema()
 ManyBlogPost = BlogPostSchema(many=True)
@@ -16,6 +18,7 @@ title_invalid = generate_error("Titel ungültig", HTTPStatus.BAD_REQUEST)
 content_invalid = generate_error("Inhalt ungültig", HTTPStatus.BAD_REQUEST)
 user_invalid = generate_error("Benutzer ID ungültig", HTTPStatus.BAD_REQUEST)
 blog_post_id_invalid = generate_error("Blog Post ID ungültig", HTTPStatus.BAD_REQUEST)
+date_format_invalid = generate_error("Falsches Datumsformat.", HTTPStatus.BAD_REQUEST)
 not_permitted_to_edit_or_delete = generate_error("Dieser Post gehört zu einem anderen Benutzer. "
                                                  "Daher kann er nicht bearbeitet oder gelöscht werden.",
                                                  HTTPStatus.FORBIDDEN)
@@ -26,6 +29,7 @@ not_permitted_to_edit_or_delete = generate_error("Dieser Post gehört zu einem a
 def add_blog_post():
     title = request.json.get('title')
     content = request.json.get('content')
+    expiration_date_string = request.json.get('expiration_date')
 
     if title is None or title == "":
         return title_invalid
@@ -36,7 +40,12 @@ def add_blog_post():
     if current_user is None:
         return user_invalid
 
-    new_article = BlogPost(title, content, current_user.id)
+    success, expiration_date = parse_date(expiration_date_string)
+
+    if not success:
+        return date_format_invalid
+
+    new_article = BlogPost(title, content, current_user.id, datetime.now(), expiration_date)
 
     db.session.add(new_article)
     db.session.commit()
@@ -49,6 +58,7 @@ def update_blog_post():
     id_ = request.json.get('id')
     title = request.json.get('title')
     content = request.json.get('content')
+    expiration_date_string = request.json.get('expiration_date')
 
     if id_ is None or title == "":
         return blog_post_id_invalid
@@ -59,6 +69,10 @@ def update_blog_post():
     if content is None or content == "":
         return content_invalid
 
+    success, expiration_date = parse_date(expiration_date_string)
+    if not success:
+        return date_format_invalid
+
     post = BlogPost.query.get(id_)
     if post is None:
         return blog_post_id_invalid
@@ -66,6 +80,7 @@ def update_blog_post():
     if post.author_id != current_user.id:
         return not_permitted_to_edit_or_delete
 
+    post.expiration_date = expiration_date
     post.title = title
     post.content = content
     db.session.commit()
@@ -80,12 +95,17 @@ def get_all_blog_posts():
     all_posts = []
 
     for post in posts:
+        if post.expiration_date is not None and datetime.now() > post.expiration_date:
+            continue
+
         user = User.query.get(post.author_id)
 
         post_obj = {
             "id": post.id,
             "title": post.title,
             "content": post.content,
+            "creation_date": post.creation_date,
+            "expiration_date": post.expiration_date,
             "author": user.name,
             "author_id": post.author_id
         }
@@ -129,6 +149,8 @@ def render_edit_blog_post():
     return render_template('edit_blog_post.jinja2',
                            title=post.title,
                            content=post.content,
+                           creation_date=post.creation_date,
+                           expiration_date=post.expiration_date,
                            id=post.id)
 
 
@@ -140,6 +162,9 @@ def render_blog_post():
     if post is None:
         abort(HTTPStatus.NOT_FOUND)
 
+    if post.expiration_date is not None and datetime.now() > post.expiration_date:
+        abort(HTTPStatus.NOT_FOUND)
+
     html = markdown.markdown(post.content)
 
     author = User.query.get(post.author_id)
@@ -148,7 +173,11 @@ def render_blog_post():
     if author is not None:
         author_name = author.name
 
-    return render_template("blog_post.jinja2", post=html, title=post.title, author=author_name)
+    return render_template("blog_post.jinja2",
+                           post=html,
+                           title=post.title,
+                           author=author_name,
+                           creation_date=post.creation_date)
 
 
 @app.route('/api/blog_posts/render_preview', methods=['POST'])
