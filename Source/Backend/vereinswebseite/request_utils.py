@@ -1,3 +1,4 @@
+from datetime import datetime
 from http import HTTPStatus
 
 from flask import request
@@ -14,6 +15,17 @@ def get_int_from_request(key):
         return int(value_str)
     except:
         return None
+
+
+def parse_date(date_string):
+    if date_string is None:
+        return True, None
+
+    try:
+        date = datetime.strptime(date_string, '%Y-%m-%d')
+        return True, date
+    except ValueError:
+        return False, None
 
 
 def generate_success(return_values, status=HTTPStatus.OK):
