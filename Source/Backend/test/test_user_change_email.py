@@ -1,18 +1,12 @@
 import unittest
 from http import HTTPStatus
 from werkzeug import Response
-from vereinswebseite import app, db, login_manager
+from vereinswebseite import app
 from vereinswebseite.models import User
-from flask_login import current_user
-from test.test_utils import setup_test_app, create_and_login_test_user, TestUserName, TestEmail
-
+from test.test_utils import setup_test_app, create_and_login_test_user
 
 
 class UserChangeEmailTest(unittest.TestCase):
-    TestUserName = "TestUser"
-    TestEmail = "test@email.com"
-    TestPassword = "TestPassword"
-
     def setUp(self) -> None:
         app.config["TESTING"] = True
         self.app = setup_test_app()
@@ -23,13 +17,8 @@ class UserChangeEmailTest(unittest.TestCase):
     
     def test_logged_in_change_email_valid(self):
         create_and_login_test_user(self.app)
-        neueEmail = "test@mcfly.de"
+        new_email = "test@mcfly.de"
         self.app.post("/users/change_email", json={
-            "email": neueEmail
+            "email": new_email
         })
-        self.assertIsNotNone(User.query.filter_by(email=neueEmail).first())
-       
-       
-   
-
-   
+        self.assertIsNotNone(User.query.filter_by(email=new_email).first())
