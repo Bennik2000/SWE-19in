@@ -13,7 +13,7 @@
     <title>{{ title }}</title>
 
 </head>
-<body>
+<body onload="bodyOnload()">
     <div id="whole_post_page">
 
         <div class="container" id="post">
@@ -24,16 +24,20 @@
                 </div>            
             </div>
 
-                <div id="content">
-                    {{post}}
-                </div> 
-                    {% if can_edit_post %}
-                            <button type="button" class="btn btn-secondary" id="button_edit_post" onclick="editBlogPost();">Beitrag bearbeiten</button>
-                    {% endif %}
+            <div id="content">
+                <button type="button" style="display:none" class="btn btn-outline-info float-right" id="button_scrollToBottom" onclick="scrollToContent('bottom');">Zum Ende scrollen</button>
+                {{post}}
+            </div> 
 
-                    {% if true %}
-                            <button type="button" class="btn btn-danger" id="button_delete_post" onclick="deleteBlogPost();">Beitrag löschen</button>
-                    {% endif %}
+            {% if can_edit_post %}
+                    <button type="button" class="btn btn-secondary" id="button_edit_post" onclick="editBlogPost();">Beitrag bearbeiten</button>
+            {% endif %}
+            {% if can_delete_post %}
+                    <button type="button" class="btn btn-danger" id="button_delete_post" onclick="deleteBlogPost();">Beitrag löschen</button>
+            {% endif %}
+            <button type="button" style="display:none" class="btn btn-outline-info" id="button_scrollToTop" onclick="scrollToContent('top')">Zum Anfang scrollen</button>
+
+
         </div>
     </div>
 <div style="display: none;" id="id">{{ id }}</div>

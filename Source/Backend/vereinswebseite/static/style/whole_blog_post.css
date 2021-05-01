@@ -6,7 +6,6 @@
 
 #whole_post_page{
     position: fixed;
-    background-color: lightblue;
     height: 100%;
     width: 100%;
     overflow: auto; 
@@ -45,10 +44,9 @@ p {
 }
 
 #content {
-    margin-top: 8px;
-    margin-bottom: 8px;
-    padding-top: 8px;
-    padding-bottom: 8px;
+    margin-top: 1vw;
+    margin-bottom: 1vw;
+    padding-bottom: 1vw;
     border-bottom: 1px solid #e0e0e0;
     border-top: 1px solid #e0e0e0;
     font-size: 1vw !important;
@@ -77,23 +75,29 @@ button {
     font-size: 2.5vw;
 }
 
-h1 {
-    font-size: 2.6vw !important;
-}
-h2 {
+#content h1 {
+    margin-top: 2vw;
     font-size: 2.3vw !important;
 }
+h2 {
+    margin-top: 1.8vw;
+    font-size: 2.1vw !important;
+}
 h3 {
-    font-size: 2vw !important;
+    margin-top: 1.6vw;
+    font-size: 1.9vw !important;
 }
 h4 {
+    margin-top: 1.4vw;
     font-size: 1.7vw !important;
 }
 h5 {
-    font-size: 1.4vw !important;
+    margin-top: 1.2vw;
+    font-size: 1.5vw !important;
 }
 h6 {
-    font-size: 1.1vw !important;
+    margin-top: 1vw;
+    font-size: 1.4vw !important;
 }
 
 @media (max-width: 768px) 
@@ -114,23 +118,28 @@ h6 {
         font-size: 1.5vw !important;
     }
 
-    h1 {
-        font-size: 3.5vw !important;
+    #content h1 {
+        margin-top: 2.5vw;
+        font-size: 2.5vw !important;
       }
       h2 {
-        font-size: 3.2vw !important;
-      }
-      h3 {
-        font-size: 2.9vw !important;
-      }
-      h4 {
-        font-size: 2.6vw !important;
-      }
-      h5 {
+        margin-top: 2.3vw;
         font-size: 2.3vw !important;
       }
-      h6 {
-        font-size: 2vw !important;
+      h3 {
+        margin-top: 2.1vw;
+        font-size: 2.1vw !important;
       }
-      
+      h4 {
+        margin-top: 1.9vw;
+        font-size: 1.9vw !important;
+      }
+      h5 {
+        margin-top: 1.7vw;
+        font-size: 1.7vw !important;
+      }
+      h6 {
+        margin-top: 1.5vw;
+        font-size: 1.5vw !important;
+      }      
 }

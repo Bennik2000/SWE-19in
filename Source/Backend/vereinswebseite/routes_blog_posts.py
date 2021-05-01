@@ -174,7 +174,7 @@ def render_blog_post():
         author_name = author.name
 
     can_edit = current_user.is_authenticated
-    can_delete = current_user.is_authenticated and current_user.id == post.id
+    can_delete = current_user.is_authenticated
 
     return render_template("whole_blog_post.jinja2",
                            can_edit_post=can_edit,
