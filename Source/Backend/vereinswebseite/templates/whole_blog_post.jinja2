@@ -13,7 +13,7 @@
     <title>{{ title }}</title>
 
 </head>
-<body onload="bodyOnload()">
+<body onload="showOrHideScrollButtons()">
     <div id="whole_post_page">
 
         <div class="container" id="post">
@@ -25,7 +25,7 @@
             </div>
 
             <div id="content">
-                <button type="button" style="display:none" class="btn btn-outline-info float-right" id="button_scrollToBottom" onclick="scrollToContent('bottom');">Zum Ende scrollen</button>
+                <button type="button" style="display:none; margin-top: 0.5vw" class="btn btn-outline-info float-right" id="button_scrollToBottom" onclick="scrollToContent('bottom');">Zum Ende scrollen</button>
                 {{post}}
             </div> 
 

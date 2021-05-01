@@ -1,10 +1,15 @@
 var frontendHelper = new FrontendHelper();
-function bodyOnload() {
+function showOrHideScrollButtons() {
     var contentDiv = document.getElementById("content");
     if (contentDiv.scrollHeight > contentDiv.clientHeight || contentDiv.getBoundingClientRect().bottom > (window.innerHeight || contentDiv.clientHeight)) {
         document.getElementById("button_scrollToBottom").style.display = "block";
         document.getElementById("button_scrollToTop").style.display = "inline-flex";
     }
+    else {
+        document.getElementById("button_scrollToBottom").style.display = "none";
+        document.getElementById("button_scrollToTop").style.display = "none";
+    }
+    window.addEventListener('resize', showOrHideScrollButtons);
 }
 function editBlogPost() {
     var id = document.getElementById("id").innerHTML;
