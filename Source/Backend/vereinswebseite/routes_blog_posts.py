@@ -182,7 +182,8 @@ def render_blog_post():
                            post=html,
                            title=post.title,
                            author=author_name, 
-                           id = post_id)
+                           id = post_id,
+                           date = post.creation_date)
 
 
 @app.route('/api/blog_posts/render_preview', methods=['POST'])

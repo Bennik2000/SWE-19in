@@ -1,4 +1,5 @@
 let frontendHelper = new FrontendHelper()
+window.addEventListener('resize', showOrHideScrollButtons);
 
 function showOrHideScrollButtons() {
     var contentDiv = document.getElementById("content");
@@ -11,8 +12,6 @@ function showOrHideScrollButtons() {
         document.getElementById("button_scrollToBottom").style.display = "none";
         document.getElementById("button_scrollToTop").style.display = "none";
     }
-
-    window.addEventListener('resize', showOrHideScrollButtons);
 }
 
 function editBlogPost() {
