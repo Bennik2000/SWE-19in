@@ -11,9 +11,8 @@
     <title>Blog Post bearbeiten</title>
 </head>
 
-<body>
+<body onload="setExpirationDate()">
     <form action="#" onsubmit="return false" class ='card p-3 bg-light'> 
-    
         <h1 id="page_h1">Blog Post bearbeiten</h1>
         <div class="form-group">
             <label for="title">Titel</label>
@@ -38,6 +37,11 @@
             <label for="preview">Vorschau</label>
             <div class="form-group" id="markdown_preview"></div>
         </div>
+        <p id="datePicker_p">
+            Bis wann soll der Post sichtbar sein? (Kein Pflichtfeld):<br>
+            <input id="datePicker" type="date" min="" onclick="getCurrentDate()">
+        </p>
+        
         <div id="bottom-button-group">
             <button class="btn btn-primary btn-sm" id="swapShowingPreview_button" type="button" onclick="swapShowingPreview()">Vorschau anzeigen</button>
             <button class="btn btn-success btn-sm" id="save" type="submit" onclick="saveEditedBlogPost()">Speichern</button>
@@ -45,6 +49,7 @@
         </div>
     </form>
 <div style="display: none;" id="id">{{ id }}</div>
+<div style="display: none;" id="expiration_date">{{ expiration_date }}</div>
 
 <script>var exports = {};</script>
 <script src= "/static/src/FrontendHelper.js"></script>

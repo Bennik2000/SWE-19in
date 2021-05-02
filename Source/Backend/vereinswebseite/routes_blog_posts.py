@@ -103,7 +103,7 @@ def get_all_blog_posts():
         post_obj = {
             "id": post.id,
             "title": post.title,
-            "content": post.content,
+            "content": post.make_post_summary(),
             "creation_date": post.creation_date,
             "expiration_date": post.expiration_date,
             "author": user.name,
