@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/style/whole_blog_post.css">
+
+
+
+    <title>{{ title }}</title>
+
+</head>
+<body onload="showOrHideScrollButtons()">
+    <div id="whole_post_page">
+
+        <div class="container" id="post">
+            <div id="post_head">
+                <h1 id="title">{{title}}</h1>
+                <div id = "authorAndDate_div">
+                    <p>{{author}} <br> {{date.strftime("%d.%m.%Y")}} </p>
+                </div>            
+            </div>
+
+            <div id="content">
+                <button type="button" style="display:none; margin-top: 0.5vw" class="btn btn-outline-info float-right" id="button_scrollToBottom" onclick="scrollToContent('bottom');">Zum Ende scrollen</button>
+                {{post}}
+            </div> 
+
+            {% if can_edit_post %}
+                    <button type="button" class="btn btn-secondary" id="button_edit_post" onclick="editBlogPost();">Beitrag bearbeiten</button>
+            {% endif %}
+            {% if can_delete_post %}
+                    <button type="button" class="btn btn-danger" id="button_delete_post" onclick="deleteBlogPost();">Beitrag löschen</button>
+            {% endif %}
+            <button type="button" style="display:none" class="btn btn-outline-info" id="button_scrollToTop" onclick="scrollToContent('top')">Zum Anfang scrollen</button>
+
+
+        </div>
+    </div>
+<div style="display: none;" id="id">{{ id }}</div>
+
+<script>var exports = {};</script>
+<script src= "/static/src/FrontendHelper.js"></script>
+<script src= "/static/src/whole_blog_post.js"></script>
+</body>
+</html>
