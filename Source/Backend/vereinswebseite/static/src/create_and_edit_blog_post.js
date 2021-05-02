@@ -126,11 +126,13 @@ function swapShowingLivePreview(checkBox) {
 function saveCreatedBlogPost() {
     var title = document.getElementById("title");
     var markdown = document.getElementById("markdown");
+    var expiration_date = document.getElementById("datePicker");
     if (title.value.trim() && markdown.value.trim()) // checking if the strings are containing only whitespaces
      {
         var jsonObj = {};
         jsonObj["title"] = title.value;
         jsonObj["content"] = markdown.value;
+        jsonObj["expiration_date"] = expiration_date.value;
         function myOnloadFunction(response) {
             if (response == null) {
                 alert(errorMessageCommunicationWithServer);
@@ -153,12 +155,14 @@ function saveCreatedBlogPost() {
 function saveEditedBlogPost() {
     var title = document.getElementById("title");
     var markdown = document.getElementById("markdown");
+    var expiration_date = document.getElementById("datePicker");
     if (title.value.trim() && markdown.value.trim()) // Checking if the strings are containing only whitespaces
      {
         var jsonObj = {};
         jsonObj["id"] = document.getElementById("id").innerHTML;
         jsonObj["title"] = title.value;
         jsonObj["content"] = markdown.value;
+        jsonObj["expiration_date"] = expiration_date.value;
         function myOnloadFunction(response) {
             if (response == null) {
                 alert(errorMessageCommunicationWithServer);
@@ -183,4 +187,24 @@ function cancelCreatingOrEditing(alertMessage) {
     if (wantsToCancel) {
         window.history.back();
     }
+}
+function getCurrentDate() {
+    var date = new Date();
+    var minimum = document.getElementById("datePicker");
+    var month = (date.getMonth() + 1).toString();
+    var day = (date.getDate()).toString();
+    if (month.length < 2) {
+        month = "0" + month;
+    }
+    if (day.length < 2) {
+        day = "0" + day;
+    }
+    var currentDate = date.getFullYear() + "-" + month + "-" + day;
+    minimum.setAttribute("min", currentDate);
+}
+function setExpirationDate() {
+    var minimum = document.getElementById("datePicker");
+    var currentExpirationDate = document.getElementById("expiration_date").innerHTML;
+    currentExpirationDate = currentExpirationDate.substring(0, 10);
+    minimum.setAttribute("value", currentExpirationDate);
 }
