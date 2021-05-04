@@ -28,7 +28,7 @@ function delete_account() {
 function logout() {
     function myOnloadFunction(response) {
         if (response) {
-            if (response.success = true) {
+            if (response.success == true) {
                 window.location.href = "/login";
             }
             else {
@@ -43,17 +43,23 @@ function logout() {
     frontendHelper.makeHttpRequest("POST", "/api/users/logout", jsonObj, myOnloadFunction);
 }
 function email_save() {
-    /*let newEmail=document.getElementById("current_email_new");
-    function myOnloadFunction(response){
-        document.getElementById("Username").innerHTML=response.name;
-        document.getElementById("current_email").innerHTML=response.email;
-        
+    var newEmail = document.getElementById("current_email_new");
+    function myOnloadFunction(response) {
+        if (response) {
+            if (response.success == true) {
+                alert("E-Mail wurde erfolgreich geändert!");
+            }
+            else {
+                alert("Fehlgeschlagen! Bitte versuchen Sie es erneut!");
+            }
+        }
+        else {
+            alert("Server fehler!");
+        }
     }
-    let jsonObj={};
-    jsonObj["email"]=
-
-    frontendHelper.makeHttpRequest("GET", "/api/users/personal_info", jsonObj, myOnloadFunction);
-*/ 
+    var jsonObj = {};
+    jsonObj["email"] = newEmail.value;
+    frontendHelper.makeHttpRequest("POST", "/users/change_email", jsonObj, myOnloadFunction);
 }
 function password_save() {
     var renamenewPassword = document.getElementById("rename_new_password");
@@ -202,6 +208,7 @@ function get_user_info() {
     function myOnloadFunction(response) {
         document.getElementById("Username").innerHTML = response.name;
         document.getElementById("current_email").innerHTML = response.email;
+        document.getElementById("old_email").innerHTML = response.email;
     }
     var jsonObj = {};
     frontendHelper.makeHttpRequest("GET", "/api/users/personal_info", jsonObj, myOnloadFunction);

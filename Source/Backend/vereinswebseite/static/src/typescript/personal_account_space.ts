@@ -32,7 +32,7 @@ function delete_account(){
 function logout(){
     function myOnloadFunction(response){
         if(response){
-            if (response.success=true){
+            if (response.success==true){
                 window.location.href="/login"
             
             }else{
@@ -47,17 +47,25 @@ function logout(){
 }
 
 function email_save() {
-    /*let newEmail=document.getElementById("current_email_new");
+    let newEmail=document.getElementById("current_email_new") as HTMLInputElement;
     function myOnloadFunction(response){
-        document.getElementById("Username").innerHTML=response.name;
-        document.getElementById("current_email").innerHTML=response.email;
+        if(response){
+            if (response.success==true){
+            alert("E-Mail wurde erfolgreich geändert!")
+            }else{
+            alert("Fehlgeschlagen! Bitte versuchen Sie es erneut!")
+            }  
+        }else{
+            alert("Server fehler!")
+        }     
+         
         
     }
     let jsonObj={};
-    jsonObj["email"]=
+    jsonObj["email"]= newEmail.value;
 
-    frontendHelper.makeHttpRequest("GET", "/api/users/personal_info", jsonObj, myOnloadFunction);
-*/}
+    frontendHelper.makeHttpRequest("POST", "/users/change_email", jsonObj, myOnloadFunction);
+}
 
 function password_save() {
     
@@ -237,6 +245,7 @@ function get_user_info(){
     function myOnloadFunction(response){
         document.getElementById("Username").innerHTML=response.name;
         document.getElementById("current_email").innerHTML=response.email;
+        document.getElementById("old_email").innerHTML=response.email;
         
     }
     let jsonObj ={};
