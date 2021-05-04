@@ -64,7 +64,7 @@ function email_save() {
     let jsonObj={};
     jsonObj["email"]= newEmail.value;
 
-    frontendHelper.makeHttpRequest("POST", "/users/change_email", jsonObj, myOnloadFunction);
+    frontendHelper.makeHttpRequest("POST", "/api/users/change_email", jsonObj, myOnloadFunction);
 }
 
 function password_save() {
