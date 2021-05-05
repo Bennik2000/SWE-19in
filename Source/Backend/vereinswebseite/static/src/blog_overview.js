@@ -1,4 +1,13 @@
 var frontendHelper = new FrontendHelper();
+function add_post_button() {
+    window.location.href = "/account";
+}
+function post_more_button() {
+    window.location.href = "/login";
+}
+function post_edit_button() {
+    window.location.href = "/account";
+}
 function get_all_blogs() {
     var post_list = document.getElementById("post_list");
     function myOnloadFunction(response) {
@@ -37,6 +46,7 @@ function get_all_blogs() {
                         var post_more = document.createElement("div");
                         post_more.classList.add("col-md-1");
                         post_more.classList.add("btn");
+                        post_more.setAttribute("onclick", "post_more_button();");
                         post_more.setAttribute("id", "post_more");
                         post_more.setAttribute("href", "#");
                         post_more.innerHTML = "mehr...";
@@ -45,6 +55,7 @@ function get_all_blogs() {
                         post_edit.classList.add("offset-md-10");
                         post_edit.classList.add("btn");
                         post_edit.classList.add("btn-primary");
+                        post_edit.setAttribute("onclick", "post_edit_button();");
                         post_edit.setAttribute("id", "post_edit");
                         post_edit.setAttribute("href", "#");
                         post_edit.innerHTML = "edit";
