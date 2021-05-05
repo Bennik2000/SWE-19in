@@ -27,6 +27,26 @@ class FrontendHelper {
             }
         }
     }
+    
+    sendFile(request: string, route: string, formData: FormData, onloadFunction){
+        if (!this.isTesting) {
+            var xhttp = new XMLHttpRequest();
+            xhttp.open(request, route, true);
+            xhttp.setRequestHeader("Content-Type", "multipart/form-data");
+            xhttp.responseType = "json";
+            xhttp.send(formData);
+            xhttp.onload = () => {
+                onloadFunction(xhttp.response)
+            };
+        }
+        else {
+            if (this.testRequestCallback != null)
+            {
+                var response = this.testRequestCallback(request, route, formData);
+                onloadFunction(response);
+            }
+        }
+    }
 
 }
 export const frontendHelper = new FrontendHelper();

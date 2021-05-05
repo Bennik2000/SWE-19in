@@ -9,6 +9,8 @@ let errorMessageNoMarkdownEntered = "Um eine Vorschau anzeigen zu lassen bitte M
 let errorMessageShowingPreview = "Anzeigen der Vorschau fehlgeschlagen!";
 let errorMessageUpdatingPreview = "Aktualisieren der Vorschau fehlgeschlagen!";
 let errorMessageUpdatingOrShowingLivePreview = "Live-Vorschau: Anzeigen/Aktualisieren fehlgeschlagen!";
+let errorMessageNoFilesSelected = "Bitte Bilder zum Hochladen auswählen!";
+let errorMessageUploadingFiles = "Hochladen fehlgeschlagen!";
 
 function swapShowingPreview() {
     var markdown = document.getElementById("markdown") as HTMLInputElement;
@@ -242,4 +244,77 @@ function setExpirationDate() {
     var currentExpirationDate = document.getElementById("expiration_date").innerHTML;
     currentExpirationDate = currentExpirationDate.substring(0,10);
     minimum.setAttribute("value", currentExpirationDate);
+}
+
+
+function sendFiles() {
+    let filesInput = document.getElementById("filesInput") as HTMLInputElement;
+
+    
+    if (filesInput.files.length == 0) {
+        alert(errorMessageNoFilesSelected);
+        return;
+    }
+    var x = filesInput.files[0];
+    let testImage = document.getElementById("testImage");
+    testImage.src = URL.createObjectURL(x);
+
+    /*let numberOfFiles = filesInput.files.length;
+
+    if (numberOfFiles == 0) {
+        alert(errorMessageNoFilesSelected);
+        return;
+    }
+
+    var formData = new FormData();
+
+    for (var i = 0; i < numberOfFiles; i++) {
+        formData.append("image", filesInput.files[i]);
+    }
+
+    var respondedFileNames = []; */
+    var respondedFileName = "";
+
+    var data = {"image": filesInput.files[0]}
+
+    var formData = new FormData();
+    formData.append("image", filesInput.files[0], filesInput.files[0].name);
+    var formDataValue = formData.get("image"); 
+
+    function myOnloadFunction(response) {
+        if(response == null)
+        {
+            alert(errorMessageCommunicationWithServer);
+            return;
+        }
+        else if (response.success) {
+            respondedFileName = response.filename;
+            //loadAndShowImage(respondedFileName);
+        }
+        else {
+            alert(errorMessageUploadingFiles + "\n➔ " + response.errors[0].title + ".");
+        }
+    }
+    frontendHelper.sendFile("POST", "/api/upload_image", formData, myOnloadFunction);
+}
+
+function loadAndShowImage(fileName) {
+    /*let jsonObj = {};
+    var image: File;
+
+    function myOnloadFunction(response) {
+        if(response == null)
+        {
+            alert(errorMessageCommunicationWithServer);
+            return;
+        }
+        else if (response.success) {
+            image = response.image;
+            document.getElementById("testImage").src = URL.createObjectURL(image);
+        }
+        else {
+            alert(errorMessageUploadingFiles + "\n➔ " + response.errors[0].title + ".");
+        }
+    }
+    frontendHelper.makeHttpRequest("GET", "/api/_uploads/images/" + fileName, jsonObj, myOnloadFunction);*/
 }
