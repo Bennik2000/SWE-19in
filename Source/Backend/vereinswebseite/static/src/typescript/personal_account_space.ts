@@ -39,7 +39,7 @@ function logout(){
             alert("Logout fehlgeschlagen! Bitte versuchen Sie es erneut!")
             }  
         }else{
-            alert("Server fehler!")
+            alert("Kommunikation mit Server fehlgeschlagen!")
         }      
     }
     let jsonObj={};
@@ -52,7 +52,7 @@ function email_save() {
     let oldEmail=document.getElementById("");
 
     if (!frontendHelper.validateEmail(newEmail.value)) {
-        alert("Email nicht valide! Bitte überprüfen");
+        alert("E-Mail nicht valide! Bitte überprüfen");
         return;
     }else if(newEmail.value == currentEmail.innerHTML){
         alert("Fehler! Die E-Mail Adresse ist identisch mit der aktuell Verwendeten");
