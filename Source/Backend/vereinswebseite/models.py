@@ -24,7 +24,6 @@ class BlogPost(db.Model):
         return f'BlogPost(id={self.id}, author_id={self.author_id},\n' \
                f'\ttitle="{self.title}",\n\tcontent="{self.content}")'
 
-      
     def make_post_summary(self):
         summary_length_in_words = 100
 
@@ -34,13 +33,11 @@ class BlogPost(db.Model):
             return ' '.join(words[0:summary_length_in_words]) + "..."
         return self.content
 
-      
     def is_expired(self):
         if self.expiration_date is None:
             return False
 
         return self.expiration_date.date() < datetime.today().date()
-
 
 
 class User(UserMixin, db.Model):
@@ -74,6 +71,19 @@ class PasswordResetToken(db.Model):
     def __init__(self, token, user):
         self.token = token
         self.user = user
+
+
+class Role(db.Model):
+    __tablename__ = 'role'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50), unique=True)
+
+
+class UserRoles(db.Model):
+    __tablename__ = 'user_roles'
+    id = db.Column(db.Integer(), primary_key=True)
+    user_id = db.Column(db.Integer(), db.ForeignKey('user.id', ondelete='CASCADE'))
+    role_id = db.Column(db.Integer(), db.ForeignKey('role.id', ondelete='CASCADE'))
 
 
 class UserSchema(ma.Schema):
