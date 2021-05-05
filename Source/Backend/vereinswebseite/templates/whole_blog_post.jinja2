@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link rel="stylesheet" type="text/css" href="/style/whole_blog_post.css">
+
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script> scr="https://kit.frontawesome.com/b99e675b6e.js"</script>
+
+    <title>{{ title }}</title>
+
+</head>
+<body>
+    <div id="whole_post_page">
+
+        <div class="container" id="post">
+            <div id="post_head">
+
+                <h1 id="title">{{title}}</h1>
+                <h4 id="author">{{author}}</h4>
+                <p id="date">{{date}}</p>
+
+
+                <div id="content">
+                    <p id="post_text">{{post}}</p>
+
+                </div>
+
+                <h2 id="picture_title">Bilder</h2>
+                <div class="wrapped" id="all_pictures">
+                    <div id='all_pictures'>
+                            <img src="bild1" width="120" height="96" alt="" style="margin:5px" float="left">
+                            <img src="bild2" width="120" height="96" alt="" style="margin:5px" float="left">
+                            <img src="bild3" width="120" height="96" alt="" style="margin:5px" float="left">
+                            <img src="bild4" width="120" height="96" alt="" style="margin:5px" float="left">
+                            <img src="bild4" width="120" height="96" alt="" style="margin:5px" float="left">
+                            <img src="bild4" width="120" height="96" alt="" style="margin:5px" float="left">
+                    </div>
+
+                </div>
+
+                <div class="d-md-flex flex-md-row justify-content-md mt-1">
+
+                    {% if can_edit_post %}
+                        <button type="button" class="btn btn-secondary" id="button_edit_post" onclick="post_edit();">Beitrag Bearbeiten</button>
+                    {% endif %}
+
+                    {% if can_delete_post %}
+                        <button type="button" class="btn btn-secondary" id="button_delete_post" onclick="post_delete();">Beitrag löschen</button>
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="container" id="comments" style="display:none;">
+
+            <h1 id="comment_title">Kommentare</h1>
+
+            <div id="exist_comment">
+
+                <p id="comment_owner">Max Mustermann</p>
+
+                <div id="exist_comment_text">
+                    <p id="post_text">Hahahaha lol</p>
+
+                </div>
+            </div>
+
+
+            <div id="new_comment_div">
+                <label for="comment_description" class="form-label">neuer Kommentar erstellen</label>
+                <textarea class="form-control form-control-md" id="comment_description" rows="3" readonly
+                aria-describedby="comment_description" placeholder="Kommentar hinzufügen" ></textarea>
+                <div class="d-md-flex flex-md-row justify-content-md mt-1">
+                    <button type="button" class="btn btn-secondary" id="comment_description_edit" onclick="comment_edit();">Neuer Kommentar erstellen</button>
+                    <button type="button" class="btn btn-secondary" id="comment_description_save" disabled onclick="comment_save();">Neuer Kommentar Speichern</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+<script>var exports = {};</script>
+<script src= "/static/src/FrontendHelper.js"></script>
+<script src= "/static/src/rename_password.js"></script>
+</body>
+</html>

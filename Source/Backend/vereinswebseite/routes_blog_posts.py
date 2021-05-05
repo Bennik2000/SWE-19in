@@ -148,7 +148,7 @@ def render_blog_post():
     if author is not None:
         author_name = author.name
 
-    return render_template("blog_post.jinja2", post=html, title=post.title, author=author_name)
+    return render_template("whole_blog_post.jinja2", post=html, title=post.title, author=author_name)
 
 
 @app.route('/blog_posts/render_preview', methods=['POST'])
