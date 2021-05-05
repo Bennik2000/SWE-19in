@@ -247,7 +247,7 @@ function setExpirationDate() {
 }
 
 
-function sendFiles() {
+function uploadImage() {
     let filesInput = document.getElementById("filesInput") as HTMLInputElement;
  
     if (filesInput.files.length == 0) {
@@ -276,6 +276,8 @@ function sendFiles() {
 }
 
 function embedImageIntoMarkdown(filename) {
-    
-    var link = "/_uploads/images/" + filename;
+    let markdown = document.getElementById("markdown") as HTMLInputElement;
+
+    var imageURL = "![](/_uploads/images/" + filename + ")";
+    markdown.value += "  \n" + imageURL;
 }

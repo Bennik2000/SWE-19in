@@ -210,7 +210,7 @@ function setExpirationDate() {
     currentExpirationDate = currentExpirationDate.substring(0, 10);
     minimum.setAttribute("value", currentExpirationDate);
 }
-function sendFiles() {
+function uploadImage() {
     var filesInput = document.getElementById("filesInput");
     if (filesInput.files.length == 0) {
         alert(errorMessageNoFilesSelected);
@@ -234,5 +234,7 @@ function sendFiles() {
     frontendHelper.sendFile("POST", "/api/upload_image", formData, myOnloadFunction);
 }
 function embedImageIntoMarkdown(filename) {
-    var link = "/_uploads/images/" + filename;
+    var markdown = document.getElementById("markdown");
+    var imageURL = "![](/_uploads/images/" + filename + ")";
+    markdown.value += "  \n" + imageURL;
 }
