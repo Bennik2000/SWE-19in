@@ -36,7 +36,7 @@ function logout() {
             }
         }
         else {
-            alert("Server fehler!");
+            alert("Kommunikation mit Server fehlgeschlagen!");
         }
     }
     var jsonObj = {};
@@ -47,11 +47,11 @@ function email_save() {
     var currentEmail = document.getElementById("current_email");
     var oldEmail = document.getElementById("old_email");
     if (!frontendHelper.validateEmail(newEmail.value)) {
-        alert("Email nicht valide! Bitte überprüfen");
+        alert("E-Mail nicht valide! Bitte überprüfen");
         return;
     }
     else if (newEmail.value == currentEmail.innerHTML) {
-        alert("Fehler! Die E-Mail Adresse is identisch mit der aktuell Verwendeten");
+        alert("Fehler! Die E-Mail Adresse ist identisch mit der aktuell Verwendeten");
         return;
     }
     function myOnloadFunction(response) {
