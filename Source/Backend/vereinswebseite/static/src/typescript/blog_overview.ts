@@ -72,10 +72,11 @@ function get_all_blogs(){
                     post_edit.classList.add("offset-md-10") 
                     post_edit.classList.add("btn");
                     post_edit.classList.add("btn-primary");
+                    post_edit.classList.add("pl-2");
                     post_edit.setAttribute("onclick","post_edit_button();");
                     post_edit.setAttribute("id","post_edit");
                     post_edit.setAttribute("href","#");
-                    post_edit.innerHTML = "edit";
+                    post_edit.innerHTML = "bearbeiten";
 
                     post_meta.appendChild(post_author);
                     row.appendChild(post_titel);
