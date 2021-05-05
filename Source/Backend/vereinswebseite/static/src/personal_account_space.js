@@ -45,7 +45,7 @@ function logout() {
 function email_save() {
     var newEmail = document.getElementById("current_email_new");
     var currentEmail = document.getElementById("current_email");
-    var oldEmail = document.getElementById("");
+    var oldEmail = document.getElementById("old_email");
     if (!frontendHelper.validateEmail(newEmail.value)) {
         alert("Email nicht valide! Bitte überprüfen");
         return;

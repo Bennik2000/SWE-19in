@@ -49,7 +49,7 @@ function logout(){
 function email_save() {
     let newEmail=document.getElementById("current_email_new") as HTMLInputElement;
     let currentEmail=document.getElementById("current_email");
-    let oldEmail=document.getElementById("");
+    let oldEmail=document.getElementById("old_email");   
 
     if (!frontendHelper.validateEmail(newEmail.value)) {
         alert("Email nicht valide! Bitte überprüfen");
