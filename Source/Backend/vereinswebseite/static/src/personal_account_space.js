@@ -60,6 +60,7 @@ function email_save() {
                 alert("E-Mail wurde erfolgreich geändert!");
                 oldEmail.innerHTML = newEmail.value;
                 currentEmail.innerHTML = newEmail.value;
+                newEmail.value = "";
             }
             else {
                 alert("Fehlgeschlagen! Bitte versuchen Sie es erneut!");
