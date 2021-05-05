@@ -1,4 +1,5 @@
 import jinja2
+import os
 
 from vereinswebseite import limiter, app, db
 import vereinswebseite
@@ -40,7 +41,7 @@ def add_test_user() -> User:
 
 def create_and_login_test_user(test_app) -> User:
     test_user = add_test_user()
-    test_app.post("/users/login", json={
+    test_app.post("/api/users/login", json={
         "email": TestEmail,
         "password": TestPassword
     })

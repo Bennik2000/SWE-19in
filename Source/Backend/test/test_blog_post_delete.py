@@ -15,7 +15,7 @@ class DeleteBlogPostTest(unittest.TestCase):
         db.session.add(BlogPost("Title", "Content", 1))
         db.session.commit()
 
-        response = self.app.delete("/blog_posts/delete", json={
+        response = self.app.delete("/api/blog_posts/delete", json={
             "id": "1",
         })
 
@@ -29,7 +29,7 @@ class DeleteBlogPostTest(unittest.TestCase):
         db.session.add(BlogPost("Title1", "Content1", 2))
         db.session.commit()
 
-        response = self.app.delete("/blog_posts/delete", json={
+        response = self.app.delete("/api/blog_posts/delete", json={
             "id": "1",
         })
 
@@ -43,7 +43,7 @@ class DeleteBlogPostTest(unittest.TestCase):
         db.session.add(BlogPost("Title", "Content", 1))
         db.session.commit()
 
-        response = self.app.delete("/blog_posts/delete", json={
+        response = self.app.delete("/api/blog_posts/delete", json={
             "id": "1",
         })
 

@@ -24,15 +24,15 @@ class UserRegistrationTest(TestCase):
 
     def test_delete_user(self):
         self._prepare_access_token()
-        self.app.post("/users", json=self.ValidTestJson)
-        self.app.post("/users/login", json=self.ValidTestJson)
-        response = self.app.delete("/users/delete")
+        self.app.post("/api/users", json=self.ValidTestJson)
+        self.app.post("/api/users/login", json=self.ValidTestJson)
+        response = self.app.delete("/api/users/delete")
         self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertIsNone(db.session.query(User.name).filter_by(name='TestUser').first())
 
     def test_register_user_valid_user(self):
         self._prepare_access_token()
-        response = self.app.post("/users", json=self.ValidTestJson)
+        response = self.app.post("/api/users", json=self.ValidTestJson)
         print(f"JSON response: {response.json}")
         self.assertTrue(response.json.items() >= {"success": True}.items())
         self._assert_access_token_deleted()
@@ -41,7 +41,7 @@ class UserRegistrationTest(TestCase):
         response = None
         for i in range(2):
             self._prepare_access_token()
-            response = self.app.post("/users", json=self.ValidTestJson)
+            response = self.app.post("/api/users", json=self.ValidTestJson)
         print(f"JSON response: {response.json}")
         self._assert_user_not_registered_and_error(response)
         self._assert_access_token_not_deleted()
@@ -93,7 +93,7 @@ class UserRegistrationTest(TestCase):
 
     def _send_invalid_json_and_assert_error(self, invalid_json):
         self._prepare_access_token()
-        response = self.app.post("/users", json=invalid_json)
+        response = self.app.post("/api/users", json=invalid_json)
         print(f"JSON response: {response.json}")
         self._assert_user_not_registered_and_error(response)
         self._assert_access_token_not_deleted()

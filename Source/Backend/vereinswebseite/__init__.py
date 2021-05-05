@@ -1,4 +1,5 @@
 import datetime
+import os
 
 from flask import Flask
 from flask_limiter import Limiter
@@ -7,6 +8,7 @@ from flask_mail import Mail
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from flask_login import LoginManager
+from flask_uploads import UploadSet, IMAGES, configure_uploads
 
 app = Flask("VereinSWEbseite",
             template_folder="vereinswebseite/templates",
@@ -25,7 +27,11 @@ app.config['MAIL_PASSWORD'] = '2021SWEsem4'
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
 
+app.config['UPLOADED_IMAGES_DEST'] = os.path.join(app.root_path, "uploads")
+
 mail = Mail(app)
+images = UploadSet('images', IMAGES)
+configure_uploads(app, images)
 
 limiter = Limiter(
     app,
@@ -44,5 +50,6 @@ from vereinswebseite import routes_users  # noqa: E402
 from vereinswebseite import routes_accss_token  # noqa: E402
 from vereinswebseite import routes_blog_posts  # noqa: E402
 from vereinswebseite import routes_static  # noqa: E402
+from vereinswebseite import routes_uploads  # noqa: E402
 
 db.create_all()

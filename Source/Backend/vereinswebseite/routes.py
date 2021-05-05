@@ -3,8 +3,9 @@ from http import HTTPStatus
 
 from vereinswebseite import app
 from flask import render_template
+from flask_login import login_required
 
-from vereinswebseite.errors import generate_error
+from vereinswebseite.request_utils import success_response, generate_error
 
 too_many_requests = generate_error("Too many requests", HTTPStatus.TOO_MANY_REQUESTS)
 unauthorized = generate_error("Unauthorized", HTTPStatus.UNAUTHORIZED)
@@ -17,12 +18,13 @@ def index():
 
 @app.route('/ping')
 def ping_handler():
-    return {"success": True}
+    return success_response
 
 
 @app.route('/create_account')
 def create_account():
     return render_template('create_account.jinja2')
+
 
 @app.route('/login')
 def render_login():
@@ -30,8 +32,14 @@ def render_login():
 
 
 @app.route('/account')
+@login_required
 def personal_account_space():
     return render_template('personal_account_space.jinja2')
+
+@app.route('/blog_overview')
+def render_blog_overview():
+    return render_template('blog_overview.jinja2')
+
 
   
 @app.errorhandler(HTTPStatus.TOO_MANY_REQUESTS)
@@ -49,10 +57,11 @@ def unauthorized_handler(e):
     response.content_type = "application/json"
     return response
 
+
 @app.route('/reset_password')
 def render_reset_password():
     return render_template('reset_password.jinja2')
 
-@app.route('/blog_overview')
-def render_blog_overview():
-    return render_template('blog_overview.jinja2')
+
+
+

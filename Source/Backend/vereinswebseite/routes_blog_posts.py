@@ -1,12 +1,15 @@
+from datetime import datetime
 from http import HTTPStatus
 
 import markdown
 from flask_login import login_required, current_user
 
-from vereinswebseite import app, db
-from vereinswebseite.errors import generate_error
+from vereinswebseite import app, db, limiter
 from vereinswebseite.models import BlogPost, BlogPostSchema, User
-from flask import request, jsonify, abort, render_template
+from flask import request, abort, render_template
+
+from vereinswebseite.request_utils import get_int_from_request, success_response, generate_error, generate_success, \
+    parse_date
 
 OneBlogPost = BlogPostSchema()
 ManyBlogPost = BlogPostSchema(many=True)
@@ -15,16 +18,18 @@ title_invalid = generate_error("Titel ungültig", HTTPStatus.BAD_REQUEST)
 content_invalid = generate_error("Inhalt ungültig", HTTPStatus.BAD_REQUEST)
 user_invalid = generate_error("Benutzer ID ungültig", HTTPStatus.BAD_REQUEST)
 blog_post_id_invalid = generate_error("Blog Post ID ungültig", HTTPStatus.BAD_REQUEST)
+date_format_invalid = generate_error("Falsches Datumsformat.", HTTPStatus.BAD_REQUEST)
 not_permitted_to_edit_or_delete = generate_error("Dieser Post gehört zu einem anderen Benutzer. "
                                                  "Daher kann er nicht bearbeitet oder gelöscht werden.",
                                                  HTTPStatus.FORBIDDEN)
 
 
-@app.route('/blog_posts', methods=['POST'])
+@app.route('/api/blog_posts', methods=['POST'])
 @login_required
 def add_blog_post():
     title = request.json.get('title')
     content = request.json.get('content')
+    expiration_date_string = request.json.get('expiration_date')
 
     if title is None or title == "":
         return title_invalid
@@ -35,19 +40,25 @@ def add_blog_post():
     if current_user is None:
         return user_invalid
 
-    new_article = BlogPost(title, content, current_user.id)
+    success, expiration_date = parse_date(expiration_date_string)
+
+    if not success:
+        return date_format_invalid
+
+    new_article = BlogPost(title, content, current_user.id, datetime.now(), expiration_date)
 
     db.session.add(new_article)
     db.session.commit()
-    return {"success": True}
+    return success_response
 
 
-@app.route('/blog_posts/update', methods=['PUT'])
+@app.route('/api/blog_posts/update', methods=['PUT'])
 @login_required
 def update_blog_post():
     id_ = request.json.get('id')
     title = request.json.get('title')
     content = request.json.get('content')
+    expiration_date_string = request.json.get('expiration_date')
 
     if id_ is None or title == "":
         return blog_post_id_invalid
@@ -58,6 +69,10 @@ def update_blog_post():
     if content is None or content == "":
         return content_invalid
 
+    success, expiration_date = parse_date(expiration_date_string)
+    if not success:
+        return date_format_invalid
+
     post = BlogPost.query.get(id_)
     if post is None:
         return blog_post_id_invalid
@@ -65,35 +80,43 @@ def update_blog_post():
     if post.author_id != current_user.id:
         return not_permitted_to_edit_or_delete
 
+    post.expiration_date = expiration_date
     post.title = title
     post.content = content
     db.session.commit()
 
-    return {"success": True}
+    return success_response
 
 
-@app.route('/blog_posts', methods=['GET'])
+@app.route('/api/blog_posts', methods=['GET'])
 def get_all_blog_posts():
     posts = BlogPost.query.all()
 
     all_posts = []
 
     for post in posts:
+        if post.is_expired():
+            continue
+
         user = User.query.get(post.author_id)
 
         post_obj = {
             "id": post.id,
             "title": post.title,
-            "content": post.content,
+            "content": post.make_post_summary(),
+            "creation_date": post.creation_date,
+            "expiration_date": post.expiration_date,
             "author": user.name,
             "author_id": post.author_id
         }
         all_posts.append(post_obj)
 
-    return jsonify({"success": True, "blog_posts": all_posts})
+    return generate_success({
+        "blog_posts": all_posts
+    })
 
 
-@app.route('/blog_posts/delete', methods=['DELETE'])
+@app.route('/api/blog_posts/delete', methods=['DELETE'])
 @login_required
 def delete_blog_post():
     post_id = request.json.get("id")
@@ -106,14 +129,40 @@ def delete_blog_post():
     db.session.delete(post)
     db.session.commit()
 
-    return {"success": True}
+    return success_response
 
 
-@app.route('/blog_posts/render/<post_id>', methods=['GET'])
-def render_blog_post(post_id):
+@app.route('/blog_posts/create')
+def render_create_blog_post():
+    return render_template('create_blog_post.jinja2')
+
+
+@app.route('/blog_posts/edit', methods=['GET'])
+@login_required
+def render_edit_blog_post():
+    post_id = get_int_from_request("post_id")
     post = BlogPost.query.get(post_id)
 
     if post is None:
+        abort(HTTPStatus.NOT_FOUND)
+
+    return render_template('edit_blog_post.jinja2',
+                           title=post.title,
+                           content=post.content,
+                           creation_date=post.creation_date,
+                           expiration_date=post.expiration_date,
+                           id=post.id)
+
+
+@app.route('/blog_posts/render', methods=['GET'])
+def render_blog_post():
+    post_id = get_int_from_request("post_id")
+    post = BlogPost.query.get(post_id)
+
+    if post is None:
+        abort(HTTPStatus.NOT_FOUND)
+
+    if post.is_expired():
         abort(HTTPStatus.NOT_FOUND)
 
     html = markdown.markdown(post.content)
@@ -124,10 +173,21 @@ def render_blog_post(post_id):
     if author is not None:
         author_name = author.name
 
-    return render_template("blog_post.jinja2", post=html, title=post.title, author=author_name)
+    can_edit = current_user.is_authenticated
+    can_delete = current_user.is_authenticated
+
+    return render_template("whole_blog_post.jinja2",
+                           can_edit_post=can_edit,
+                           can_delete_post=can_delete,
+                           post=html,
+                           title=post.title,
+                           author=author_name, 
+                           id = post_id,
+                           date = post.creation_date)
 
 
-@app.route('/blog_posts/render_preview', methods=['POST'])
+@app.route('/api/blog_posts/render_preview', methods=['POST'])
+@limiter.limit("2 per second")
 def render_blog_post_preview():
     content = request.json.get("content")
 
@@ -136,7 +196,6 @@ def render_blog_post_preview():
 
     html = markdown.markdown(content)
 
-    return {
-        "success": True,
+    return generate_success({
         "html": html
-    }
+    })

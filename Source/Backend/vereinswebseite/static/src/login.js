@@ -20,9 +20,9 @@ function login() {
                 window.location.href = "/account";
             }
             else {
-                alert("Benutzername oder Passwort falsch.");
+                alert("Login fehlgeschlagen!" + "\n➔ " + response.errors[0].title + ".");
             }
         }
-        frontendHelper.makeHttpRequest("POST", "/users/login", jsonObj, myOnloadFunction);
+        frontendHelper.makeHttpRequest("POST", "/api/users/login", jsonObj, myOnloadFunction);
     }
 }
