@@ -28,11 +28,10 @@ class FrontendHelper {
         }
     }
     
-    sendFile(request: string, route: string, formData: FormData, onloadFunction){
+    sendFile(request: string, route: string, formData, onloadFunction){
         if (!this.isTesting) {
             var xhttp = new XMLHttpRequest();
             xhttp.open(request, route, true);
-            xhttp.setRequestHeader("Content-Type", "multipart/form-data");
             xhttp.responseType = "json";
             xhttp.send(formData);
             xhttp.onload = () => {

@@ -32,7 +32,6 @@ var FrontendHelper = /** @class */ (function () {
         if (!this.isTesting) {
             var xhttp = new XMLHttpRequest();
             xhttp.open(request, route, true);
-            xhttp.setRequestHeader("Content-Type", "multipart/form-data");
             xhttp.responseType = "json";
             xhttp.send(formData);
             xhttp.onload = function () {
