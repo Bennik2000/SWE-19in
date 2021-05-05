@@ -26,16 +26,14 @@ function get_all_blogs() {
                         var post_author = document.createElement("span");
                         post_author.setAttribute("id", "post_author");
                         post_author.innerHTML = post.author;
+                        var post_date = document.createElement("span");
+                        post_date.setAttribute("id", "post_date");
+                        post_date.innerHTML = post.creation_date;
                         var post_separator = document.createElement("hr");
                         var post_content = document.createElement("div");
                         post_content.classList.add("col-md-12");
                         post_content.setAttribute("id", "post_content");
-                        if (post.content.length > 300) {
-                            post_content.innerHTML = response.html;
-                        }
-                        else {
-                            post_content.innerHTML = response.html;
-                        }
+                        post_content.innerHTML = response.html;
                         var post_more = document.createElement("div");
                         post_more.classList.add("col-md-1");
                         post_more.classList.add("btn");
@@ -62,13 +60,8 @@ function get_all_blogs() {
                         post_list.appendChild(col);
                     }
                     var jsonObj = {};
-                    if (post.content.length > 300) {
-                        jsonObj["content"] = ((String)(post.content)).substr(0, 300) + "...";
-                    }
-                    else {
-                        jsonObj["content"] = post.content;
-                    }
-                    frontendHelper.makeHttpRequest("POST", "/blog_posts/render_preview", jsonObj, myOnloadFunction);
+                    jsonObj["content"] = post.content;
+                    frontendHelper.makeHttpRequest("POST", "/api/blog_posts/render_preview", jsonObj, myOnloadFunction);
                 });
             }
             else {
@@ -76,11 +69,11 @@ function get_all_blogs() {
             }
         }
         else {
-            alert("Server Error while loading Posts!");
+            alert("Server Error!");
         }
     }
     var jsonObj = {};
-    frontendHelper.makeHttpRequest("GET", "/blog_posts", jsonObj, myOnloadFunction);
+    frontendHelper.makeHttpRequest("GET", "/api/blog_posts", jsonObj, myOnloadFunction);
 }
 window.onload = function () {
     get_all_blogs();
