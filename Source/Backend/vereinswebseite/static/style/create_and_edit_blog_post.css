@@ -186,7 +186,7 @@ input[type=checkbox]
        #datePicker_p {
            font-size: 1.5vw;
        }
-       button {
+       #bottom_button_group button {
            font-size: 1.5vw !important;
            padding: 0.5% 2% 8% 2% !important;
        }

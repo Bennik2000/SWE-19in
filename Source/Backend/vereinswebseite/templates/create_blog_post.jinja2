@@ -39,9 +39,9 @@
             <div class="form-group" id="markdown_preview"></div>
         </div>
          <p id="uploadPictures">Bilder hochladen: 
-                <input name="uploadFiles" type="file" accept="image/*"> 
+                <input name="uploadFiles" type="file" accept="image/*" multiple> 
             </p>  
-            <button class="btn btn-primary" id="uploadPicturesButton">hochladen</button>
+            <button class="btn btn-primary" type="button" id="uploadPicturesButton">hochladen</button>
         <p id="datePicker_p">
             Bis wann soll der Post sichtbar sein? (Kein Pflichtfeld):<br>
             <input id="datePicker" type="date" min="2021-03-29" onclick="getCurrentDate()">
