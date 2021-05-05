@@ -42,6 +42,19 @@ db = SQLAlchemy(app)
 ma = Marshmallow(app)
 login_manager = LoginManager(app)
 
+from vereinswebseite.models import Role  # noqa: E402
+db.create_all()
+
+webmaster_role = Role.query.filter_by(name='Webmaster').first()
+if webmaster_role is None:
+    webmaster_role = Role(name='Webmaster')
+
+vorstand_role = Role.query.filter_by(name='Vorstand').first()
+if vorstand_role is None:
+    vorstand_role = Role(name='Vorstand')
+
+db.session.commit()
+
 # Ignore PEP8 this one time to have the routes in a separate file,
 # while avoiding circular imports
 from vereinswebseite import routes  # noqa: E402
@@ -50,19 +63,3 @@ from vereinswebseite import routes_accss_token  # noqa: E402
 from vereinswebseite import routes_blog_posts  # noqa: E402
 from vereinswebseite import routes_static  # noqa: E402
 from vereinswebseite import routes_uploads  # noqa: E402
-
-db.create_all()
-
-from vereinswebseite.models import Role  # noqa: E402
-
-webmaster_role = Role.query.filter_by(name='Webmaster').first()
-if webmaster_role is None:
-    webmaster_role = Role(name='Webmaster')
-    db.session.add(webmaster_role)
-
-vorstand_role = Role.query.filter_by(name='Vorstand').first()
-if vorstand_role is None:
-    vorstand_role = Role(name='Vorstand')
-    db.session.add(vorstand_role)
-
-db.session.commit()

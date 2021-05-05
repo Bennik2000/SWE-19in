@@ -1,12 +1,14 @@
 from uuid import uuid4
 
-from vereinswebseite import app, db, login_manager
+from vereinswebseite import app, db, login_manager, webmaster_role
 from vereinswebseite.email_utils import send_reset_password_email
 from vereinswebseite.models import User, UserSchema, AccessToken, PasswordResetToken
+from vereinswebseite.request_utils import success_response, generate_error
+from vereinswebseite.decorators import roles_required
 from flask import request, jsonify, abort, render_template
 from flask_login import current_user, login_user, logout_user, login_required
 from http import HTTPStatus
-from vereinswebseite.request_utils import success_response, generate_error
+
 
 # Init Schemas
 OneUser = UserSchema()
@@ -40,8 +42,10 @@ def register_user():
     if password is None or password == "":
         return password_invalid
 
+    is_first_user = len(User.query.all()) == 0
+
     token = AccessToken.query.get(token_string)
-    if token is None and not app.debug:
+    if token is None and not is_first_user and not app.debug:
         return token_invalid
 
     existing_user = User.query.filter_by(email=email).first()
@@ -50,6 +54,9 @@ def register_user():
 
     new_user = User(name=name, email=email)
     new_user.set_password(password)
+
+    if is_first_user:
+        new_user.roles = [webmaster_role, ]
 
     db.session.add(new_user)
 
