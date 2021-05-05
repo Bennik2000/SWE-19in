@@ -44,6 +44,9 @@
   #current_email{
     resize: none;
   }
+  #old_email{
+    resize: none;
+  }
   #new_password{
     resize: none;
   }

@@ -32,14 +32,14 @@ function delete_account(){
 function logout(){
     function myOnloadFunction(response){
         if(response){
-            if (response.success=true){
+            if (response.success==true){
                 window.location.href="/login"
             
             }else{
             alert("Logout fehlgeschlagen! Bitte versuchen Sie es erneut!")
             }  
         }else{
-            alert("Server fehler!")
+            alert("Kommunikation mit Server fehlgeschlagen!")
         }      
     }
     let jsonObj={};
@@ -47,17 +47,38 @@ function logout(){
 }
 
 function email_save() {
-    /*let newEmail=document.getElementById("current_email_new");
+    let newEmail=document.getElementById("current_email_new") as HTMLInputElement;
+    let currentEmail=document.getElementById("current_email");
+    let oldEmail=document.getElementById("old_email");   
+
+    if (!frontendHelper.validateEmail(newEmail.value)) {
+        alert("E-Mail nicht valide! Bitte überprüfen");
+        return;
+    }else if(newEmail.value == currentEmail.innerHTML){
+        alert("Fehler! Die E-Mail Adresse ist identisch mit der aktuell Verwendeten");
+        return;
+    }
     function myOnloadFunction(response){
-        document.getElementById("Username").innerHTML=response.name;
-        document.getElementById("current_email").innerHTML=response.email;
+        if(response){
+            if (response.success==true){
+            alert("E-Mail wurde erfolgreich geändert!")
+            oldEmail.innerHTML=newEmail.value
+            currentEmail.innerHTML=newEmail.value
+            newEmail.value="";
+            }else{
+            alert("Fehlgeschlagen! Bitte versuchen Sie es erneut!")
+            }  
+        }else{
+            alert("Kommunikation mit Server fehlgeschlagen!");
+        }     
+         
         
     }
     let jsonObj={};
-    jsonObj["email"]=
+    jsonObj["email"]= newEmail.value;
 
-    frontendHelper.makeHttpRequest("GET", "/api/users/personal_info", jsonObj, myOnloadFunction);
-*/}
+    frontendHelper.makeHttpRequest("POST", "/api/users/change_email", jsonObj, myOnloadFunction);
+}
 
 function password_save() {
     
@@ -237,6 +258,7 @@ function get_user_info(){
     function myOnloadFunction(response){
         document.getElementById("Username").innerHTML=response.name;
         document.getElementById("current_email").innerHTML=response.email;
+        document.getElementById("old_email").innerHTML=response.email;
         
     }
     let jsonObj ={};
