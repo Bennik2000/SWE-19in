@@ -51,7 +51,7 @@ function email_save() {
         return;
     }
     else if (newEmail.value == currentEmail.innerHTML) {
-        alert("Fehler! Die E-Mail Adresse is identisch mit der aktuell Verwendeten");
+        alert("Fehler! Die E-Mail Adresse ist identisch mit der aktuell Verwendeten");
         return;
     }
     function myOnloadFunction(response) {
