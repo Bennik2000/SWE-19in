@@ -44,17 +44,29 @@ function logout() {
 }
 function email_save() {
     var newEmail = document.getElementById("current_email_new");
+    var currentEmail = document.getElementById("current_email");
+    var oldEmail = document.getElementById("");
+    if (!frontendHelper.validateEmail(newEmail.value)) {
+        alert("Email nicht valide! Bitte überprüfen");
+        return;
+    }
+    else if (newEmail.value == currentEmail.innerHTML) {
+        alert("Fehler! Die E-Mail Adresse is identisch mit der aktuell Verwendeten");
+        return;
+    }
     function myOnloadFunction(response) {
         if (response) {
             if (response.success == true) {
                 alert("E-Mail wurde erfolgreich geändert!");
+                oldEmail.innerHTML = newEmail.value;
+                currentEmail.innerHTML = newEmail.value;
             }
             else {
                 alert("Fehlgeschlagen! Bitte versuchen Sie es erneut!");
             }
         }
         else {
-            alert("Server fehler!");
+            alert("Kommunikation mit Server fehlgeschlagen!");
         }
     }
     var jsonObj = {};
