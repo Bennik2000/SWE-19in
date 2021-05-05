@@ -26,7 +26,6 @@ app.config['MAIL_USERNAME'] = 'vereinSWEbseite@gmail.com'
 app.config['MAIL_PASSWORD'] = '2021SWEsem4'
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
-
 app.config['UPLOADED_IMAGES_DEST'] = os.path.join(app.root_path, "uploads")
 
 mail = Mail(app)
@@ -53,3 +52,17 @@ from vereinswebseite import routes_static  # noqa: E402
 from vereinswebseite import routes_uploads  # noqa: E402
 
 db.create_all()
+
+from vereinswebseite.models import Role  # noqa: E402
+
+webmaster_role = Role.query.filter_by(name='Webmaster').first()
+if webmaster_role is None:
+    webmaster_role = Role(name='Webmaster')
+    db.session.add(webmaster_role)
+
+vorstand_role = Role.query.filter_by(name='Vorstand').first()
+if vorstand_role is None:
+    vorstand_role = Role(name='Vorstand')
+    db.session.add(vorstand_role)
+
+db.session.commit()
