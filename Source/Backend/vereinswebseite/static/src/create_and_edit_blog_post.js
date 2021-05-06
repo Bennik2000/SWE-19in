@@ -240,7 +240,16 @@ function uploadImage() {
 function embedImageIntoMarkdown(filename) {
     var markdown = document.getElementById("markdown");
     var imageURL = "![](/_uploads/images/" + filename + "){: style='width: 5vw;'}";
-    markdown.value += "  \n" + imageURL;
+    if (markdown.selectionStart || markdown.selectionStart === 0) {
+        var startPos = markdown.selectionStart;
+        var endPos = markdown.selectionEnd;
+        markdown.value = markdown.value.substring(0, startPos) + imageURL + markdown.value.substring(endPos, markdown.value.length);
+        markdown.selectionStart = startPos + imageURL.length;
+        markdown.selectionEnd = startPos + imageURL.length;
+    }
+    else {
+        markdown.value += imageURL;
+    }
 }
 function deleteBlogPost() {
     var wantsToCancel = confirm("Soll der Beitrag wirklich gelöscht werden?");

@@ -283,7 +283,16 @@ function embedImageIntoMarkdown(filename) {
     let markdown = document.getElementById("markdown") as HTMLInputElement;
 
     var imageURL = "![](/_uploads/images/" + filename + "){: style='width: 5vw;'}";
-    markdown.value += "  \n" + imageURL;
+
+    if (markdown.selectionStart || markdown.selectionStart === 0) {
+        var startPos = markdown.selectionStart;
+        var endPos = markdown.selectionEnd;
+        markdown.value = markdown.value.substring(0, startPos) + imageURL + markdown.value.substring(endPos, markdown.value.length);
+        markdown.selectionStart = startPos + imageURL.length;
+        markdown.selectionEnd = startPos + imageURL.length;
+      } else {
+        markdown.value += imageURL;
+      }
 }
 
 function deleteBlogPost() {
