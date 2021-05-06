@@ -26,7 +26,7 @@
   <script src= "/static/src/FrontendHelper.js"></script>
   <script src= "/static/src/personal_account_space.js"></script>
 
-  <title>My Account Space</title>
+  <title>Mein Account</title>
 </head>
 
 
@@ -50,7 +50,7 @@
         <div class="col-md-10 rounded" id="right_head">
 
 
-          <h1 id="Username">Benutzername</h1>
+          <h1 id="Username"></h1>
 
           <label for="head_decription" class="form-label">Beschreibung / Bio</label>
           <textarea class="form-control form-control-md" id="head_description" rows="3" readonly
@@ -88,7 +88,7 @@
 
           <p>Aktuelle Email:</p>
 
-          <textarea class="form-control form-control-md" id="current_email" readonly  rows="1">Max.Mustermann@mail.de</textarea>
+          <textarea class="form-control form-control-md" id="current_email" readonly  rows="1"></textarea>
           <button type="button" class="btn btn-danger mt-5" id="delet_account"  onclick="delete_account();">Account Löschen</button>
           <button type="button" class="btn btn-danger mt-5" id="logout_user"  onclick="logout();">Logout</button>
           
@@ -108,9 +108,9 @@
         <!--End right_body-->
         <div class="col-md-10 d-none" id="email_template"><!----------------------------Email---------------------------------------->
 
-          <p>Aktuelle Email:</p>
-          <textarea class="form-control form-control-md" id="current_email" readonly  rows="1">Max.Mustermann@mail.de</textarea>
-          <p class="mt-1">Neue Email:</p>
+          <p>Aktuelle E-Mail:</p>
+          <textarea class="form-control form-control-md" id="old_email" readonly  rows="1"></textarea>
+          <p class="mt-1">Neue E-Mail:</p>
           <textarea class="form-control form-control-md" id="current_email_new" placeholder="Neue Email" rows="1"></textarea>
           <button type="button" class="btn btn-primary mt-2" id="email_save"  onclick="email_save();">Speichern</button>
 

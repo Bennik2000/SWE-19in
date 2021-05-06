@@ -70,6 +70,15 @@ def src_create_blog_post():
 def style_whole_blog_post():
     return app.send_static_file('style/whole_blog_post.css')
 
+@app.route('/static/src/edit_blog_post.js')
+def src_edit_blog_post():
+    return app.send_static_file('src/edit_blog_post.js')
+
+@app.route('/static/style/navigation_page.css')
+def style_navigation_page():
+    return app.send_static_file('style/navigation_page.css')
+
 @app.route('/static/src/whole_blog_post.js')
 def src_whole_blog_post():
     return app.send_static_file('src/whole_blog_post.js')
+
