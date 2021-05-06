@@ -165,7 +165,7 @@ def render_blog_post():
     if post.is_expired():
         abort(HTTPStatus.NOT_FOUND)
 
-    html = markdown.markdown(post.content)
+    html = markdown.markdown(post.content, extensions=["extra"])
 
     author = User.query.get(post.author_id)
     author_name = ""
@@ -182,8 +182,8 @@ def render_blog_post():
                            post=html,
                            title=post.title,
                            author=author_name, 
-                           id = post_id,
-                           date = post.creation_date)
+                           id=post_id,
+                           date=post.creation_date)
 
 
 @app.route('/api/blog_posts/render_preview', methods=['POST'])
@@ -194,7 +194,7 @@ def render_blog_post_preview():
     if content is None:
         return content_invalid
 
-    html = markdown.markdown(content)
+    html = markdown.markdown(content, extensions=["extra"])
 
     return generate_success({
         "html": html
