@@ -28,4 +28,25 @@ jobs:
     - name: Test with pytest
       run: |
         cd Source/Backend/
-        python -m unittest
+        coverage run -m unittest
+    - name: Upload code coverage
+            uses: actions/upload-artifact@v2
+            with:
+              name: code covarege report
+              path: coverage.out
+              
+    - name: Generate covarege Status
+        run: |
+          cd Source/Backend/
+          total=`coverage report | grep total | grep -Eo '[0-9]+\.[0-9]+' | cut -d" " -f2`
+          echo "total coverage: $total"
+          
+          curl "https://${GIT_USER}:${ADIKA_GITHUB_TOKEN}@api.github.com/repos/${ORG_NAME}/${PROJECT_NAME}/statuses/${COMMIT_SHA}" -d "{\"state\": \"${STATE}\",\"target_url\": \"https://github.com/${ORG_NAME}/${PROJECT_NAME}/pull/${PULL_NUMBER}/checks?check_run_id=${RUN_ID}\",\"description\": \"${total}%\",\"context\": \"code coverage\"}"
+        env:
+          GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
+          GIT_USER: ${{ secrets.GIT_USER }}
+          ORG_NAME: ${{ secrets.ORG_NAME }}
+          PROJECT_NAME: ${{ secrets.PROJECT_NAME }}
+          COMMIT_SHA: ${{ github.event.pull_request.head.sha }}
+          PULL_NUMBER: ${{ github.event.pull_request.number }}
+          RUN_ID: ${{ github.run_id }}
