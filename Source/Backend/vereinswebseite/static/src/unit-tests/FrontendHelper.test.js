@@ -47,7 +47,7 @@ test('correct called FrontendHelper.makeHttpRequest(...) for creating a new user
   
   frontendHelper.testRequestCallback =  (request, route, json) => {
       expect(request).toBe("POST");
-      expect(route).toBe("/users");
+      expect(route).toBe("/api/users");
       expect(json).toMatchObject({email: "test@test.com", name: "Test User", password: "password123", token: "123"});
 
       var responseObj = {};
@@ -57,5 +57,5 @@ test('correct called FrontendHelper.makeHttpRequest(...) for creating a new user
   function myOnloadFunction(response){
       expect(response.success).toBe(true);
   }
-  frontendHelper.makeHttpRequest("POST", "/users", jsonObj, myOnloadFunction)
+  frontendHelper.makeHttpRequest("POST", "/api/users", jsonObj, myOnloadFunction)
 }); 

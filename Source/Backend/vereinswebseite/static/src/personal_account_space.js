@@ -23,12 +23,12 @@ function delete_account() {
         }
     }
     var jsonObj = {};
-    frontendHelper.makeHttpRequest("DELETE", "/users/delete", jsonObj, myOnloadFunction);
+    frontendHelper.makeHttpRequest("DELETE", "/api/users/delete", jsonObj, myOnloadFunction);
 }
 function logout() {
     function myOnloadFunction(response) {
         if (response) {
-            if (response.success = true) {
+            if (response.success == true) {
                 window.location.href = "/login";
             }
             else {
@@ -36,24 +36,43 @@ function logout() {
             }
         }
         else {
-            alert("Server fehler!");
+            alert("Kommunikation mit Server fehlgeschlagen!");
         }
     }
     var jsonObj = {};
-    frontendHelper.makeHttpRequest("POST", "/users/logout", jsonObj, myOnloadFunction);
+    frontendHelper.makeHttpRequest("POST", "/api/users/logout", jsonObj, myOnloadFunction);
 }
 function email_save() {
-    /*let newEmail=document.getElementById("current_email_new");
-    function myOnloadFunction(response){
-        document.getElementById("Username").innerHTML=response.name;
-        document.getElementById("current_email").innerHTML=response.email;
-        
+    var newEmail = document.getElementById("current_email_new");
+    var currentEmail = document.getElementById("current_email");
+    var oldEmail = document.getElementById("old_email");
+    if (!frontendHelper.validateEmail(newEmail.value)) {
+        alert("E-Mail nicht valide! Bitte überprüfen");
+        return;
     }
-    let jsonObj={};
-    jsonObj["email"]=
-
-    frontendHelper.makeHttpRequest("GET", "/users/personal_info", jsonObj, myOnloadFunction);
-*/ 
+    else if (newEmail.value == currentEmail.innerHTML) {
+        alert("Fehler! Die E-Mail Adresse ist identisch mit der aktuell Verwendeten");
+        return;
+    }
+    function myOnloadFunction(response) {
+        if (response) {
+            if (response.success == true) {
+                alert("E-Mail wurde erfolgreich geändert!");
+                oldEmail.innerHTML = newEmail.value;
+                currentEmail.innerHTML = newEmail.value;
+                newEmail.value = "";
+            }
+            else {
+                alert("Fehlgeschlagen! Bitte versuchen Sie es erneut!");
+            }
+        }
+        else {
+            alert("Kommunikation mit Server fehlgeschlagen!");
+        }
+    }
+    var jsonObj = {};
+    jsonObj["email"] = newEmail.value;
+    frontendHelper.makeHttpRequest("POST", "/api/users/change_email", jsonObj, myOnloadFunction);
 }
 function password_save() {
     var renamenewPassword = document.getElementById("rename_new_password");
@@ -77,7 +96,7 @@ function password_save() {
                 alert("Passwort ändern fehlgeschlagen!" + "\n➔ " + response.errors[0].title + ".");
             }
         }
-        frontendHelper.makeHttpRequest("POST", "/users/change_password", jsonObj, myOnloadFunction);
+        frontendHelper.makeHttpRequest("POST", "/api/users/change_password", jsonObj, myOnloadFunction);
     }
 }
 function reload(x) {
@@ -142,7 +161,7 @@ function get_access_token() {
         });
     }
     var jsonObj = {};
-    frontendHelper.makeHttpRequest("GET", "/accessToken", jsonObj, myOnloadFunction);
+    frontendHelper.makeHttpRequest("GET", "/api/accessToken", jsonObj, myOnloadFunction);
 }
 function get_users() {
     var userList = document.getElementById("user_list");
@@ -184,7 +203,7 @@ function get_users() {
         });
     }
     var jsonObj = {};
-    frontendHelper.makeHttpRequest("GET", "/users", jsonObj, myOnloadFunction);
+    frontendHelper.makeHttpRequest("GET", "/api/users", jsonObj, myOnloadFunction);
 }
 function delete_access_token(elem) {
     /*  function myOnloadFunction(response){
@@ -195,16 +214,17 @@ function delete_access_token(elem) {
   
       let jsonObj={};
       jsonObj["token"]=elem.parentElement.getElementsByTagName("a")[0].innerHTML
-      frontendHelper.makeHttpRequest("DELETE", "/accessToken/delete", jsonObj, myOnloadFunction);
+      frontendHelper.makeHttpRequest("DELETE", "/api/accessToken/delete", jsonObj, myOnloadFunction);
   */ 
 }
 function get_user_info() {
     function myOnloadFunction(response) {
         document.getElementById("Username").innerHTML = response.name;
         document.getElementById("current_email").innerHTML = response.email;
+        document.getElementById("old_email").innerHTML = response.email;
     }
     var jsonObj = {};
-    frontendHelper.makeHttpRequest("GET", "/users/personal_info", jsonObj, myOnloadFunction);
+    frontendHelper.makeHttpRequest("GET", "/api/users/personal_info", jsonObj, myOnloadFunction);
 }
 window.addEventListener('popstate', function (popstateEvent) {
     reload(Number(window.history.state));

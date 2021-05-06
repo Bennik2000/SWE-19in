@@ -3,7 +3,7 @@
     padding: 0px;
   }
   #page{
-  position: fixed;
+    position: fixed;
     background-color: lightblue;
     height: 100%;
     width: 100%;
@@ -42,6 +42,9 @@
     margin-top: 40px;
   }
   #current_email{
+    resize: none;
+  }
+  #old_email{
     resize: none;
   }
   #new_password{

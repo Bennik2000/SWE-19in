@@ -27,37 +27,58 @@ function delete_account(){
         
     }
     let jsonObj={};
-    frontendHelper.makeHttpRequest("DELETE", "/users/delete", jsonObj, myOnloadFunction);
+    frontendHelper.makeHttpRequest("DELETE", "/api/users/delete", jsonObj, myOnloadFunction);
 }
 function logout(){
     function myOnloadFunction(response){
         if(response){
-            if (response.success=true){
+            if (response.success==true){
                 window.location.href="/login"
             
             }else{
             alert("Logout fehlgeschlagen! Bitte versuchen Sie es erneut!")
             }  
         }else{
-            alert("Server fehler!")
+            alert("Kommunikation mit Server fehlgeschlagen!")
         }      
     }
     let jsonObj={};
-    frontendHelper.makeHttpRequest("POST", "/users/logout", jsonObj, myOnloadFunction);
+    frontendHelper.makeHttpRequest("POST", "/api/users/logout", jsonObj, myOnloadFunction);
 }
 
 function email_save() {
-    /*let newEmail=document.getElementById("current_email_new");
+    let newEmail=document.getElementById("current_email_new") as HTMLInputElement;
+    let currentEmail=document.getElementById("current_email");
+    let oldEmail=document.getElementById("old_email");   
+
+    if (!frontendHelper.validateEmail(newEmail.value)) {
+        alert("E-Mail nicht valide! Bitte überprüfen");
+        return;
+    }else if(newEmail.value == currentEmail.innerHTML){
+        alert("Fehler! Die E-Mail Adresse ist identisch mit der aktuell Verwendeten");
+        return;
+    }
     function myOnloadFunction(response){
-        document.getElementById("Username").innerHTML=response.name;
-        document.getElementById("current_email").innerHTML=response.email;
+        if(response){
+            if (response.success==true){
+            alert("E-Mail wurde erfolgreich geändert!")
+            oldEmail.innerHTML=newEmail.value
+            currentEmail.innerHTML=newEmail.value
+            newEmail.value="";
+            }else{
+            alert("Fehlgeschlagen! Bitte versuchen Sie es erneut!")
+            }  
+        }else{
+            alert("Kommunikation mit Server fehlgeschlagen!");
+        }     
+         
         
     }
     let jsonObj={};
-    jsonObj["email"]=
+    jsonObj["email"]= newEmail.value;
 
-    frontendHelper.makeHttpRequest("GET", "/users/personal_info", jsonObj, myOnloadFunction);
-*/}
+    frontendHelper.makeHttpRequest("POST", "/api/users/change_email", jsonObj, myOnloadFunction);
+}
 
 function password_save() {
     
@@ -87,7 +108,7 @@ function password_save() {
             alert("Passwort ändern fehlgeschlagen!" + "\n➔ " + response.errors[0].title + ".");
         }
     }
-    frontendHelper.makeHttpRequest("POST", "/users/change_password", jsonObj, myOnloadFunction);
+    frontendHelper.makeHttpRequest("POST", "/api/users/change_password", jsonObj, myOnloadFunction);
     }
 }
 
@@ -167,7 +188,7 @@ function get_access_token(){
         
     }
     let jsonObj={};
-    frontendHelper.makeHttpRequest("GET", "/accessToken", jsonObj, myOnloadFunction);
+    frontendHelper.makeHttpRequest("GET", "/api/accessToken", jsonObj, myOnloadFunction);
 
 }
 function get_users(){
@@ -220,7 +241,7 @@ function get_users(){
         
     }
     let jsonObj={};
-    frontendHelper.makeHttpRequest("GET", "/users", jsonObj, myOnloadFunction);
+    frontendHelper.makeHttpRequest("GET", "/api/users", jsonObj, myOnloadFunction);
 }
 function delete_access_token(elem: Element ){
   /*  function myOnloadFunction(response){
@@ -231,16 +252,17 @@ function delete_access_token(elem: Element ){
 
     let jsonObj={};
     jsonObj["token"]=elem.parentElement.getElementsByTagName("a")[0].innerHTML
-    frontendHelper.makeHttpRequest("DELETE", "/accessToken/delete", jsonObj, myOnloadFunction);
+    frontendHelper.makeHttpRequest("DELETE", "/api/accessToken/delete", jsonObj, myOnloadFunction);
 */}
 function get_user_info(){
     function myOnloadFunction(response){
         document.getElementById("Username").innerHTML=response.name;
         document.getElementById("current_email").innerHTML=response.email;
+        document.getElementById("old_email").innerHTML=response.email;
         
     }
     let jsonObj ={};
-    frontendHelper.makeHttpRequest("GET", "/users/personal_info", jsonObj, myOnloadFunction);
+    frontendHelper.makeHttpRequest("GET", "/api/users/personal_info", jsonObj, myOnloadFunction);
 }
 window.addEventListener('popstate', function (popstateEvent) {
     reload(Number(window.history.state));
