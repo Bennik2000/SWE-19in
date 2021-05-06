@@ -8,32 +8,18 @@ class FrontendHelper {
         return re.test(String(email).toLowerCase());
     }
 
-    makeHttpRequest(request: string, route: string, json: string, onloadFunction){
+    makeHttpRequest(request: string, route: string, data , onloadFunction, isSendingJSON = true){
         if (!this.isTesting) {
             var xhttp = new XMLHttpRequest();
             xhttp.open(request, route, true);
-            xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-            xhttp.responseType = "json";
-            xhttp.send(JSON.stringify(json));
-            xhttp.onload = () => {
-                onloadFunction(xhttp.response)
-            };
-        }
-        else {
-            if (this.testRequestCallback != null)
-            {
-                var response = this.testRequestCallback(request, route, json);
-                onloadFunction(response);
+
+            if(isSendingJSON){
+                xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+                data = JSON.stringify(data);
             }
-        }
-    }
-    
-    sendFile(request: string, route: string, formData, onloadFunction){
-        if (!this.isTesting) {
-            var xhttp = new XMLHttpRequest();
-            xhttp.open(request, route, true);
+
             xhttp.responseType = "json";
-            xhttp.send(formData);
+            xhttp.send(data);
             xhttp.onload = () => {
                 onloadFunction(xhttp.response)
             };
@@ -41,7 +27,7 @@ class FrontendHelper {
         else {
             if (this.testRequestCallback != null)
             {
-                var response = this.testRequestCallback(request, route, formData);
+                var response = this.testRequestCallback(request, route, data);
                 onloadFunction(response);
             }
         }
