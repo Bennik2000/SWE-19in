@@ -118,15 +118,18 @@ label {
 
 #uploadPictures {
   font-size: 1vw;
+  display: inline-block;
 }
 
 #uploadImageButton{
   font-size: 1vw;
-  padding: 0.5% 2% 0.5% 2%;
-  margin-top: 0%;
-  margin-left: 0.5%;
-  margin-right: 88%;
-  margin-bottom: 2%;
+  padding: 0% 4% 0.2% 4%;
+  margin-top: 0.4%;
+  margin-bottom: 0.5%;
+}
+
+#filesInput {
+  margin-right: 0% !important;
 }
 
 h1 {
