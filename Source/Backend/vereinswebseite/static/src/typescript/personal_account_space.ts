@@ -17,17 +17,20 @@ function bio_save() {
     }
 }
 function delete_account(){
-    function myOnloadFunction(response){
-        if (response.success!=true){
-            window.location.href="/login"
+    if(confirm("Wollen Sie Ihren Account wirklich löschen? Dann drücken sie \"OK\"")==true){
+        function myOnloadFunction(response){
+            if (response.success==true){
+                window.location.href="/login"
+            }
+            else{
+            alert("Account löschen fehlgeschlagen! Bitte versuchen Sie es erneut!"); 
+            }
+            
         }
-        else{
-        alert("Account löschen fehlgeschlagen! Bitte versuchen Sie es erneut!"); 
-        }
-        
+        let jsonObj={};
+        frontendHelper.makeHttpRequest("DELETE", "/api/users/delete", jsonObj, myOnloadFunction);
     }
-    let jsonObj={};
-    frontendHelper.makeHttpRequest("DELETE", "/api/users/delete", jsonObj, myOnloadFunction);
+    
 }
 function logout(){
     function myOnloadFunction(response){
