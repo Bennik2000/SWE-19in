@@ -157,8 +157,10 @@ function saveCreatedBlogPost() {
         var jsonObj = {};
         jsonObj["title"] = title.value;
         jsonObj["content"] = markdown.value;
-        jsonObj["expiration_date"] = expiration_date.value;
-
+        
+        if(expiration_date.value.length > 0){
+            jsonObj["expiration_date"] = expiration_date.value;
+        }
         function myOnloadFunction(response) {
             if(response == null)
             {
@@ -191,7 +193,9 @@ function saveEditedBlogPost() {
         jsonObj["id"] = document.getElementById("id").innerHTML;
         jsonObj["title"] = title.value;
         jsonObj["content"] = markdown.value;
-        jsonObj["expiration_date"] = expiration_date.value;
+        if(expiration_date.value.length > 0){
+            jsonObj["expiration_date"] = expiration_date.value;
+        }
 
         function myOnloadFunction(response) {
             if(response == null)
