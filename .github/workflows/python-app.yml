@@ -30,11 +30,11 @@ jobs:
         cd Source/Backend/
         coverage run -m unittest
     - name: Upload code coverage
-            uses: actions/upload-artifact@v2
-            with:
-              name: code covarege report
-              path: coverage.out
-              
+      uses: actions/upload-artifact@v2
+      with:
+        name: code covarege report
+        path: coverage.out
+          
     - name: Generate covarege Status
         run: |
           cd Source/Backend/
