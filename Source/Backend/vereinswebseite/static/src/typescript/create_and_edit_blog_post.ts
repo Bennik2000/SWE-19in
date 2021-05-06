@@ -276,13 +276,13 @@ function uploadImage() {
             alert(errorMessageUploadingFiles + "\n➔ " + response.errors[0].title + ".");
         }
     }
-    frontendHelper.sendFile("POST", "/api/upload_image", formData, myOnloadFunction);
+    frontendHelper.makeHttpRequest("POST", "/api/upload_image", formData, myOnloadFunction, false);
 }
 
 function embedImageIntoMarkdown(filename) {
     let markdown = document.getElementById("markdown") as HTMLInputElement;
 
-    var imageURL = "![](/_uploads/images/" + filename + ")";
+    var imageURL = "![](/_uploads/images/" + filename + "){: style='width: 5vw;'}";
     markdown.value += "  \n" + imageURL;
 }
 
