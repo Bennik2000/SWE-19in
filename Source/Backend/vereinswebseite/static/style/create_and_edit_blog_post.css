@@ -55,7 +55,7 @@ body {
     resize: vertical;
 }
 
-#cancel{
+#cancel, #button_delete_post{
     font-size: 1vw;
     margin-top: 2%;
     margin-left: 1%;
