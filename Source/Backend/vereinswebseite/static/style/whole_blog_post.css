@@ -6,11 +6,11 @@
 
 #whole_post_page{
     position: fixed;
+
     height: 100%;
     width: 100%;
     overflow: auto; 
 }
-
 
 
 html{
@@ -21,6 +21,11 @@ body{
     height: 100%;
 }
 
+
+.container{
+    padding: 0px;
+  
+}
 
 #post {
     border: 5px ;
@@ -60,6 +65,7 @@ ul {
 {
     color: #888a89;
     font-size: 1.2vw;
+
 }
 
 #post_text{
@@ -143,3 +149,4 @@ h6 {
         font-size: 1.5vw !important;
       }      
 }
+
