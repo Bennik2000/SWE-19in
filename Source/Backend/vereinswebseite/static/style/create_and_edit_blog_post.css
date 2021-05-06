@@ -132,6 +132,10 @@ label {
   margin-right: 0% !important;
 }
 
+table, th, td {
+  border: 1px solid black;
+}
+
 h1 {
     margin-top: 2.5vw;
     font-size: 1.9vw !important;
