@@ -185,7 +185,6 @@ def render_blog_post():
                            id = post_id,
                            date = post.creation_date)
 
-
 @app.route('/api/blog_posts/render_preview', methods=['POST'])
 @limiter.limit("2 per second")
 def render_blog_post_preview():

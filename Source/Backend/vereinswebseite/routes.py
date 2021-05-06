@@ -57,4 +57,9 @@ def unauthorized_handler(e):
 def render_reset_password():
     return render_template('reset_password.jinja2')
 
+@app.route('/navigation_page')
+def render_navigation_page():
+    return render_template('navigation_page.jinja2')
+
+
 
