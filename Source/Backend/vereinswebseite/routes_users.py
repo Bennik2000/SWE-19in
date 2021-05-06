@@ -1,6 +1,6 @@
 from uuid import uuid4
 
-from vereinswebseite import app, db, login_manager, webmaster_role
+from vereinswebseite import app, db, login_manager, webmaster_role, vorstand_role
 from vereinswebseite.email_utils import send_reset_password_email
 from vereinswebseite.models import User, UserSchema, AccessToken, PasswordResetToken
 from vereinswebseite.request_utils import success_response, generate_error
@@ -122,7 +122,7 @@ def change_password():
     return success_response
 
 
-@app.route('/users/change_email', methods = ['POST'])
+@app.route('/users/change_email', methods=['POST'])
 @login_required
 def change_email():
     email = request.json.get("email")
@@ -137,7 +137,7 @@ def change_email():
 
 @app.route('/api/users', methods=['GET'])
 @login_required
-# TODO: Webmaster role required
+@roles_required('Webmaster')
 def get_users():
     id_ = request.args.get("id", default="*")
 
@@ -215,6 +215,17 @@ def reset_password_page(reset_token):
         return abort(HTTPStatus.NOT_FOUND)
     else:
         return render_template('set_new_password.jinja2', token=reset_token)
+
+
+@app.route('/api/users/current_user_roles', methods=['GET'])
+@login_required
+def current_user_roles():
+    roles = [role.name for role in current_user.roles]
+
+    return {
+        "success": True,
+        "roles": roles
+    }
 
 
 @login_manager.user_loader
