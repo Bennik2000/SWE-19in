@@ -217,7 +217,7 @@ function get_users(){
             let usermail=document.createElement("p");
             let eh5=document.createElement("h6");
             let ea=document.createElement("a");
-            eh5.innerHTML="Email: ";
+            eh5.innerHTML="E-Mail: ";
             eh5.style.display="inline";
             usermail.appendChild(eh5);
             ea.innerHTML=element.email;

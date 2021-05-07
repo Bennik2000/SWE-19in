@@ -73,7 +73,7 @@
           <div class="btn-group-vertical w-100" role="group" aria-label="Basic Settings">
             <button type="button" class="btn btn-outline-secondary" onclick="reload(0);">Account</button>
             <button type="button" class="btn btn-outline-secondary" onclick="reload(1);">Passwort</button>
-            <button type="button" class="btn btn-outline-secondary" onclick="reload(2);">Email</button>
+            <button type="button" class="btn btn-outline-secondary" onclick="reload(2);">E-Mail</button>
           </div>
 
 
@@ -86,18 +86,18 @@
         <!--End left_body-->
         <div class="col-md-10" id="base_template"><!---------------------------Base----------------------------------------->
 
-          <p>Aktuelle Email:</p>
+          <p>Aktuelle E-Mail:</p>
 
           <textarea class="form-control form-control-md" id="current_email" readonly  rows="1"></textarea>
-          <button type="button" class="btn btn-danger mt-5" id="delet_account"  onclick="delete_account();">Account Löschen</button>
-          <button type="button" class="btn btn-danger mt-5" id="logout_user"  onclick="logout();">Logout</button>
+          <button type="button" class="btn btn-danger mt-5" id="delet_account"  onclick="delete_account();">Account löschen</button>
+          <button type="button" class="btn btn-outline-danger mt-5" id="logout_user"  onclick="logout();">Logout</button>
           
         </div>
         <!--End right_body-->
         <div class="col-md-10 d-none" id="password_template"><!-------------------------------Password------------------------------------->
 
 
-          <h1>Passwort ändern?</h1>
+          <h1 id="rename_password_h1">Passwort ändern?</h1>
           <p>Hier kannst du dein aktuelles Passwort neu vergeben.</p>
           <input id="rename_new_password" placeholder="Neues Passwort" class="form-control form-control-md"  type="password"  required="true">
           <input id="rename_new_password2" placeholder="Neues Passwort wiederholen" class="form-control form-control-md"  type="password" required="true">
@@ -106,12 +106,12 @@
 
         </div>
         <!--End right_body-->
-        <div class="col-md-10 d-none" id="email_template"><!----------------------------Email---------------------------------------->
+        <div class="col-md-10 d-none" id="email_template"><!----------------------------E-Mail---------------------------------------->
 
           <p>Aktuelle E-Mail:</p>
           <textarea class="form-control form-control-md" id="old_email" readonly  rows="1"></textarea>
           <p class="mt-1">Neue E-Mail:</p>
-          <textarea class="form-control form-control-md" id="current_email_new" placeholder="Neue Email" rows="1"></textarea>
+          <textarea class="form-control form-control-md" id="current_email_new" placeholder="Neue E-Mail" rows="1"></textarea>
           <button type="button" class="btn btn-primary mt-2" id="email_save"  onclick="email_save();">Speichern</button>
 
         </div>
