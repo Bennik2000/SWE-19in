@@ -76,6 +76,15 @@ class PasswordResetToken(db.Model):
         self.user = user
 
 
+class RenderedPost:
+    def __init__(self, post_id, title, summary, creation_date, name):
+        self.id = post_id
+        self.title = title
+        self.summary = summary
+        self.creation_date = creation_date
+        self.name = name
+
+
 class UserSchema(ma.Schema):
     class Meta:
         fields = ('id', 'name', 'email')

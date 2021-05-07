@@ -5,7 +5,7 @@ import markdown
 from flask_login import login_required, current_user
 
 from vereinswebseite import app, db, limiter
-from vereinswebseite.models import BlogPost, BlogPostSchema, User
+from vereinswebseite.models import BlogPost, BlogPostSchema, User, RenderedPost
 from flask import request, abort, render_template
 
 from vereinswebseite.request_utils import get_int_from_request, success_response, generate_error, generate_success, \
@@ -91,9 +91,7 @@ def update_blog_post():
 @app.route('/api/blog_posts', methods=['GET'])
 def get_all_blog_posts():
     posts = BlogPost.query.all()
-
     all_posts = []
-
     for post in posts:
         if post.is_expired():
             continue
@@ -114,6 +112,32 @@ def get_all_blog_posts():
     return generate_success({
         "blog_posts": all_posts
     })
+
+
+@app.route('/blog_posts/all', methods=['GET'])
+def render_all_blog_posts():
+    posts = BlogPost.query.all()
+    all_posts = []
+
+    for post in posts:
+        if post.is_expired():
+            continue
+
+        user = User.query.get(post.author_id)
+        username = ""
+
+        if user is not None:
+            username = user.name
+
+        all_posts.append(RenderedPost(
+            post.id,
+            post.title,
+            markdown.markdown(post.make_post_summary()),
+            post.creation_date,
+            username
+        ))
+
+    return render_template('all_blog_posts.jinja2', posts=all_posts)
 
 
 @app.route('/api/blog_posts/delete', methods=['DELETE'])
