@@ -14,16 +14,18 @@ function bio_save() {
     }
 }
 function delete_account() {
-    function myOnloadFunction(response) {
-        if (response.success != true) {
-            window.location.href = "/login";
+    if (confirm("Wollen Sie Ihren Account wirklich löschen? Dann drücken sie \"OK\"") == true) {
+        function myOnloadFunction(response) {
+            if (response.success == true) {
+                window.location.href = "/login";
+            }
+            else {
+                alert("Account löschen fehlgeschlagen! Bitte versuchen Sie es erneut!");
+            }
         }
-        else {
-            alert("Account löschen fehlgeschlagen! Bitte versuchen Sie es erneut!");
-        }
+        var jsonObj = {};
+        frontendHelper.makeHttpRequest("DELETE", "/api/users/delete", jsonObj, myOnloadFunction);
     }
-    var jsonObj = {};
-    frontendHelper.makeHttpRequest("DELETE", "/api/users/delete", jsonObj, myOnloadFunction);
 }
 function logout() {
     function myOnloadFunction(response) {
@@ -181,7 +183,7 @@ function get_users() {
             var usermail = document.createElement("p");
             var eh5 = document.createElement("h6");
             var ea = document.createElement("a");
-            eh5.innerHTML = "Email: ";
+            eh5.innerHTML = "E-Mail: ";
             eh5.style.display = "inline";
             usermail.appendChild(eh5);
             ea.innerHTML = element.email;

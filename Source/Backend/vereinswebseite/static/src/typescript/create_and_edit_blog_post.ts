@@ -9,6 +9,8 @@ let errorMessageNoMarkdownEntered = "Um eine Vorschau anzeigen zu lassen bitte M
 let errorMessageShowingPreview = "Anzeigen der Vorschau fehlgeschlagen!";
 let errorMessageUpdatingPreview = "Aktualisieren der Vorschau fehlgeschlagen!";
 let errorMessageUpdatingOrShowingLivePreview = "Live-Vorschau: Anzeigen/Aktualisieren fehlgeschlagen!";
+let errorMessageNoFilesSelected = "Bitte Bilder zum Hochladen auswählen!";
+let errorMessageUploadingFiles = "Hochladen fehlgeschlagen!";
 
 function swapShowingPreview() {
     var markdown = document.getElementById("markdown") as HTMLInputElement;
@@ -155,8 +157,10 @@ function saveCreatedBlogPost() {
         var jsonObj = {};
         jsonObj["title"] = title.value;
         jsonObj["content"] = markdown.value;
-        jsonObj["expiration_date"] = expiration_date.value;
-
+        
+        if(expiration_date.value.length > 0){
+            jsonObj["expiration_date"] = expiration_date.value;
+        }
         function myOnloadFunction(response) {
             if(response == null)
             {
@@ -189,7 +193,9 @@ function saveEditedBlogPost() {
         jsonObj["id"] = document.getElementById("id").innerHTML;
         jsonObj["title"] = title.value;
         jsonObj["content"] = markdown.value;
-        jsonObj["expiration_date"] = expiration_date.value;
+        if(expiration_date.value.length > 0){
+            jsonObj["expiration_date"] = expiration_date.value;
+        }
 
         function myOnloadFunction(response) {
             if(response == null)
@@ -242,4 +248,75 @@ function setExpirationDate() {
     var currentExpirationDate = document.getElementById("expiration_date").innerHTML;
     currentExpirationDate = currentExpirationDate.substring(0,10);
     minimum.setAttribute("value", currentExpirationDate);
+}
+
+
+function uploadImage() {
+    let filesInput = document.getElementById("filesInput") as HTMLInputElement;
+ 
+    if (filesInput.files.length == 0) {
+        alert(errorMessageNoFilesSelected);
+        return;
+    }
+
+    var formData = new FormData();
+    formData.append("image", filesInput.files[0], filesInput.files[0].name);
+
+    function myOnloadFunction(response) {
+        if(response == null)
+        {
+            alert(errorMessageCommunicationWithServer);
+            return;
+        }
+        else if (response.success) {
+            var respondedFilename = response.filename;
+            embedImageIntoMarkdown(respondedFilename);
+        }
+        else {
+            alert(errorMessageUploadingFiles + "\n➔ " + response.errors[0].title + ".");
+        }
+    }
+    frontendHelper.makeHttpRequest("POST", "/api/upload_image", formData, myOnloadFunction, false);
+}
+
+function embedImageIntoMarkdown(filename) {
+    let markdown = document.getElementById("markdown") as HTMLInputElement;
+
+    var imageURL = "![](/_uploads/images/" + filename + "){: style='width: 5vw;'}";
+
+    if (markdown.selectionStart || markdown.selectionStart === 0) {
+        var startPos = markdown.selectionStart;
+        var endPos = markdown.selectionEnd;
+        markdown.value = markdown.value.substring(0, startPos) + imageURL + markdown.value.substring(endPos, markdown.value.length);
+        markdown.selectionStart = startPos + imageURL.length;
+        markdown.selectionEnd = startPos + imageURL.length;
+      } else {
+        markdown.value += imageURL;
+      }
+}
+
+function deleteBlogPost() {
+
+    let wantsToCancel = confirm("Soll der Beitrag wirklich gelöscht werden?");
+    if (wantsToCancel) 
+    {
+        var jsonObj = {};
+        jsonObj["id"] = document.getElementById("id").innerHTML;
+
+        function myOnloadFunction(response) {
+            if(response == null)
+            {
+                alert("Kommunikation mit Server fehlgeschlagen!");
+                return;
+            }
+            else if (response.success) {
+                alert("Artikel erfolgreich gelöscht!");
+                window.location.href = "/#"; //TODO: Link to the blog post overview of all post
+            }
+            else {
+                alert("Löschen fehlgeschlagen!" + "\n➔ " + response.errors[0].title + ".");
+            }
+        }
+        frontendHelper.makeHttpRequest("DELETE", "/api/blog_posts/delete", jsonObj, myOnloadFunction); 
+    }
 }
