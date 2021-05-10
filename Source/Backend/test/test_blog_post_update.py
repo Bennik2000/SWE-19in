@@ -1,6 +1,6 @@
 import flask
 
-from base_test_case import BaseTestCase, TestPassword
+from test.base_test_case import BaseTestCase, TestPassword
 from vereinswebseite.models import db, BlogPost, User
 
 

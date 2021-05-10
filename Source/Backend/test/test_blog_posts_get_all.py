@@ -2,7 +2,7 @@ import unittest
 from datetime import datetime
 from http import HTTPStatus
 
-from base_test_case import BaseTestCase, TestUserName
+from test.base_test_case import BaseTestCase, TestUserName
 from vereinswebseite.models import db, BlogPost
 
 

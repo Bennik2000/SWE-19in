@@ -1,6 +1,6 @@
 from http import HTTPStatus
 from vereinswebseite.models import User
-from base_test_case import BaseTestCase, TestUserName, TestEmail, TestPassword
+from test.base_test_case import BaseTestCase, TestUserName, TestEmail, TestPassword
 
 
 class UserRolesTest(BaseTestCase):

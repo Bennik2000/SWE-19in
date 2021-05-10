@@ -1,6 +1,6 @@
 from http import HTTPStatus
 
-from base_test_case import BaseTestCase
+from test.base_test_case import BaseTestCase
 
 
 class RateLimitTest(BaseTestCase):

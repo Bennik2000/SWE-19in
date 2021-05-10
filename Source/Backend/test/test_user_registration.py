@@ -1,4 +1,4 @@
-from base_test_case import BaseTestCase, TestUserName, TestEmail, TestPassword
+from test.base_test_case import BaseTestCase, TestUserName, TestEmail, TestPassword
 from copy import deepcopy
 from http import HTTPStatus
 from vereinswebseite.models import db, User

@@ -2,7 +2,7 @@ import unittest
 from http import HTTPStatus
 from werkzeug import Response
 
-from base_test_case import BaseTestCase, TestUserName, TestEmail
+from test.base_test_case import BaseTestCase, TestUserName, TestEmail
 
 
 class UserPersonalInfoTest(BaseTestCase):

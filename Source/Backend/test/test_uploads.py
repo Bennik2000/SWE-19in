@@ -7,7 +7,7 @@ import flask_uploads
 from http import HTTPStatus
 from flask import Response
 from werkzeug.datastructures import FileStorage
-from base_test_case import BaseTestCase
+from test.base_test_case import BaseTestCase
 
 
 class UploadsTest(BaseTestCase):

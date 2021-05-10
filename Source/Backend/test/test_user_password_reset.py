@@ -1,7 +1,7 @@
 import unittest
 from http import HTTPStatus
 
-from base_test_case import BaseTestCase, TestEmail
+from test.base_test_case import BaseTestCase, TestEmail
 from vereinswebseite.models import db, PasswordResetToken, User
 
 
