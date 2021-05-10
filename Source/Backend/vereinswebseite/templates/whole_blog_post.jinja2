@@ -30,11 +30,13 @@
             </div> 
 
             {% if can_edit_post %}
-                    <button type="button" class="btn btn-secondary" id="button_edit_post" onclick="editBlogPost();">Beitrag bearbeiten</button>
+                    <button type="button" class="btn btn-primary" id="button_edit_post" onclick="editBlogPost();">Beitrag bearbeiten</button>
             {% endif %}
+            
             {% if can_delete_post %}
                     <button type="button" class="btn btn-danger" id="button_delete_post" onclick="deleteBlogPost();">Beitrag löschen</button>
             {% endif %}
+            
             <button type="button" style="display:none" class="btn btn-outline-info" id="button_scrollToTop" onclick="scrollToContent('top')">Zum Anfang scrollen</button>
 
 

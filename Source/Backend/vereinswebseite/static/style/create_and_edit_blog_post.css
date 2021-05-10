@@ -4,7 +4,11 @@ form {
     width: 80%;
     position: center;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    } 
+}
+
+body {
+  zoom:80%;
+}
 
 #markdown {
     height: 15vw;
@@ -51,7 +55,7 @@ form {
     resize: vertical;
 }
 
-#cancel{
+#cancel, #button_delete_post{
     font-size: 1vw;
     margin-top: 2%;
     margin-left: 1%;
@@ -112,6 +116,26 @@ label {
     font-size: 1vw;
 }
 
+#uploadPictures {
+  font-size: 1vw;
+  display: inline-block;
+}
+
+#uploadImageButton{
+  font-size: 1vw;
+  padding: 0% 4% 0.2% 4%;
+  margin-top: 0.4%;
+  margin-bottom: 0.5%;
+}
+
+#filesInput {
+  margin-right: 0% !important;
+}
+
+table, th, td {
+  border: 1px solid black;
+}
+
 h1 {
     margin-top: 2.5vw;
     font-size: 1.9vw !important;
@@ -135,61 +159,89 @@ h5 {
 h6 {
   margin-top: 1.5vw;
   font-size: 1.1vw !important;
-}      
+}     
+p {
+  font-size: 1vw !important;
+} 
 input[type=checkbox]
  {
    transform: scale(1);  
  }
 
+ @media (max-width: 1200px) 
+{
+  body {
+    zoom: 100%;
+  }
+   form {
+     margin-top: 10%;
+   }
+}
+
  @media (max-width: 768px) 
  {
-       h1 {
-         margin-top: 2.5vw;
-         font-size: 2.5vw !important;
-       }
-       h2 {
-         margin-top: 2.3vw;
-         font-size: 2.3vw !important;
-       }
-       h3 {
-         margin-top: 2.1vw;
-         font-size: 2.1vw !important;
-       }
-       h4 {
-         margin-top: 1.9vw;
-         font-size: 1.9vw !important;
-       }
-       h5 {
-         margin-top: 1.7vw;
-         font-size: 1.7vw !important;
-       }
-       h6 {
-         margin-top: 1.5vw;
-         font-size: 1.5vw !important;
-       }  
-       #datePicker_p {
-           font-size: 1.5vw;
-       }
-       button {
-           font-size: 1.5vw !important;
-           padding: 0.5% 2% 8% 2% !important;
-       }
-       label {
-        font-size: 2vw !important;
-       } 
-       #markdown, #title, #livePreviewCheckbox_label {
+    body {
+      zoom: 120%;
+    }
+    form {
+      margin-top: 20%;
+    }
+    h1 {
+      font-size: 2.5vw !important;
+      margin-top: 2.5vw;
+    }
+    h2 {
+      margin-top: 2.3vw;
+      font-size: 2.3vw !important;
+    }
+    h3 {
+      margin-top: 2.1vw;
+      font-size: 2.1vw !important;
+    }
+    h4 {
+      margin-top: 1.9vw;
+      font-size: 1.9vw !important;
+    }
+    h5 {
+      margin-top: 1.7vw;
+      font-size: 1.7vw !important;
+    }
+    h6 {
+      margin-top: 1.5vw;
+      font-size: 1.5vw !important;
+    }  
+    #datePicker_p {
+        font-size: 1.5vw;
+    }
+    #bottom_button_groupbutton {
         font-size: 1.5vw !important;
-       }
-       input[type=checkbox]
-       {
-        margin-top: 1vw !important;
-         transform: scale(0.8);  
-       }
- }
+        padding: 0.5% 2% 8% 2% !important;
+    }
+    #uploadImageButton {
+      width: 10vw;
+    }
+    label {
+     font-size: 2vw !important;
+    } 
+    #markdown, #title, #livePreviewCheckbox_label {
+     font-size: 1.5vw !important;
+    }
+    input[type=checkbox]
+    {
+     margin-top: 1vw !important;
+      transform: scale(0.8);  
+    }
+}
 
 
 @media (max-width: 500px) 
 {
+    body {
+      zoom: 150%;
+    }
+    form {
+      margin-top: 30%;
+    }
     #livePreviewCheckbox_label
     {
      font-size: 2.4vw !important; 
