@@ -4,6 +4,7 @@ from flask_login import UserMixin
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from vereinswebseite.routes import ma
+import marshmallow_sqlalchemy.fields
 
 db = SQLAlchemy()
 
@@ -132,9 +133,29 @@ class UserRoles(db.Model):
     role_id = db.Column(db.Integer(), db.ForeignKey('role.id', ondelete='CASCADE'))
 
 
-class UserSchema(ma.Schema):
+class RoleSchema(ma.Schema):
     class Meta:
-        fields = ('id', 'name', 'email')
+        fields = ('name', )
+
+
+class NamedRelation(ma.Field):
+    def __init__(self, name_column, **kwargs):
+        super().__init__(**kwargs)
+        self.name_column = name_column
+
+    def serialize(self, attr, obj, accessor=None):
+        return [getattr(related, self.name_column) for related in getattr(obj, attr)]
+
+
+class UserSchema(ma.SQLAlchemySchema):
+    class Meta:
+        model = User
+        include_relationships = True
+
+    id = ma.auto_field()
+    name = ma.auto_field()
+    email = ma.auto_field()
+    roles = NamedRelation(name_column="name")
 
 
 class BlogPostSchema(ma.Schema):

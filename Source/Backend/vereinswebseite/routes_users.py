@@ -31,7 +31,7 @@ users_bp = Blueprint('users', __name__, url_prefix='/api/users')
 users_frontend_bp = Blueprint('users_frontend', __name__, url_prefix='/users')
 
 
-@users_bp.route('/', methods=['POST'])
+@users_bp.route('', methods=['POST'])
 def register_user():
     name = request.json.get('name')
     email = request.json.get('email')
@@ -216,16 +216,35 @@ def reset_password():
 def current_user_roles():
     roles = [role.name for role in current_user.roles]
 
-    return {
-        "success": True,
+    return success_response | {
         "roles": roles
     }
 
 
-@users_bp.route('/set_user_roles', methods=['PUT'])
+@users_bp.route('/user_roles', methods=['GET'])
 @login_required
 @roles_required('Webmaster')
-def assign_role():
+def get_user_roles():
+    user_id = request.json.get("user_id")
+
+    if user_id is None or user_id == "":
+        return user_id_invalid
+
+    user = User.query.get(user_id)
+    if user is None:
+        return user_id_invalid
+
+    roles = [role.name for role in user.roles]
+
+    return success_response | {
+        "roles": roles
+    }
+
+
+@users_bp.route('/user_roles', methods=['PUT'])
+@login_required
+@roles_required('Webmaster')
+def put_user_roles():
     user_id = request.json.get("user_id")
     role_names = request.json.get("roles")
 
