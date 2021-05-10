@@ -136,14 +136,14 @@ def delete_blog_post():
 
 
 @blog_posts_bp.route('/render_preview', methods=['POST'])
-@limiter.limit("2 per second")
+@limiter.limit("5 per second")
 def render_blog_post_preview():
     content = request.json.get("content")
 
     if content is None:
         return content_invalid
 
-    html = markdown.markdown(content)
+    html = markdown.markdown(content, extensions=["extra"])
 
     return generate_success({
         "html": html
@@ -183,7 +183,7 @@ def render_blog_post():
     if post.is_expired():
         abort(HTTPStatus.NOT_FOUND)
 
-    html = markdown.markdown(post.content)
+    html = markdown.markdown(post.content, extensions=["extra"])
 
     author = User.query.get(post.author_id)
     author_name = ""

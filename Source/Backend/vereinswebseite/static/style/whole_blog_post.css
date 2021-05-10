@@ -6,11 +6,11 @@
 
 #whole_post_page{
     position: fixed;
+
     height: 100%;
     width: 100%;
     overflow: auto; 
 }
-
 
 
 html{
@@ -21,6 +21,11 @@ body{
     height: 100%;
 }
 
+
+.container{
+    padding: 0px;
+  
+}
 
 #post {
     border: 5px ;
@@ -60,6 +65,7 @@ ul {
 {
     color: #888a89;
     font-size: 1.2vw;
+
 }
 
 #post_text{
@@ -73,6 +79,20 @@ button {
 
 #title {
     font-size: 2.5vw;
+}
+
+#button_delete_post{
+    font-size: 1vw;
+    margin-top: 2%;
+    margin-left: 1%;
+    padding: 0.5% 2% 0.5% 2%;
+  }
+
+#button_edit_post{
+    font-size: 1vw;
+    margin-top: 2%;
+    margin-left: 1%;
+    padding: 0.5% 2% 0.5% 2%;
 }
 
 #content h1 {
@@ -143,3 +163,9 @@ h6 {
         font-size: 1.5vw !important;
       }      
 }
+
+table, th, td {
+    border: 1px solid black;
+  }
+  
+  

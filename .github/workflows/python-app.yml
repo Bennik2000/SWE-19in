@@ -28,4 +28,5 @@ jobs:
     - name: Test with pytest
       run: |
         cd Source/Backend/
-        python -m unittest
+        coverage run -m unittest
+        coverage report

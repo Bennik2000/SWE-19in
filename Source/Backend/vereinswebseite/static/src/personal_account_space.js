@@ -14,21 +14,23 @@ function bio_save() {
     }
 }
 function delete_account() {
-    function myOnloadFunction(response) {
-        if (response.success != true) {
-            window.location.href = "/login";
+    if (confirm("Wollen Sie Ihren Account wirklich löschen? Dann drücken sie \"OK\"") == true) {
+        function myOnloadFunction(response) {
+            if (response.success == true) {
+                window.location.href = "/login";
+            }
+            else {
+                alert("Account löschen fehlgeschlagen! Bitte versuchen Sie es erneut!");
+            }
         }
-        else {
-            alert("Account löschen fehlgeschlagen! Bitte versuchen Sie es erneut!");
-        }
+        var jsonObj = {};
+        frontendHelper.makeHttpRequest("DELETE", "/api/users/delete", jsonObj, myOnloadFunction);
     }
-    var jsonObj = {};
-    frontendHelper.makeHttpRequest("DELETE", "/api/users/delete", jsonObj, myOnloadFunction);
 }
 function logout() {
     function myOnloadFunction(response) {
         if (response) {
-            if (response.success = true) {
+            if (response.success == true) {
                 window.location.href = "/login";
             }
             else {
@@ -36,24 +38,43 @@ function logout() {
             }
         }
         else {
-            alert("Server fehler!");
+            alert("Kommunikation mit Server fehlgeschlagen!");
         }
     }
     var jsonObj = {};
     frontendHelper.makeHttpRequest("POST", "/api/users/logout", jsonObj, myOnloadFunction);
 }
 function email_save() {
-    /*let newEmail=document.getElementById("current_email_new");
-    function myOnloadFunction(response){
-        document.getElementById("Username").innerHTML=response.name;
-        document.getElementById("current_email").innerHTML=response.email;
-        
+    var newEmail = document.getElementById("current_email_new");
+    var currentEmail = document.getElementById("current_email");
+    var oldEmail = document.getElementById("old_email");
+    if (!frontendHelper.validateEmail(newEmail.value)) {
+        alert("E-Mail nicht valide! Bitte überprüfen");
+        return;
     }
-    let jsonObj={};
-    jsonObj["email"]=
-
-    frontendHelper.makeHttpRequest("GET", "/api/users/personal_info", jsonObj, myOnloadFunction);
-*/ 
+    else if (newEmail.value == currentEmail.innerHTML) {
+        alert("Fehler! Die E-Mail Adresse ist identisch mit der aktuell Verwendeten");
+        return;
+    }
+    function myOnloadFunction(response) {
+        if (response) {
+            if (response.success == true) {
+                alert("E-Mail wurde erfolgreich geändert!");
+                oldEmail.innerHTML = newEmail.value;
+                currentEmail.innerHTML = newEmail.value;
+                newEmail.value = "";
+            }
+            else {
+                alert("Fehlgeschlagen! Bitte versuchen Sie es erneut!");
+            }
+        }
+        else {
+            alert("Kommunikation mit Server fehlgeschlagen!");
+        }
+    }
+    var jsonObj = {};
+    jsonObj["email"] = newEmail.value;
+    frontendHelper.makeHttpRequest("POST", "/api/users/change_email", jsonObj, myOnloadFunction);
 }
 function password_save() {
     var renamenewPassword = document.getElementById("rename_new_password");
@@ -162,7 +183,7 @@ function get_users() {
             var usermail = document.createElement("p");
             var eh5 = document.createElement("h6");
             var ea = document.createElement("a");
-            eh5.innerHTML = "Email: ";
+            eh5.innerHTML = "E-Mail: ";
             eh5.style.display = "inline";
             usermail.appendChild(eh5);
             ea.innerHTML = element.email;
@@ -202,6 +223,7 @@ function get_user_info() {
     function myOnloadFunction(response) {
         document.getElementById("Username").innerHTML = response.name;
         document.getElementById("current_email").innerHTML = response.email;
+        document.getElementById("old_email").innerHTML = response.email;
     }
     var jsonObj = {};
     frontendHelper.makeHttpRequest("GET", "/api/users/personal_info", jsonObj, myOnloadFunction);
