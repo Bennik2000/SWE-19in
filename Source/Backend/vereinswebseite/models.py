@@ -24,7 +24,6 @@ class BlogPost(db.Model):
         return f'BlogPost(id={self.id}, author_id={self.author_id},\n' \
                f'\ttitle="{self.title}",\n\tcontent="{self.content}")'
 
-      
     def make_post_summary(self):
         summary_length_in_words = 100
 
@@ -33,14 +32,12 @@ class BlogPost(db.Model):
         if len(words) > summary_length_in_words:
             return ' '.join(words[0:summary_length_in_words]) + "..."
         return self.content
-
       
     def is_expired(self):
         if self.expiration_date is None:
             return False
 
         return self.expiration_date.date() < datetime.today().date()
-
 
 
 class User(UserMixin, db.Model):
@@ -83,6 +80,10 @@ class RenderedPost:
         self.summary = summary
         self.creation_date = creation_date
         self.name = name
+
+
+class RenderedPostPreview(RenderedPost):
+    pass
 
 
 class UserSchema(ma.Schema):

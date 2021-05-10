@@ -5,7 +5,7 @@ import markdown
 from flask_login import login_required, current_user
 
 from vereinswebseite import app, db, limiter
-from vereinswebseite.models import BlogPost, BlogPostSchema, User, RenderedPost
+from vereinswebseite.models import BlogPost, BlogPostSchema, User, RenderedPostPreview
 from flask import request, abort, render_template
 
 from vereinswebseite.request_utils import get_int_from_request, success_response, generate_error, generate_success, \
@@ -129,7 +129,7 @@ def render_all_blog_posts():
         if user is not None:
             username = user.name
 
-        all_posts.append(RenderedPost(
+        all_posts.append(RenderedPostPreview(
             post.id,
             post.title,
             markdown.markdown(post.make_post_summary()),
