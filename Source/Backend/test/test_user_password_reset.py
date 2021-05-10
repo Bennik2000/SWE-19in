@@ -1,17 +1,16 @@
 import unittest
 from http import HTTPStatus
 
-from test.test_utils import setup_test_app, add_test_user, TestEmail
-from vereinswebseite import db
-from vereinswebseite.models import PasswordResetToken, User
+from base_test_case import BaseTestCase, TestEmail
+from vereinswebseite.models import db, PasswordResetToken, User
 
 
-class UserPasswordResetTest(unittest.TestCase):
+class UserPasswordResetTest(BaseTestCase):
     TestToken = "ZHHEU2345"
 
     def setUp(self) -> None:
-        self.app = setup_test_app()
-        add_test_user()
+        super().setUp()
+        self.add_test_user()
 
     def test_given_user_exists_when_request_password_reset_then_token_generated(self):
         self.clear_reset_tokens()

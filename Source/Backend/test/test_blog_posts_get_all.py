@@ -2,16 +2,14 @@ import unittest
 from datetime import datetime
 from http import HTTPStatus
 
-from test.test_utils import setup_test_app, add_test_user, TestUserName
-from vereinswebseite import db
-from vereinswebseite.models import BlogPost
+from base_test_case import BaseTestCase, TestUserName
+from vereinswebseite.models import db, BlogPost
 
 
-class GetBlogPostsTest(unittest.TestCase):
-
-    def setUp(self) -> None:
-        self.app = setup_test_app()
-        add_test_user()
+class GetBlogPostsTest(BaseTestCase):
+    def setUp(self):
+        super().setUp()
+        self.add_test_user()
 
     def test_given_not_logged_in_when_get_all_then_all_returned(self):
         db.session.add(BlogPost("Title", "Content", 1))

@@ -1,8 +1,11 @@
 from datetime import datetime
 
-from vereinswebseite import db, ma
 from flask_login import UserMixin
+from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
+from vereinswebseite.routes import ma
+
+db = SQLAlchemy()
 
 
 class BlogPost(db.Model):

@@ -4,9 +4,9 @@ from http import HTTPStatus
 import markdown
 from flask_login import login_required, current_user
 
-from vereinswebseite import app, db, limiter
-from vereinswebseite.models import BlogPost, BlogPostSchema, User
-from flask import request, abort, render_template
+from vereinswebseite.routes import limiter
+from vereinswebseite.models import db, BlogPost, BlogPostSchema, User
+from flask import request, abort, render_template, Blueprint
 
 from vereinswebseite.request_utils import get_int_from_request, success_response, generate_error, generate_success, \
     parse_date
@@ -23,8 +23,11 @@ not_permitted_to_edit_or_delete = generate_error("Dieser Post gehört zu einem a
                                                  "Daher kann er nicht bearbeitet oder gelöscht werden.",
                                                  HTTPStatus.FORBIDDEN)
 
+blog_posts_bp = Blueprint('blog_posts', __name__, url_prefix='/api/blog_posts')
+blog_posts_frontend_bp = Blueprint('blog_posts_frontend', __name__, url_prefix='/blog_posts')
 
-@app.route('/api/blog_posts', methods=['POST'])
+
+@blog_posts_bp.route('', methods=['POST'])
 @login_required
 def add_blog_post():
     title = request.json.get('title')
@@ -52,7 +55,7 @@ def add_blog_post():
     return success_response
 
 
-@app.route('/api/blog_posts/update', methods=['PUT'])
+@blog_posts_bp.route('/update', methods=['PUT'])
 @login_required
 def update_blog_post():
     id_ = request.json.get('id')
@@ -88,7 +91,7 @@ def update_blog_post():
     return success_response
 
 
-@app.route('/api/blog_posts', methods=['GET'])
+@blog_posts_bp.route('', methods=['GET'])
 def get_all_blog_posts():
     posts = BlogPost.query.all()
 
@@ -116,7 +119,7 @@ def get_all_blog_posts():
     })
 
 
-@app.route('/api/blog_posts/delete', methods=['DELETE'])
+@blog_posts_bp.route('/delete', methods=['DELETE'])
 @login_required
 def delete_blog_post():
     post_id = request.json.get("id")
@@ -132,12 +135,27 @@ def delete_blog_post():
     return success_response
 
 
-@app.route('/blog_posts/create')
+@blog_posts_bp.route('/render_preview', methods=['POST'])
+@limiter.limit("2 per second")
+def render_blog_post_preview():
+    content = request.json.get("content")
+
+    if content is None:
+        return content_invalid
+
+    html = markdown.markdown(content)
+
+    return generate_success({
+        "html": html
+    })
+
+
+@blog_posts_frontend_bp.route('/create')
 def render_create_blog_post():
     return render_template('create_blog_post.jinja2')
 
 
-@app.route('/blog_posts/edit', methods=['GET'])
+@blog_posts_frontend_bp.route('/edit', methods=['GET'])
 @login_required
 def render_edit_blog_post():
     post_id = get_int_from_request("post_id")
@@ -154,7 +172,7 @@ def render_edit_blog_post():
                            id=post.id)
 
 
-@app.route('/blog_posts/render', methods=['GET'])
+@blog_posts_frontend_bp.route('/render', methods=['GET'])
 def render_blog_post():
     post_id = get_int_from_request("post_id")
     post = BlogPost.query.get(post_id)
@@ -182,20 +200,5 @@ def render_blog_post():
                            post=html,
                            title=post.title,
                            author=author_name, 
-                           id = post_id,
-                           date = post.creation_date)
-
-
-@app.route('/api/blog_posts/render_preview', methods=['POST'])
-@limiter.limit("2 per second")
-def render_blog_post_preview():
-    content = request.json.get("content")
-
-    if content is None:
-        return content_invalid
-
-    html = markdown.markdown(content)
-
-    return generate_success({
-        "html": html
-    })
+                           id=post_id,
+                           date=post.creation_date)

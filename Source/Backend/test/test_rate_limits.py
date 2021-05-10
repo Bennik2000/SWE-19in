@@ -1,13 +1,11 @@
-from unittest import TestCase
 from http import HTTPStatus
 
-from test.test_utils import setup_test_app
+from base_test_case import BaseTestCase
 
 
-class RateLimitTest(TestCase):
-
+class RateLimitTest(BaseTestCase):
     def setUp(self) -> None:
-        self.app = setup_test_app(limiter_enabled=True)
+        super().setUp(limiter_enabled=True)
 
     def test_rate_limit(self):
         did_exceed_rate_limit = False
