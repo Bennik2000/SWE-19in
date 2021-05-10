@@ -74,16 +74,13 @@ class PasswordResetToken(db.Model):
 
 
 class RenderedPost:
-    def __init__(self, post_id, title, summary, creation_date, name):
+    def __init__(self, post_id, title, summary, content, creation_date, name):
         self.id = post_id
         self.title = title
         self.summary = summary
+        self.content = content
         self.creation_date = creation_date
         self.name = name
-
-
-class RenderedPostPreview(RenderedPost):
-    pass
 
 
 class UserSchema(ma.Schema):
