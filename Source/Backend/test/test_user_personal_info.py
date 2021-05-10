@@ -46,6 +46,15 @@ class UserPersonalInfoTest(BaseTestCase):
         self.assertIsNotNone(user_name)
         self.assertEqual(user_name, TestUserName)
 
+    def test_logged_in_current_roles_received(self):
+        test_user_roles = ['Vorstand']
+        self.create_and_login_test_user(roles=test_user_roles)
+        response: Response = self.app.get("/api/users/personal_info")
+        roles_received = response.json.get("roles")
+        self.assertIsNotNone(roles_received, "No roles received")
+        self.assertEqual(roles_received, test_user_roles)
+        print(f"JSON response: {response.json}")
+
     def test_logged_in_password_not_sent(self):
         self.create_and_login_test_user()
         response: Response = self.app.get("/api/users/personal_info")
