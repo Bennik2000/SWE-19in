@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_uploads import configure_uploads
+from vereinswebseite import config
 
 
 def create_app(test_config=None):
@@ -47,8 +48,8 @@ def init_db():
 
     db.create_all()
 
-    if Role.query.filter_by(name='Webmaster').first() is None:
-        db.session.add(Role(name='Webmaster'))
-    if Role.query.filter_by(name='Vorstand').first() is None:
-        db.session.add(Role(name='Vorstand'))
+    for role_name in config.ROLES:
+        if Role.query.filter_by(name=role_name).first() is None:
+            db.session.add(Role(name=role_name))
+
     db.session.commit()
