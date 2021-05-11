@@ -5,7 +5,7 @@ import markdown
 from flask_login import login_required, current_user
 
 from vereinswebseite.routes import limiter
-from vereinswebseite.models import db, BlogPost, BlogPostSchema, User
+from vereinswebseite.models import db, BlogPost, BlogPostSchema, User, RenderedPost
 from flask import request, abort, render_template, Blueprint
 
 from vereinswebseite.request_utils import get_int_from_request, success_response, generate_error, generate_success, \
@@ -94,9 +94,7 @@ def update_blog_post():
 @blog_posts_bp.route('', methods=['GET'])
 def get_all_blog_posts():
     posts = BlogPost.query.all()
-
     all_posts = []
-
     for post in posts:
         if post.is_expired():
             continue
@@ -150,7 +148,35 @@ def render_blog_post_preview():
     })
 
 
+@blog_posts_frontend_bp.route('/all', methods=['GET'])
+def render_all_blog_posts():
+    posts = BlogPost.query.all()
+    all_posts = []
+
+    for post in posts:
+        if post.is_expired():
+            continue
+
+        user = User.query.get(post.author_id)
+        username = ""
+
+        if user is not None:
+            username = user.name
+
+        all_posts.append(RenderedPost(
+            post_id=post.id,
+            title=post.title,
+            summary=markdown.markdown(post.make_post_summary()),
+            content=None,
+            creation_date=post.creation_date,
+            name=username
+        ))
+
+    return render_template('all_blog_posts.jinja2', posts=all_posts)
+
+
 @blog_posts_frontend_bp.route('/create')
+@login_required
 def render_create_blog_post():
     return render_template('create_blog_post.jinja2')
 

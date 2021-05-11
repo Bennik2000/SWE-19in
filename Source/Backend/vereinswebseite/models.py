@@ -133,6 +133,16 @@ class UserRoles(db.Model):
     role_id = db.Column(db.Integer(), db.ForeignKey('role.id', ondelete='CASCADE'))
 
 
+class RenderedPost:
+    def __init__(self, post_id, title, summary, content, creation_date, name):
+        self.id = post_id
+        self.title = title
+        self.summary = summary
+        self.content = content
+        self.creation_date = creation_date
+        self.name = name
+
+
 class RoleSchema(ma.Schema):
     class Meta:
         fields = ('name', )
