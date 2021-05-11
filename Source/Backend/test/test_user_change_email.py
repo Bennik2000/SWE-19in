@@ -1,8 +1,9 @@
-import unittest
 from http import HTTPStatus
+
 from werkzeug import Response
-from vereinswebseite.models import User
+
 from test.base_test_case import BaseTestCase
+from vereinswebseite.models.user import User
 
 
 class UserChangeEmailTest(BaseTestCase):

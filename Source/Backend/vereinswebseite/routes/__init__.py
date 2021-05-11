@@ -45,7 +45,7 @@ def render_login():
 def personal_account_space():
     return render_template('personal_account_space.jinja2')
 
-  
+
 @general_bp.errorhandler(HTTPStatus.TOO_MANY_REQUESTS)
 def rate_limit_handler(e):
     response = e.get_response()

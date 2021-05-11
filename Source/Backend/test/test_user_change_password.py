@@ -3,7 +3,7 @@ from http import HTTPStatus
 from werkzeug import Response
 
 from test.base_test_case import BaseTestCase, TestEmail
-from vereinswebseite.models import User
+from vereinswebseite.models.user import User
 
 
 class UserChangePasswordTest(BaseTestCase):

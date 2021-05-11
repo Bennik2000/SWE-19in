@@ -1,6 +1,7 @@
 from http import HTTPStatus
 from test.base_test_case import BaseTestCase
-from vereinswebseite.models import db, BlogPost
+from vereinswebseite.models import db
+from vereinswebseite.models.blog_post import BlogPost
 
 
 class BlogPostRoutesTest(BaseTestCase):

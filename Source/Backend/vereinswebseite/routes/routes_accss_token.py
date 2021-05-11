@@ -1,9 +1,10 @@
 from http import HTTPStatus
 
-from vereinswebseite.models import db, AccessTokenSchema, AccessToken
+from vereinswebseite.models import db
 from flask import request, Blueprint
 from uuid import uuid4
 
+from vereinswebseite.models.token import AccessTokenSchema, AccessToken
 from vereinswebseite.request_utils import success_response, generate_error, generate_success
 
 OneAccessToken = AccessTokenSchema()

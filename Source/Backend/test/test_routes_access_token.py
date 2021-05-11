@@ -1,9 +1,7 @@
-from unittest import TestCase
-
 from test.base_test_case import BaseTestCase
-
-from vereinswebseite.models import db, AccessToken
-from vereinswebseite.routes_accss_token import AccessTokenLength
+from vereinswebseite.models import db
+from vereinswebseite.models.token import AccessToken
+from vereinswebseite.routes.routes_accss_token import AccessTokenLength
 
 
 class AccessTokenRoutesTest(BaseTestCase):

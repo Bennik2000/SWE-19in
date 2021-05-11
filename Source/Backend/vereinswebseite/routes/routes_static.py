@@ -83,14 +83,14 @@ def style_whole_blog_post():
   
 @static_bp.route('/src/edit_blog_post.js')
 def src_edit_blog_post():
-    return app.send_static_file('src/edit_blog_post.js')
+    return current_app.send_static_file('src/edit_blog_post.js')
 
   
 @static_bp.route('/style/navigation_page.css')
 def style_navigation_page():
-    return app.send_static_file('style/navigation_page.css')
+    return current_app.send_static_file('style/navigation_page.css')
 
 
 @static_bp.route('/src/whole_blog_post.js')
 def src_whole_blog_post():
-    return app.send_static_file('src/whole_blog_post.js')
+    return current_app.send_static_file('src/whole_blog_post.js')

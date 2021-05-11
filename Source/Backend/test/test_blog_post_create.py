@@ -1,5 +1,5 @@
 from test.base_test_case import BaseTestCase
-from vereinswebseite.models import BlogPost
+from vereinswebseite.models.blog_post import BlogPost
 
 
 class BlogPostTest(BaseTestCase):

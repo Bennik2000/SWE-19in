@@ -14,9 +14,9 @@ def create_app(test_config=None):
         app.config.from_mapping(test_config)
 
     from vereinswebseite.models import db
-    from vereinswebseite.routes_users import login_manager
+    from vereinswebseite.routes.routes_users import login_manager
     from vereinswebseite.email_utils import mail
-    from vereinswebseite.routes_uploads import images
+    from vereinswebseite.routes.routes_uploads import images
     from vereinswebseite.routes import limiter, ma
     db.init_app(app)
     login_manager.init_app(app)
@@ -26,11 +26,11 @@ def create_app(test_config=None):
     ma.init_app(app)
 
     from vereinswebseite.routes import general_bp
-    from vereinswebseite.routes_accss_token import access_token_bp
-    from vereinswebseite.routes_blog_posts import blog_posts_bp, blog_posts_frontend_bp
-    from vereinswebseite.routes_static import static_bp
-    from vereinswebseite.routes_uploads import uploads_bp
-    from vereinswebseite.routes_users import users_bp, users_frontend_bp
+    from vereinswebseite.routes.routes_accss_token import access_token_bp
+    from vereinswebseite.routes.routes_blog_posts import blog_posts_bp, blog_posts_frontend_bp
+    from vereinswebseite.routes.routes_static import static_bp
+    from vereinswebseite.routes.routes_uploads import uploads_bp
+    from vereinswebseite.routes.routes_users import users_bp, users_frontend_bp
     app.register_blueprint(general_bp)
     app.register_blueprint(access_token_bp)
     app.register_blueprint(blog_posts_bp)
@@ -44,7 +44,8 @@ def create_app(test_config=None):
 
 
 def init_db():
-    from vereinswebseite.models import db, Role
+    from vereinswebseite.models import db
+    from vereinswebseite.models.roles import Role
 
     db.create_all()
 
