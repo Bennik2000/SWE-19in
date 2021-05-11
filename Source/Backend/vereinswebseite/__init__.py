@@ -1,55 +1,55 @@
-import datetime
-import os
-
 from flask import Flask
-from flask_limiter import Limiter
-from flask_limiter.util import get_remote_address
-from flask_mail import Mail
-from flask_sqlalchemy import SQLAlchemy
-from flask_marshmallow import Marshmallow
-from flask_login import LoginManager
-from flask_uploads import UploadSet, IMAGES, configure_uploads
+from flask_uploads import configure_uploads
+from vereinswebseite import config
 
-app = Flask("VereinSWEbseite",
-            template_folder="vereinswebseite/templates",
-            static_url_path='',
-            static_folder='vereinswebseite/static')
 
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db.sqlite"
-app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-app.config["SECRET_KEY"] = "M2JjYjU2NDZmYzUJhMIgIC0K"
-app.config["REMEMBER_COOKIE_DURATION"] = datetime.timedelta(weeks=12)
-app.config['JSON_AS_ASCII'] = False
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-app.config['MAIL_PORT'] = 465
-app.config['MAIL_USERNAME'] = 'vereinSWEbseite@gmail.com'
-app.config['MAIL_PASSWORD'] = '2021SWEsem4'
-app.config['MAIL_USE_TLS'] = False
-app.config['MAIL_USE_SSL'] = True
+def create_app(test_config=None):
+    app = Flask('vereinswebseite',
+                static_url_path='')
 
-app.config['UPLOADED_IMAGES_DEST'] = os.path.join(app.root_path, "uploads")
+    # Allow adding a route '' to a blueprint with a url prefix
+    app.url_map.strict_slashes = False
+    app.config.from_pyfile('config.py')
+    if test_config is not None:
+        app.config.from_mapping(test_config)
 
-mail = Mail(app)
-images = UploadSet('images', IMAGES)
-configure_uploads(app, images)
+    from vereinswebseite.models import db
+    from vereinswebseite.routes_users import login_manager
+    from vereinswebseite.email_utils import mail
+    from vereinswebseite.routes_uploads import images
+    from vereinswebseite.routes import limiter, ma
+    db.init_app(app)
+    login_manager.init_app(app)
+    mail.init_app(app)
+    configure_uploads(app, images)
+    limiter.init_app(app)
+    ma.init_app(app)
 
-limiter = Limiter(
-    app,
-    key_func=get_remote_address,
-    default_limits=["200 per day", "60 per hour"]
-)
+    from vereinswebseite.routes import general_bp
+    from vereinswebseite.routes_accss_token import access_token_bp
+    from vereinswebseite.routes_blog_posts import blog_posts_bp, blog_posts_frontend_bp
+    from vereinswebseite.routes_static import static_bp
+    from vereinswebseite.routes_uploads import uploads_bp
+    from vereinswebseite.routes_users import users_bp, users_frontend_bp
+    app.register_blueprint(general_bp)
+    app.register_blueprint(access_token_bp)
+    app.register_blueprint(blog_posts_bp)
+    app.register_blueprint(blog_posts_frontend_bp)
+    app.register_blueprint(static_bp)
+    app.register_blueprint(uploads_bp)
+    app.register_blueprint(users_bp)
+    app.register_blueprint(users_frontend_bp)
 
-db = SQLAlchemy(app)
-ma = Marshmallow(app)
-login_manager = LoginManager(app)
+    return app
 
-# Ignore PEP8 this one time to have the routes in a separate file,
-# while avoiding circular imports
-from vereinswebseite import routes  # noqa: E402
-from vereinswebseite import routes_users  # noqa: E402
-from vereinswebseite import routes_accss_token  # noqa: E402
-from vereinswebseite import routes_blog_posts  # noqa: E402
-from vereinswebseite import routes_static  # noqa: E402
-from vereinswebseite import routes_uploads  # noqa: E402
 
-db.create_all()
+def init_db():
+    from vereinswebseite.models import db, Role
+
+    db.create_all()
+
+    for role_name in config.ROLES:
+        if Role.query.filter_by(name=role_name).first() is None:
+            db.session.add(Role(name=role_name))
+
+    db.session.commit()

@@ -1,8 +1,7 @@
 from http import HTTPStatus
 
-from vereinswebseite import app, db
-from vereinswebseite.models import AccessTokenSchema, AccessToken
-from flask import request
+from vereinswebseite.models import db, AccessTokenSchema, AccessToken
+from flask import request, Blueprint
 from uuid import uuid4
 
 from vereinswebseite.request_utils import success_response, generate_error, generate_success
@@ -14,8 +13,10 @@ AccessTokenLength = 8
 
 token_invalid = generate_error("Registrierungscode existiert nicht", HTTPStatus.NOT_FOUND)
 
+access_token_bp = Blueprint('access_token', __name__, url_prefix='/api/accessToken')
 
-@app.route('/api/accessToken/validate')
+
+@access_token_bp.route('/validate')
 def validate_access_token():
     token = request.json['token']
     access_token = AccessToken.query.get(token)
@@ -25,7 +26,7 @@ def validate_access_token():
     })
 
 
-@app.route('/api/accessToken/delete')
+@access_token_bp.route('/delete')
 def delete_access_token():
     token = request.json['token']
     access_token = AccessToken.query.get(token)
@@ -38,7 +39,7 @@ def delete_access_token():
     return success_response
 
 
-@app.route('/api/accessToken', methods=["POST"])
+@access_token_bp.route('', methods=["POST"])
 def create_access_token():
     access_token = str(uuid4())[0:AccessTokenLength].upper()
     token = AccessToken(access_token)
@@ -51,7 +52,7 @@ def create_access_token():
     return result
 
 
-@app.route('/api/accessToken', methods=['GET'])
+@access_token_bp.route('', methods=['GET'])
 def all_access_token():
     all_tokens = AccessToken.query.all()
 

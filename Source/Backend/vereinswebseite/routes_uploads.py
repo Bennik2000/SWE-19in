@@ -2,19 +2,22 @@ import uuid
 import os.path
 from http import HTTPStatus
 
-from vereinswebseite import app, images
-from flask_login import login_required
-from flask import request
-import flask_uploads
-
 from vereinswebseite.request_utils import generate_error, generate_success
+from flask_login import login_required
+from flask import request, Blueprint
+from flask_uploads import UploadSet, IMAGES, UploadNotAllowed
+
+
+images = UploadSet('images', IMAGES)
 
 wrong_file_type = generate_error("Dieser Dateityp kann nicht hochgeladen werden. "
                                  "Nur Bilder sind erlaubt.", HTTPStatus.BAD_REQUEST)
 no_image_given = generate_error("Keine Bilddatei im Request vorhanden", HTTPStatus.BAD_REQUEST)
 
+uploads_bp = Blueprint('uploads', __name__)
 
-@app.route('/api/upload_image', methods=['POST'])
+
+@uploads_bp.route('/api/upload_image', methods=['POST'])
 @login_required
 def upload_image():
     if 'image' not in request.files:
@@ -30,5 +33,5 @@ def upload_image():
         return generate_success({
             "filename": filename
         }, status=HTTPStatus.CREATED)
-    except flask_uploads.UploadNotAllowed:
+    except UploadNotAllowed:
         return wrong_file_type
