@@ -1,17 +1,13 @@
 from unittest import TestCase
 
-from test.test_utils import setup_test_app
-from vereinswebseite import app, db
+from test.base_test_case import BaseTestCase
 
-from vereinswebseite.models import AccessToken
+from vereinswebseite.models import db, AccessToken
 from vereinswebseite.routes_accss_token import AccessTokenLength
 
 
-class AccessTokenRoutesTest(TestCase):
+class AccessTokenRoutesTest(BaseTestCase):
     AccessTokenToDelete = "AccessTokenToDelete"
-
-    def setUp(self) -> None:
-        self.app = setup_test_app()
 
     def test_given_no_access_tokens_when_create_access_token_then_correct_created(self):
         response = self.app.post("/api/accessToken")

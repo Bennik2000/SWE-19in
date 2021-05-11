@@ -1,22 +1,17 @@
-import unittest
 import flask
 
-from test.test_utils import setup_test_app, add_test_user, create_and_login_test_user, TestPassword
-from vereinswebseite.models import BlogPost, User
-from vereinswebseite import db
+from test.base_test_case import BaseTestCase, TestPassword
+from vereinswebseite.models import db, BlogPost, User
 
 
-class BlogPostTest(unittest.TestCase):
+class BlogPostTest(BaseTestCase):
     ORIGINAL_POST_TITLE = "Original blog post title"
     ORIGINAL_POST_CONTENT = "Original blog post content"
     NEW_POST_TITLE = "New blog post title"
     NEW_POST_CONTENT = "New blog post content"
 
-    def setUp(self) -> None:
-        self.app = setup_test_app()
-
     def test_given_correct_user_logged_in_then_updated_correctly(self):
-        test_user = create_and_login_test_user(self.app)
+        test_user = self.create_and_login_test_user()
         blog_post_id = self._add_original_blog_post(test_user.id)
         response = self._send_update_request(blog_post_id)
 
@@ -29,7 +24,7 @@ class BlogPostTest(unittest.TestCase):
         self.assertEqual(blog_post.content, self.NEW_POST_CONTENT)
 
     def test_given_not_logged_in_then_not_updated(self):
-        test_user = add_test_user()
+        test_user = self.add_test_user()
         blog_post_id = self._add_original_blog_post(test_user.id)
         response = self._send_update_request(blog_post_id)
 
@@ -39,7 +34,7 @@ class BlogPostTest(unittest.TestCase):
         self._assert_blog_post_not_updated(blog_post_id)
 
     def test_given_wrong_user_logged_in_then_not_updated(self):
-        test_user = add_test_user()
+        test_user = self.add_test_user()
         blog_post_id = self._add_original_blog_post(test_user.id)
         self._add_and_login_second_testuser()
         response = self._send_update_request(blog_post_id)

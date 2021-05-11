@@ -1,7 +1,8 @@
-from flask_mail import Message
+from flask_mail import Mail, Message
 
-from vereinswebseite import mail
 from vereinswebseite.models import User
+
+mail = Mail()
 
 
 def send_reset_password_email(user: User, reset_url: str):
