@@ -4,7 +4,7 @@ from http import HTTPStatus
 import markdown
 from flask_login import login_required, current_user
 
-from vereinswebseite.data_cleanup import DataCleanup
+from vereinswebseite import data_cleanup
 from vereinswebseite.models.blog_post import BlogPostSchema, BlogPost, RenderedPost
 from vereinswebseite.models.user import User
 from vereinswebseite.routes import limiter
@@ -91,7 +91,7 @@ def update_blog_post():
     post.content = content
     db.session.commit()
 
-    DataCleanup().delete_unused_images()
+    data_cleanup.delete_unused_images()
 
     return success_response
 
@@ -138,7 +138,7 @@ def delete_blog_post():
     db.session.delete(post)
     db.session.commit()
 
-    DataCleanup().delete_unused_images()
+    data_cleanup.delete_unused_images()
 
     return success_response
 

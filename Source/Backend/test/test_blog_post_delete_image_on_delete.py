@@ -1,7 +1,6 @@
 import os
 import pathlib
 
-from flask import Response
 from werkzeug.datastructures import FileStorage
 
 from test.base_test_case import BaseTestCase
@@ -18,20 +17,20 @@ class DeleteBlogPostImagesTest(BaseTestCase):
 
     def test_on_delete_post_images_are_deleted(self):
         self.create_and_login_test_user()
-        uploaded_file_path = self.create_blog_post_with_image()
+        uploaded_file_path = self._create_blog_post_with_image()
 
-        self.delete_blog_post()
+        self._delete_blog_post()
 
         uploaded_file_exists = os.path.isfile(uploaded_file_path)
         self.assertFalse(uploaded_file_exists, "The uploaded file was not deleted")
 
     def test_on_update_post_images_are_deleted(self):
         self.create_and_login_test_user()
-        uploaded_file_path = self.create_blog_post_with_image()
+        uploaded_file_path = self._create_blog_post_with_image()
 
         uploaded_file_path_new, path_new = self._send_upload_request()
 
-        self.edit_blog_post("#Title\n![Alt-text](/_uploads/images/" + uploaded_file_path_new + "){: style='width: 5vw;'}")
+        self._edit_blog_post("#Title\n![Alt-text](/_uploads/images/" + uploaded_file_path_new + "){: style='width: 5vw;'}")
 
         uploaded_file_exists = os.path.isfile(path_new)
         self.assertTrue(uploaded_file_exists, "The uploaded file was deleted")
@@ -39,26 +38,26 @@ class DeleteBlogPostImagesTest(BaseTestCase):
         uploaded_file_exists = os.path.isfile(uploaded_file_path)
         self.assertFalse(uploaded_file_exists, "The uploaded file was not deleted")
 
-    def create_blog_post_with_image(self):
+    def _create_blog_post_with_image(self):
         image_filename, path = self._send_upload_request()
-        self.create_blog_post("#Title\n![Alt-text](/_uploads/images/" + image_filename + "){: style='width: 5vw;'}")
+        self._create_blog_post("#Title\n![Alt-text](/_uploads/images/" + image_filename + "){: style='width: 5vw;'}")
 
         uploaded_file_exists = os.path.isfile(path)
         self.assertTrue(uploaded_file_exists, "The uploaded file doesn't exist in the upload directory")
         return image_filename
 
-    def delete_blog_post(self):
+    def _delete_blog_post(self):
         self.app.delete("/api/blog_posts/delete", json={
             "id": "1",
         })
 
-    def create_blog_post(self, content):
+    def _create_blog_post(self, content):
         self.app.post("/api/blog_posts", json={
             "title": "Title",
             "content": content,
         })
 
-    def edit_blog_post(self, new_content):
+    def _edit_blog_post(self, new_content):
         self.app.put("/api/blog_posts/update", json={
             "id": "1",
             "title": "Title",
