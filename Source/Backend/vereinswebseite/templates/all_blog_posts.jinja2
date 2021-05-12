@@ -6,24 +6,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="/style/whole_blog_post.css">
+    <link rel="stylesheet" type="text/css" href="/style/blog_overview.css">
 
-
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" 
+          integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous" />
 
     <title>All blog posts</title>
 
 </head>
 <body>
 
-{% for post in posts %}
+    <div class ="position-relative" id="page">
+        <div class="position-absolute " id="background"></div>
+        <div class="postition-relative" id="wrapper">
+        
+            <div class="container position-relative" id="before">
+                
+                <span onclick="add_post_button();" href="#" type="button" class="btn ml-3" id="add_post">
+                <i class="fas fa-plus"></i>
+                Neuer Post</span>
+            </div>
+            <div class="container" id="overview_space">
 
-    <div>
-    <!-- See the RenderedPost class in models.py for more properties -->
-    <h1>{{ post.title }}</h1>
-    <p>{{ post.summary }}</p>
+                {% for post in posts %}
+                    <!-- See the RenderedPost class in models.py for more properties -->
+                    <div class="col-md-12 mb-3">
+                        <div class="container position-relative" id="post">
+                            <div class="row">
+                                <h3 class="col-sm-12" id="post_titel"> {{ post.title }}</h3>
+                                <div class="col-sm-12 mb-1" id="post_meta">
+                                    <span id="post_author">{{ post.name }}</span>
+                                </div>
+                                <hr>
+                                <div class="col-md-12" id="post_content">
+                                    {{ post.summary }}
+                                </div>
+                                <div class="col-md d-flex justify-content-md-between p-0" >
+                                    <button type="button" id="post_more" href="#" class="btn btn-link" onclick="post_more_button({{ post.id }});">mehr...</button>
+                                    {% if  %}
+                                    <button type="button" id="post_edit" href="#" class="btn btn-primary" onclick="post_edit_button({{ post.id }});">bearbeiten</button>
+                                    {% endif %}%}
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div><!--end Oveview -->
+        </div>
     </div>
-
-{% endfor %}
-
+    
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script>var exports = {};</script>
+<script src= "/static/src/FrontendHelper.js"></script>
+<script src= "/static/src/blog_overview.js"></script>
 </body>
 </html>
