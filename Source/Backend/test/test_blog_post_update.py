@@ -1,7 +1,9 @@
 import flask
 
 from test.base_test_case import BaseTestCase, TestPassword
-from vereinswebseite.models import db, BlogPost, User
+from vereinswebseite.models import db
+from vereinswebseite.models.blog_post import BlogPost
+from vereinswebseite.models.user import User
 
 
 class BlogPostTest(BaseTestCase):

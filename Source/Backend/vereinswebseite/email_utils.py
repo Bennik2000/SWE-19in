@@ -1,6 +1,6 @@
 from flask_mail import Mail, Message
 
-from vereinswebseite.models import User
+from vereinswebseite.models.user import User
 
 mail = Mail()
 

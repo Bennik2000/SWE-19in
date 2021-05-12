@@ -4,8 +4,10 @@ from http import HTTPStatus
 import markdown
 from flask_login import login_required, current_user
 
+from vereinswebseite.models.blog_post import BlogPostSchema, BlogPost, RenderedPost
+from vereinswebseite.models.user import User
 from vereinswebseite.routes import limiter
-from vereinswebseite.models import db, BlogPost, BlogPostSchema, User, RenderedPost
+from vereinswebseite.models import db
 from flask import request, abort, render_template, Blueprint
 
 from vereinswebseite.request_utils import get_int_from_request, success_response, generate_error, generate_success, \

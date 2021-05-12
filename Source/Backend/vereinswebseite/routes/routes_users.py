@@ -1,7 +1,10 @@
 from uuid import uuid4
 
 from vereinswebseite.email_utils import send_reset_password_email
-from vereinswebseite.models import db, User, UserSchema, AccessToken, PasswordResetToken, Role
+from vereinswebseite.models import db
+from vereinswebseite.models.roles import Role
+from vereinswebseite.models.token import AccessToken, PasswordResetToken
+from vereinswebseite.models.user import UserSchema, User
 from vereinswebseite.request_utils import success_response, generate_error
 from vereinswebseite.decorators import roles_required
 from flask import Blueprint, request, jsonify, abort, render_template, current_app

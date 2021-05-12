@@ -1,9 +1,10 @@
 from test.base_test_case import BaseTestCase, TestUserName, TestEmail, TestPassword
 from copy import deepcopy
 from http import HTTPStatus
-from vereinswebseite.models import db, User
 
-from vereinswebseite.models import AccessToken
+from vereinswebseite.models import db
+from vereinswebseite.models.token import AccessToken
+from vereinswebseite.models.user import User
 
 
 class UserRegistrationTest(BaseTestCase):

@@ -1,7 +1,9 @@
 from unittest import TestCase
 import jinja2
 import vereinswebseite
-from vereinswebseite.models import db, User, Role
+from vereinswebseite.models import db
+from vereinswebseite.models.roles import Role
+from vereinswebseite.models.user import User
 
 TestUserName = "TestUser"
 TestEmail = "test@email.com"

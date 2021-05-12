@@ -1,12 +1,11 @@
-import os
 import filecmp
+import os
 import pathlib
-
-import vereinswebseite
-import flask_uploads
 from http import HTTPStatus
+
 from flask import Response
 from werkzeug.datastructures import FileStorage
+
 from test.base_test_case import BaseTestCase
 
 

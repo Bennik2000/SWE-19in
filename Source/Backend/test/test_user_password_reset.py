@@ -1,8 +1,9 @@
-import unittest
 from http import HTTPStatus
 
 from test.base_test_case import BaseTestCase, TestEmail
-from vereinswebseite.models import db, PasswordResetToken, User
+from vereinswebseite.models import db
+from vereinswebseite.models.token import PasswordResetToken
+from vereinswebseite.models.user import User
 
 
 class UserPasswordResetTest(BaseTestCase):
