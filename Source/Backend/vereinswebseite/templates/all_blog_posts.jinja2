@@ -34,8 +34,9 @@
                         <div class="container position-relative" id="post">
                             <div class="row">
                                 <h3 class="col-sm-12" id="post_titel"> {{ post.title }}</h3>
-                                <div class="col-sm-12 mb-1" id="post_meta">
+                                <div class="col-sm-12 mb-1 d-flex justify-content-md-between" id="post_meta">
                                     <span id="post_author">{{ post.name }}</span>
+                                    <span id="post_date">{{ post.creation_date.strftime("%d.%m.%Y") }}</span>
                                 </div>
                                 <hr>
                                 <div class="col-md-12" id="post_content">
