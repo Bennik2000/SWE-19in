@@ -11,6 +11,6 @@ MAIL_USERNAME = 'vereinSWEbseite@gmail.com'
 MAIL_PASSWORD = '2021SWEsem4'
 MAIL_USE_TLS = False
 MAIL_USE_SSL = True
-UPLOADED_IMAGES_DEST = "uploads"
+UPLOADED_IMAGES_DEST = "../uploads"
 
 ROLES = ["Webmaster", "Vorstand"]
