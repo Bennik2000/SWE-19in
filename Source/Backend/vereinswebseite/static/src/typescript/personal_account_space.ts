@@ -224,13 +224,22 @@ function get_users(){
             usermail.appendChild(ea);
 
             let userid=document.createElement("p");
+            let rh5=document.createElement("h6");
+            let ra=document.createElement("a");
+            rh5.innerHTML="Role: ";
+            rh5.style.display="inline";
+            userid.appendChild(rh5);
+            ra.innerHTML=element.roles;
+            userid.appendChild(ra);
+
+            let role=document.createElement("p");
             let ih5=document.createElement("h6");
             let ia=document.createElement("a");
             ih5.innerHTML="ID: ";
             ih5.style.display="inline";
-            userid.appendChild(ih5);
+            role.appendChild(ih5);
             ia.innerHTML=element.id;
-            userid.appendChild(ia);
+            role.appendChild(ia);
 
     
             let listItem=document.createElement("li");
@@ -238,6 +247,7 @@ function get_users(){
             listItem.appendChild(username);
             listItem.appendChild(usermail);
             listItem.appendChild(userid);
+            listItem.appendChild(role);
 
             userList.appendChild(listItem);
         });
