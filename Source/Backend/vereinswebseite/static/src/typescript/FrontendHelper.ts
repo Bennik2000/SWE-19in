@@ -8,13 +8,18 @@ class FrontendHelper {
         return re.test(String(email).toLowerCase());
     }
 
-    makeHttpRequest(request: string, route: string, json: string, onloadFunction){
+    makeHttpRequest(request: string, route: string, data , onloadFunction, isSendingJSON = true){
         if (!this.isTesting) {
             var xhttp = new XMLHttpRequest();
             xhttp.open(request, route, true);
-            xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+
+            if(isSendingJSON){
+                xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+                data = JSON.stringify(data);
+            }
+
             xhttp.responseType = "json";
-            xhttp.send(JSON.stringify(json));
+            xhttp.send(data);
             xhttp.onload = () => {
                 onloadFunction(xhttp.response)
             };
@@ -22,7 +27,7 @@ class FrontendHelper {
         else {
             if (this.testRequestCallback != null)
             {
-                var response = this.testRequestCallback(request, route, json);
+                var response = this.testRequestCallback(request, route, data);
                 onloadFunction(response);
             }
         }

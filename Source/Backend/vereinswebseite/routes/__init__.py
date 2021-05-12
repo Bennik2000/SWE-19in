@@ -1,48 +1,57 @@
 import json
 from http import HTTPStatus
 
-from vereinswebseite import app
-from flask import render_template
-from flask_login import login_required
-
 from vereinswebseite.request_utils import success_response, generate_error
+from flask import render_template, Blueprint
+from flask_login import login_required
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
+from flask_marshmallow import Marshmallow
+
+limiter = Limiter(
+    key_func=get_remote_address,
+    default_limits=["200 per day", "60 per hour"]
+)
+ma = Marshmallow()
 
 too_many_requests = generate_error("Too many requests", HTTPStatus.TOO_MANY_REQUESTS)
 unauthorized = generate_error("Unauthorized", HTTPStatus.UNAUTHORIZED)
 
+general_bp = Blueprint('general', __name__)
 
-@app.route('/')
+
+@general_bp.route('/')
 def index():
     return render_template('index.jinja2')
 
 
-@app.route('/ping')
+@general_bp.route('/ping')
 def ping_handler():
     return success_response
 
 
-@app.route('/create_account')
+@general_bp.route('/create_account')
 def create_account():
     return render_template('create_account.jinja2')
 
 
-@app.route('/login')
+@general_bp.route('/login')
 def render_login():
     return render_template('login.jinja2')
 
 
-@app.route('/account')
+@general_bp.route('/account')
 @login_required
 def personal_account_space():
     return render_template('personal_account_space.jinja2')
 
-@app.route('/blog_overview')
+
+@general_bp.route('/blog_overview')
 def render_blog_overview():
     return render_template('blog_overview.jinja2')
 
 
-  
-@app.errorhandler(HTTPStatus.TOO_MANY_REQUESTS)
+@general_bp.errorhandler(HTTPStatus.TOO_MANY_REQUESTS)
 def rate_limit_handler(e):
     response = e.get_response()
     response.data = json.dumps(too_many_requests[0])
@@ -50,7 +59,7 @@ def rate_limit_handler(e):
     return response
 
 
-@app.errorhandler(HTTPStatus.UNAUTHORIZED)
+@general_bp.errorhandler(HTTPStatus.UNAUTHORIZED)
 def unauthorized_handler(e):
     response = e.get_response()
     response.data = json.dumps(unauthorized[0])
@@ -58,10 +67,13 @@ def unauthorized_handler(e):
     return response
 
 
-@app.route('/reset_password')
+@general_bp.route('/reset_password')
 def render_reset_password():
     return render_template('reset_password.jinja2')
 
 
 
+@general_bp.route('/navigation_page')
+def render_navigation_page():
+    return render_template('navigation_page.jinja2')
 

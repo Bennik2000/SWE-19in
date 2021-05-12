@@ -1,15 +1,13 @@
-from unittest import TestCase
-
-from test.test_utils import setup_test_app, TestUserName, TestEmail, TestPassword
-from vereinswebseite import db
+from test.base_test_case import BaseTestCase, TestUserName, TestEmail, TestPassword
 from copy import deepcopy
 from http import HTTPStatus
-from vereinswebseite.models import User
 
-from vereinswebseite.models import AccessToken
+from vereinswebseite.models import db
+from vereinswebseite.models.token import AccessToken
+from vereinswebseite.models.user import User
 
 
-class UserRegistrationTest(TestCase):
+class UserRegistrationTest(BaseTestCase):
     ValidAccessToken = "VALID_TOKEN"
 
     ValidTestJson = {
@@ -18,9 +16,6 @@ class UserRegistrationTest(TestCase):
         "password": TestPassword,
         "token": ValidAccessToken
     }
-
-    def setUp(self) -> None:
-        self.app = setup_test_app()
 
     def test_delete_user(self):
         self._prepare_access_token()
