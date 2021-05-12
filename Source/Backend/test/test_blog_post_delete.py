@@ -47,3 +47,12 @@ class DeleteBlogPostTest(BaseTestCase):
 
         posts = BlogPost.query.all()
         self.assertEqual(len(posts), 1)
+
+    def test_given_logged_in_post_when_delete_invalid_id_then_error(self):
+        self.create_and_login_test_user()
+
+        response = self.app.delete("/api/blog_posts/delete", json={
+            "id": "1000",
+        })
+
+        self.assertFalse(response.json["success"])
