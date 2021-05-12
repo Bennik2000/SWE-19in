@@ -29,19 +29,23 @@ class DeleteBlogPostImagesTest(BaseTestCase):
         self.create_and_login_test_user()
         uploaded_file_path = self.create_blog_post_with_image()
 
-        self.edit_blog_post("# New content with no image")
+        uploaded_file_path_new, path_new = self._send_upload_request()
+
+        self.edit_blog_post("#Title\n![Alt-text](/_uploads/images/" + uploaded_file_path_new + "){: style='width: 5vw;'}")
+
+        uploaded_file_exists = os.path.isfile(path_new)
+        self.assertTrue(uploaded_file_exists, "The uploaded file was deleted")
 
         uploaded_file_exists = os.path.isfile(uploaded_file_path)
         self.assertFalse(uploaded_file_exists, "The uploaded file was not deleted")
 
     def create_blog_post_with_image(self):
-        response = self._send_upload_request()
-        image_filename = response.json["filename"]
-        self.create_blog_post("#Title\n![Alt-text](" + image_filename + "){: style='width: 5vw;'}")
-        uploaded_file_path = os.path.join(self.UPLOADS_DIRECTORY, image_filename)
-        uploaded_file_exists = os.path.isfile(uploaded_file_path)
+        image_filename, path = self._send_upload_request()
+        self.create_blog_post("#Title\n![Alt-text](/_uploads/images/" + image_filename + "){: style='width: 5vw;'}")
+
+        uploaded_file_exists = os.path.isfile(path)
         self.assertTrue(uploaded_file_exists, "The uploaded file doesn't exist in the upload directory")
-        return uploaded_file_path
+        return image_filename
 
     def delete_blog_post(self):
         self.app.delete("/api/blog_posts/delete", json={
@@ -61,7 +65,7 @@ class DeleteBlogPostImagesTest(BaseTestCase):
             "content": new_content,
         })
 
-    def _send_upload_request(self) -> Response:
+    def _send_upload_request(self) -> (str, str):
         test_file = FileStorage(stream=open(self.TEST_FILE_PATH, "rb"))
 
         response = self.app.post(
@@ -70,5 +74,6 @@ class DeleteBlogPostImagesTest(BaseTestCase):
             content_type='multipart/form-data'
         )
 
-        return response
+        filename = response.json["filename"]
 
+        return filename, os.path.join(self.UPLOADS_DIRECTORY, filename)
