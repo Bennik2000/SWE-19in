@@ -95,10 +95,10 @@ def style_navigation_page():
 def src_whole_blog_post():
     return current_app.send_static_file('src/whole_blog_post.js')
 
-@static_bp.route('style/blog_overview.css')
+@static_bp.route('style/all_blog_posts.css')
 def style_blog_overview():
-    return current_app.send_static_file('style/blog_overview.css')
+    return current_app.send_static_file('style/all_blog_posts.css')
 
-@static_bp.route('/src/blog_overview.js')
+@static_bp.route('/src/all_blog_posts.js')
 def src_blog_overview():
-    return current_app.send_static_file('src/blog_overview.js')
+    return current_app.send_static_file('src/all_blog_posts.js')
