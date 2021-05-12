@@ -262,7 +262,10 @@ function get_user_info(){
         document.getElementById("Username").innerHTML=response.name;
         document.getElementById("current_email").innerHTML=response.email;
         document.getElementById("old_email").innerHTML=response.email;
-        
+        let roles = response.roles as Array<String>
+        if(roles.includes("Webmaster")){
+            document.getElementById("webmasterOnly").classList.remove("d-none");            
+        }
     }
     let jsonObj ={};
     frontendHelper.makeHttpRequest("GET", "/api/users/personal_info", jsonObj, myOnloadFunction);
