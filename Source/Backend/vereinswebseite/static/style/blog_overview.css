@@ -40,7 +40,7 @@ html, body,#background{
     color:rgb(169, 169, 169);
 }
 #post_content{
-    color: gray;
+    color: rgb(80, 80, 80);
 }
 #add_post:hover,#post_more:hover{
     background-color: lightgray;
