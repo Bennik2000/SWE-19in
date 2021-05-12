@@ -43,9 +43,9 @@
                                 </div>
                                 <div class="col-md d-flex justify-content-md-between p-0" >
                                     <button type="button" id="post_more" href="#" class="btn btn-link" onclick="post_more_button({{ post.id }});">mehr...</button>
-                                    {% if  %}
-                                    <button type="button" id="post_edit" href="#" class="btn btn-primary" onclick="post_edit_button({{ post.id }});">bearbeiten</button>
-                                    {% endif %}%}
+                                    {% if post.edit == true %}
+                                        <button type="button" id="post_edit" href="#" class="btn btn-primary" onclick="post_edit_button({{ post.id }});">bearbeiten</button>
+                                    {% endif %}
                                 </div>
                                 
                             </div>

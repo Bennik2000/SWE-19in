@@ -41,13 +41,14 @@ class BlogPost(db.Model):
 
 
 class RenderedPost:
-    def __init__(self, post_id, title, summary, content, creation_date, name):
+    def __init__(self, post_id, title, summary, content, creation_date, name,can_edit_post):
         self.id = post_id
         self.title = title
         self.summary = summary
         self.content = content
         self.creation_date = creation_date
         self.name = name
+        self.edit = can_edit_post
 
 
 class BlogPostSchema(ma.Schema):

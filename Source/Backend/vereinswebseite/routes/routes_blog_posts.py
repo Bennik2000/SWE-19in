@@ -165,15 +165,23 @@ def render_all_blog_posts():
         if user is not None:
             username = user.name
 
+
+        can_edit = False
+
+        if current_user.id == post.author_id:
+            can_edit = True
+        
         all_posts.append(RenderedPost(
+
             post_id=post.id,
             title=post.title,
             summary=markdown.markdown(post.make_post_summary()),
             content=None,
             creation_date=post.creation_date,
-            name=username
+            name=username,
+            can_edit_post=can_edit
         ))
-
+        
     return render_template('all_blog_posts.jinja2', posts=all_posts)
 
 
