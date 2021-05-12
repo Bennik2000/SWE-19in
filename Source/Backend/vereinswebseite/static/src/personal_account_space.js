@@ -1,4 +1,85 @@
 var frontendHelper = new FrontendHelper();
+function makeUserListItem(element) {
+    var username = document.createElement("p");
+    var nh5 = document.createElement("h6");
+    var na = document.createElement("a");
+    nh5.innerHTML = "Name: ";
+    nh5.style.display = "inline";
+    username.appendChild(nh5);
+    na.innerHTML = element.name;
+    username.appendChild(na);
+    var usermail = document.createElement("p");
+    var eh5 = document.createElement("h6");
+    var ea = document.createElement("a");
+    eh5.innerHTML = "E-Mail: ";
+    eh5.style.display = "inline";
+    usermail.appendChild(eh5);
+    ea.innerHTML = element.email;
+    usermail.appendChild(ea);
+    var userid = document.createElement("p");
+    var rh5 = document.createElement("h6");
+    var ra = document.createElement("a");
+    rh5.innerHTML = "Role: ";
+    rh5.style.display = "inline";
+    userid.appendChild(rh5);
+    ra.innerHTML = element.roles;
+    userid.appendChild(ra);
+    var role = document.createElement("p");
+    var ih5 = document.createElement("h6");
+    var ia = document.createElement("a");
+    ih5.innerHTML = "ID: ";
+    ih5.style.display = "inline";
+    role.appendChild(ih5);
+    ia.innerHTML = element.id;
+    role.appendChild(ia);
+    var roleInput = document.createElement("input");
+    roleInput.id = "roleInput" + element.id;
+    roleInput.placeholder = "Rolle,...";
+    roleInput.style.width = "30vw";
+    roleInput.classList.add("form-control");
+    roleInput.classList.add("form-control-md");
+    var roleButton = document.createElement("button");
+    roleButton.classList.add("btn");
+    roleButton.classList.add("btn-secondary");
+    roleButton.classList.add("mt-2");
+    roleButton.id = "role_save" + element.id;
+    roleButton.innerHTML = "Setze Rollen";
+    roleButton.type = "submit";
+    roleButton.setAttribute("onclick", "saveRoles(" + element.id + ");");
+    var listItem = document.createElement("li");
+    listItem.classList.add("list-group-item");
+    listItem.appendChild(username);
+    listItem.appendChild(usermail);
+    listItem.appendChild(userid);
+    listItem.appendChild(role);
+    listItem.appendChild(roleInput);
+    listItem.appendChild(roleButton);
+    return listItem;
+}
+function saveRoles(id) {
+    function myOnloadFunction(response) {
+        if (response) {
+            if (response.success == true) {
+                alert("Rollen wurde erfolgreich geändert!");
+                get_users();
+            }
+            else {
+                alert("Ändern der Rollen fehlgeschlagen! Bitte versuchen Sie es erneut!");
+            }
+        }
+        else {
+            alert("Kommunikation mit Server fehlgeschlagen!");
+        }
+    }
+    var rolesDoc = document.getElementById("roleInput" + id);
+    var roles = rolesDoc.value;
+    var role = roles.split(",");
+    console.log(role);
+    var jsonObj = {};
+    jsonObj["user_id"] = id;
+    jsonObj["roles"] = role;
+    frontendHelper.makeHttpRequest("PUT", "/api/users/user_roles", jsonObj, myOnloadFunction);
+}
 function bio_edit() {
     if (document.getElementById("head_description").hasAttribute('readonly')) {
         document.getElementById("head_description").removeAttribute('readonly');
@@ -172,44 +253,7 @@ function get_users() {
             userList.removeChild(userList.lastChild);
         }
         response.forEach(function (element) {
-            var username = document.createElement("p");
-            var nh5 = document.createElement("h6");
-            var na = document.createElement("a");
-            nh5.innerHTML = "Name: ";
-            nh5.style.display = "inline";
-            username.appendChild(nh5);
-            na.innerHTML = element.name;
-            username.appendChild(na);
-            var usermail = document.createElement("p");
-            var eh5 = document.createElement("h6");
-            var ea = document.createElement("a");
-            eh5.innerHTML = "E-Mail: ";
-            eh5.style.display = "inline";
-            usermail.appendChild(eh5);
-            ea.innerHTML = element.email;
-            usermail.appendChild(ea);
-            var userid = document.createElement("p");
-            var rh5 = document.createElement("h6");
-            var ra = document.createElement("a");
-            rh5.innerHTML = "Role: ";
-            rh5.style.display = "inline";
-            userid.appendChild(rh5);
-            ra.innerHTML = element.roles;
-            userid.appendChild(ra);
-            var role = document.createElement("p");
-            var ih5 = document.createElement("h6");
-            var ia = document.createElement("a");
-            ih5.innerHTML = "ID: ";
-            ih5.style.display = "inline";
-            role.appendChild(ih5);
-            ia.innerHTML = element.id;
-            role.appendChild(ia);
-            var listItem = document.createElement("li");
-            listItem.classList.add("list-group-item");
-            listItem.appendChild(username);
-            listItem.appendChild(usermail);
-            listItem.appendChild(userid);
-            listItem.appendChild(role);
+            var listItem = makeUserListItem(element);
             userList.appendChild(listItem);
         });
     }
