@@ -3,9 +3,9 @@ import os.path
 from http import HTTPStatus
 
 
-from vereinswebseite import app, images
+from vereinswebseite import app, images, db
 from vereinswebseite.errors import generate_error
-from flask_login import login_required
+from flask_login import login_required, current_user
 from flask import request
 import flask_uploads
 
@@ -24,7 +24,9 @@ def upload_image():
     file_extension = os.path.splitext(image.filename)[1]
     random_filename = str(uuid.uuid4())[:8] + file_extension
     image.filename = random_filename
-
+    current_user.profilePicture = image.filename
+    db.session.commit()
+    
     try:
         filename = images.save(image)
         return {

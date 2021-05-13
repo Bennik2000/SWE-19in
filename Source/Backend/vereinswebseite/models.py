@@ -25,8 +25,8 @@ class User(UserMixin, db.Model):
     name = db.Column(db.String, nullable=False)
     email = db.Column(db.String, unique=True, nullable=False)
     password = db.Column(db.String, nullable=False)
-    profilePicture = db.Column(db.String, nullable=False, unique = True)
-    
+    profilePicture = db.Column(db.String, nullable=True, unique = True)
+
     blog_posts = db.relationship("BlogPost")
 
     def set_password(self, password):
@@ -56,7 +56,7 @@ class PasswordResetToken(db.Model):
 
 class UserSchema(ma.Schema):
     class Meta:
-        fields = ('id', 'name', 'email')
+        fields = ('id', 'name', 'email','profilePicture')
 
 
 class BlogPostSchema(ma.Schema):

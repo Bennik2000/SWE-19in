@@ -7,8 +7,10 @@ import vereinswebseite
 import flask_uploads
 from http import HTTPStatus
 from flask import Response
+from flask_login import current_user
 from werkzeug.datastructures import FileStorage
-from test.test_utils import setup_test_app, create_and_login_test_user
+from test.test_utils import TestEmail, setup_test_app, create_and_login_test_user;   
+from vereinswebseite.models import User
 
 
 class UploadsTest(unittest.TestCase):
@@ -34,6 +36,14 @@ class UploadsTest(unittest.TestCase):
         self.assertTrue(success)
         self.assertEqual(response.status_code, HTTPStatus.CREATED)
         os.remove(os.path.join(self.UPLOADS_DIRECTORY, response.json["filename"]))
+
+    def test_user_database_profilePicture(self):
+        create_and_login_test_user(self.app)
+        response = self._send_upload_request()
+        print(f"JSON response: {response.json}")
+        existing_user = User.query.filter_by(email=TestEmail).first()
+        self.assertIsNotNone(existing_user.profilePicture)
+
 
     def test_given_logged_in_then_uploaded_correctly(self):
         create_and_login_test_user(self.app)
