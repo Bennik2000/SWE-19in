@@ -55,7 +55,9 @@ def add_blog_post():
 
     db.session.add(new_article)
     db.session.commit()
-    return success_response
+    return success_response | {
+        "id": new_article.id
+    }
 
 
 @blog_posts_bp.route('/update', methods=['PUT'])
