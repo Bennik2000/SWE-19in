@@ -1,3 +1,4 @@
+from enum import unique
 from vereinswebseite import db, ma
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -24,7 +25,8 @@ class User(UserMixin, db.Model):
     name = db.Column(db.String, nullable=False)
     email = db.Column(db.String, unique=True, nullable=False)
     password = db.Column(db.String, nullable=False)
-
+    profilePicture = db.Column(db.String, nullable=False, unique = True)
+    
     blog_posts = db.relationship("BlogPost")
 
     def set_password(self, password):
