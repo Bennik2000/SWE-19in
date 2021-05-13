@@ -8,11 +8,13 @@ class AccessTokenRoutesTest(BaseTestCase):
     AccessTokenToDelete = "AccessTokenToDelete"
 
     def test_given_no_access_tokens_when_create_access_token_then_correct_created(self):
+        self.create_and_login_test_user(roles=["Webmaster"])
         response = self.app.post("/api/accessToken")
         print(f"JSON response: {response.json}")
         self.assertEqual(len(response.json["token"]), AccessTokenLength)
 
     def test_given_access_token_existing_when_delete_access_token_then_correct_deleted(self):
+        self.create_and_login_test_user()
         db.session.add(AccessToken(self.AccessTokenToDelete))
         db.session.commit()
 
@@ -23,6 +25,7 @@ class AccessTokenRoutesTest(BaseTestCase):
         self.assertIsNone(AccessToken.query.get(self.AccessTokenToDelete))
 
     def test_given_access_token_not_existing_when_delete_access_token_then_error(self):
+        self.create_and_login_test_user()
         response = self.app.get(f"/api/accessToken/delete", json={"token": "tokenThatDoesNotExist"})
 
         print(f"JSON response: {response.json}")
@@ -46,6 +49,7 @@ class AccessTokenRoutesTest(BaseTestCase):
         self.assertFalse(response.json["valid"])
 
     def test_given_some_access_tokens_when_get_all_then_all_returned(self):
+        self.create_and_login_test_user(roles=["Webmaster"])
         db.session.add(AccessToken("token1"))
         db.session.add(AccessToken("token2"))
         db.session.commit()
@@ -54,3 +58,33 @@ class AccessTokenRoutesTest(BaseTestCase):
 
         print(f"JSON response: {response.json}")
         self.assertTrue(len(response.json["tokens"]) >= 2)
+
+    def test_not_logged_in_when_delete_access_token_then_error(self):
+        db.session.add(AccessToken(self.AccessTokenToDelete))
+        db.session.commit()
+        response = self.app.get(f"/api/accessToken/delete", json={"token": self.AccessTokenToDelete})
+        self.assertFalse(response.json["success"])
+
+    def test_given_not_webmaster_when_get_all_then_error(self):
+        self.create_and_login_test_user()
+        db.session.add(AccessToken("token2"))
+        db.session.commit()
+
+        response = self.app.get(f"/api/accessToken")
+
+        self.assertFalse(response.json["success"])
+
+    def test_given_not_webmaster_when_create_access_token_then_error(self):
+        self.create_and_login_test_user()
+        response = self.app.post("/api/accessToken")
+        self.assertFalse(response.json["success"])
+
+
+
+
+
+
+
+
+
+
