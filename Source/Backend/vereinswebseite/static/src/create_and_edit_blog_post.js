@@ -236,6 +236,7 @@ function uploadImage() {
         }
     }
     frontendHelper.makeHttpRequest("POST", "/api/upload_image", formData, myOnloadFunction, false);
+    filesInput.value = "";
 }
 function embedImageIntoMarkdown(filename) {
     var markdown = document.getElementById("markdown");
