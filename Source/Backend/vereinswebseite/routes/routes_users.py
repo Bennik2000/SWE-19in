@@ -290,4 +290,7 @@ def load_user(user_id):
 
 @login_manager.unauthorized_handler
 def unauthorized():
-    return unauthorized_response
+    if request.path.startswith("/api/"):
+        return unauthorized_response
+
+    return render_template('unauthorized.jinja2'), HTTPStatus.UNAUTHORIZED
