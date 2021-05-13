@@ -10,6 +10,7 @@ var errorMessageUpdatingPreview = "Aktualisieren der Vorschau fehlgeschlagen!";
 var errorMessageUpdatingOrShowingLivePreview = "Live-Vorschau: Anzeigen/Aktualisieren fehlgeschlagen!";
 var errorMessageNoFilesSelected = "Bitte Bilder zum Hochladen auswählen!";
 var errorMessageUploadingFiles = "Hochladen fehlgeschlagen!";
+window.addEventListener('resize', handleZoomEvent);
 function swapShowingPreview() {
     var markdown = document.getElementById("markdown");
     if (isShowingPreview) {
@@ -271,5 +272,53 @@ function deleteBlogPost() {
             }
         }
         frontendHelper.makeHttpRequest("DELETE", "/api/blog_posts/delete", jsonObj, myOnloadFunction);
+    }
+}
+function handleZoomEvent() {
+    var browserZoomLevel = Math.round((((window.outerWidth - 10) / window.innerWidth) * 100));
+    switch (browserZoomLevel) {
+        case 200:
+            document.body.style.zoom = "180%";
+            break;
+        case 175:
+            document.body.style.zoom = "155%";
+            break;
+        case 150:
+            document.body.style.zoom = "130%";
+            break;
+        case 125:
+            document.body.style.zoom = "105%";
+            break;
+        case 110:
+            document.body.style.zoom = "90%";
+            break;
+        case 100:
+            document.body.style.zoom = "80%";
+            break;
+        case 90:
+            document.body.style.zoom = "70%";
+            document.getElementById("livePreviewCheckbox").style.transform = "scale(1.2)";
+            break;
+        case 80:
+            document.body.style.zoom = "60%";
+            document.getElementById("livePreviewCheckbox").style.transform = "scale(1.8)";
+            break;
+        case 75:
+            document.body.style.zoom = "55%";
+            break;
+        case 67:
+            document.body.style.zoom = "47%";
+            break;
+        case 50:
+            document.body.style.zoom = "40%";
+            break;
+        case 33:
+            document.body.style.zoom = "23%";
+            break;
+        case 25:
+            document.body.style.zoom = "15%";
+            break;
+        default:
+            break;
     }
 }
