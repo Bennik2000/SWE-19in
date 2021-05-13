@@ -19,12 +19,13 @@
     <div class ="position-relative" id="page">
         <div class="position-absolute " id="background"></div>
         <div class="postition-relative" id="wrapper">
-        
             <div class="container position-relative" id="before">
-                
-                <span onclick="add_post_button();" href="#" type="button" class="btn ml-3" id="add_post">
-                <i class="fas fa-plus"></i>
-                Neuer Post</span>
+                    
+                {%if authenticated %}
+                    <span onclick="add_post_button();" href="#" type="button" class="btn ml-3" id="add_post">
+                    <i class="fas fa-plus"></i>
+                    Neuer Post</span>
+                {%endif%}
             </div>
             <div class="container" id="overview_space">
 
@@ -44,7 +45,7 @@
                                 </div>
                                 <div class="col-md d-flex justify-content-md-between p-0" >
                                     <button type="button" id="post_more" href="#" class="btn btn-link" onclick="post_more_button({{ post.id }});">mehr...</button>
-                                    {% if post.edit == true %}
+                                    {% if post.edit == true or post.webmaster %}
                                         <button type="button" id="post_edit" href="#" class="btn btn-primary" onclick="post_edit_button({{ post.id }});">bearbeiten</button>
                                     {% endif %}
                                 </div>
