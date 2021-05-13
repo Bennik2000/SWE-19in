@@ -19,7 +19,9 @@ html, body,#background{
     background-color: #f3f3f3;
 
 }
-
+#before{
+    padding-top: 10px;
+}
 #post_list{
     padding-bottom: 100px;
 }
