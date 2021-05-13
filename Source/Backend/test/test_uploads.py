@@ -3,7 +3,7 @@ import os
 import pathlib
 from http import HTTPStatus
 
-from flask import Response
+from flask import Response, current_app
 from werkzeug.datastructures import FileStorage
 
 from test.base_test_case import BaseTestCase
@@ -13,14 +13,12 @@ class UploadsTest(BaseTestCase):
     # pathlib.Path(__file__).parent.absolute() gives us the directory where the current script is located.
     # We use this as a reference for relative file paths since vereinswebseite.app.root_path
     # depends on how the unit tests are started
-    UPLOADS_DIRECTORY = os.path.join(pathlib.Path(__file__).parent.absolute(), "..", "uploads")
     TEST_FILE_PATH = os.path.join(pathlib.Path(__file__).parent.absolute(), "upload_test.jpeg")
     TEST_TEXT_FILE_PATH = os.path.join(pathlib.Path(__file__).parent.absolute(), "upload_test.txt")
 
-    def setUp(self) -> None:
-        super().setUp(custom_config={
-            "UPLOADED_IMAGES_DEST": self.UPLOADS_DIRECTORY
-        })
+    def setUp(self):
+        super().setUp()
+        self.uploads_directory = current_app.config["UPLOADED_IMAGES_DEST"]
 
     def test_given_logged_in_then_correct_return_value(self):
         self.create_and_login_test_user()
@@ -31,12 +29,12 @@ class UploadsTest(BaseTestCase):
         self.assertIsNotNone(success)
         self.assertTrue(success)
         self.assertEqual(response.status_code, HTTPStatus.CREATED)
-        os.remove(os.path.join(self.UPLOADS_DIRECTORY, response.json["filename"]))
+        os.remove(os.path.join(self.uploads_directory, response.json["filename"]))
 
     def test_given_logged_in_then_uploaded_correctly(self):
         self.create_and_login_test_user()
         response = self._send_upload_request()
-        uploaded_file_path = os.path.join(self.UPLOADS_DIRECTORY, response.json["filename"])
+        uploaded_file_path = os.path.join(self.uploads_directory, response.json["filename"])
         print(f"Uploaded file path: {uploaded_file_path}")
 
         uploaded_file_exists = os.path.isfile(uploaded_file_path)
@@ -54,7 +52,7 @@ class UploadsTest(BaseTestCase):
         self.assertEqual(download_response.status_code, HTTPStatus.OK)
         # flask's helpers.send_file() doesn't close files automatically, so we have to do that manually:
         download_response.close()
-        os.remove(os.path.join(self.UPLOADS_DIRECTORY, filename))
+        os.remove(os.path.join(self.uploads_directory, filename))
 
     def test_given_not_logged_in_then_not_uploaded(self):
         response = self._send_upload_request()
