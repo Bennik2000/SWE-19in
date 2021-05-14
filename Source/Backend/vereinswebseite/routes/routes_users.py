@@ -268,6 +268,8 @@ def put_user_roles():
 
     user.roles = roles
 
+    db.session.commit()
+
     return success_response
 
 
