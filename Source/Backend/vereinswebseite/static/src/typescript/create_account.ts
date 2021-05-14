@@ -33,7 +33,7 @@ function createAccount() {
             }
             else if(response.success) { // The response accesses "success:" of the responded JSON Object
                 alert("Account erfolgreich angelegt!"); 
-                window.location.href = "/#";
+                window.location.href = "/account";
             }
             else
             {
