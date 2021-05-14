@@ -1,3 +1,6 @@
+body {
+    background-color: white;
+}
 *{
     padding: 0px;
     margin: 0px;
@@ -41,6 +44,7 @@ html, body,#background{
 }
 #post_content{
     color: rgb(80, 80, 80);
+    max-height: 15em;
 }
 #add_post:hover,#post_more:hover{
     background-color: lightgray;
@@ -51,4 +55,5 @@ html, body,#background{
     text-align: left;
     width: min-content;
     border-radius: 0;
+background-color: lightgray;
 }
