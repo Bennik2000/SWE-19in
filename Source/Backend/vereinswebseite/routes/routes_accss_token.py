@@ -1,5 +1,8 @@
 from http import HTTPStatus
 
+from flask_login import login_required
+
+from vereinswebseite.decorators import roles_required
 from vereinswebseite.models import db
 from flask import request, Blueprint
 from uuid import uuid4
@@ -28,6 +31,7 @@ def validate_access_token():
 
 
 @access_token_bp.route('/delete')
+@login_required
 def delete_access_token():
     token = request.json['token']
     access_token = AccessToken.query.get(token)
@@ -41,6 +45,8 @@ def delete_access_token():
 
 
 @access_token_bp.route('', methods=["POST"])
+@login_required
+@roles_required('Webmaster')
 def create_access_token():
     access_token = str(uuid4())[0:AccessTokenLength].upper()
     token = AccessToken(access_token)
@@ -54,6 +60,8 @@ def create_access_token():
 
 
 @access_token_bp.route('', methods=['GET'])
+@login_required
+@roles_required('Webmaster')
 def all_access_token():
     all_tokens = AccessToken.query.all()
 
