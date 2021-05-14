@@ -99,3 +99,11 @@ def style_navigation_page():
 @static_bp.route('/src/whole_blog_post.js')
 def src_whole_blog_post():
     return current_app.send_static_file('src/whole_blog_post.js')
+
+@static_bp.route('style/all_blog_posts.css')
+def style_blog_overview():
+    return current_app.send_static_file('style/all_blog_posts.css')
+
+@static_bp.route('/src/all_blog_posts.js')
+def src_blog_overview():
+    return current_app.send_static_file('src/all_blog_posts.js')
