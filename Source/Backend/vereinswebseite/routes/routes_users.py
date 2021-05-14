@@ -257,6 +257,10 @@ def put_user_roles():
     if role_names is None:
         return roles_invalid
 
+    # The first user created should always stay the webmaster
+    if user_id == 1 and 'Webmaster' not in role_names:
+        role_names.append('Webmaster')
+
     roles = [Role.query.filter_by(name=role_name).first() for role_name in role_names]
 
     if None in roles:
