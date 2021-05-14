@@ -23,6 +23,7 @@ class BlogPostTest(BaseTestCase):
         })
 
         self.assertTrue(response.json["success"])
+        self.assertEqual(response.json["id"], 1)
 
         posts = BlogPost.query.all()
 
