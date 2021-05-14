@@ -2,15 +2,11 @@ import uuid
 import os.path
 from http import HTTPStatus
 
-from flask_login import current_user
-import flask_uploads
-
 from vereinswebseite.models import db
 from vereinswebseite.request_utils import generate_error, generate_success
-from flask_login import login_required
-from flask import request, Blueprint, app
+from flask_login import login_required, current_user
+from flask import request, Blueprint
 from flask_uploads import UploadSet, IMAGES, UploadNotAllowed
-
 
 images = UploadSet('images', IMAGES)
 
@@ -24,41 +20,35 @@ uploads_bp = Blueprint('uploads', __name__)
 @uploads_bp.route('/api/upload_image', methods=['POST'])
 @login_required
 def upload_image():
-    if 'image' not in request.files:
-        return no_image_given
+    success, response, filename = _save_uploaded_file()
+    return response
 
-    image = request.files['image']
-    file_extension = os.path.splitext(image.filename)[1]
-    random_filename = str(uuid.uuid4())[:8] + file_extension
-    image.filename = random_filename
-    
-    try:
-        filename = images.save(image)
-        return {
-            "success": True,
-            "filename": filename
-        }, HTTPStatus.CREATED
-    except flask_uploads.UploadNotAllowed:
-        return wrong_file_type
 
-@app.route('/upload_profile_picture', methods=['POST'])
+@uploads_bp.route('/api/upload_profile_picture', methods=['POST'])
 @login_required
 def upload_profile_picture():
+    success, response, filename = _save_uploaded_file()
+
+    if success:
+        current_user.profile_picture = filename
+        db.session.commit()
+
+    return response
+
+
+def _save_uploaded_file():
     if 'image' not in request.files:
-        return no_image_given
+        return False, no_image_given, None
 
     image = request.files['image']
     file_extension = os.path.splitext(image.filename)[1]
     random_filename = str(uuid.uuid4())[:8] + file_extension
     image.filename = random_filename
-    current_user.profile_picture = image.filename
-    db.session.commit()
-    
+
     try:
         filename = images.save(image)
-        return generate_success({
+        return True, generate_success({
             "filename": filename
-        }, status=HTTPStatus.CREATED)
+        }, status=HTTPStatus.CREATED), filename
     except UploadNotAllowed:
-        return wrong_file_type
-
+        return False, wrong_file_type, None

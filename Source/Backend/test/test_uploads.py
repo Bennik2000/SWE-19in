@@ -108,7 +108,7 @@ class UploadsTest(BaseTestCase):
         test_file = FileStorage(stream=open(self.TEST_FILE_PATH, "rb"))
 
         response = self.app.post(
-            "/upload_profile_picture",
+            "/api/upload_profile_picture",
             data={"image": test_file},
             content_type='multipart/form-data'
         )
