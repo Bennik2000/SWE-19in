@@ -79,21 +79,20 @@ body {
 
 #updatePreview_button {
     font-size: 1em;
-    margin-top: 2%;
-    margin-left: 1%;
-    margin-right: 1%;
     padding: 0.5% 2% 0.5% 2%;
-    width: 15.5em;
+    margin-top: 2%;
+    margin-left: 0.5%;
+    margin-right: 0.5%;
     background-color: goldenrod;
     border-color: goldenrod;
 }
 
 #hidePreview_button {
-    font-size: 1em;
-    margin-top: 2%;
-    margin-left: 0.7%;
-    padding: 0.5% 2% 0.5% 2%;
-    width: 15.5em;
+  font-size: 1em;
+  padding: 0.5% 2% 0.5% 2%;
+  margin-top: 2%;
+  margin-left: 0.5%;
+  margin-right: 0.5%;
 }
 
 label {    
