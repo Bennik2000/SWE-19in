@@ -4,6 +4,7 @@ from http import HTTPStatus
 import markdown
 from flask_login import login_required, current_user
 
+from vereinswebseite import data_cleanup
 from vereinswebseite.models.blog_post import BlogPostSchema, BlogPost, RenderedPost
 from vereinswebseite.models.user import User
 from vereinswebseite.routes import limiter
@@ -54,7 +55,9 @@ def add_blog_post():
 
     db.session.add(new_article)
     db.session.commit()
-    return success_response
+    return success_response | {
+        "id": new_article.id
+    }
 
 
 @blog_posts_bp.route('/update', methods=['PUT'])
@@ -89,6 +92,8 @@ def update_blog_post():
     post.title = title
     post.content = content
     db.session.commit()
+
+    data_cleanup.delete_unused_images()
 
     return success_response
 
@@ -126,11 +131,16 @@ def delete_blog_post():
 
     post = BlogPost.query.get(post_id)
 
+    if post is None:
+        return blog_post_id_invalid
+
     if post.author_id != current_user.id:
         return not_permitted_to_edit_or_delete
 
     db.session.delete(post)
     db.session.commit()
+
+    data_cleanup.delete_unused_images()
 
     return success_response
 
