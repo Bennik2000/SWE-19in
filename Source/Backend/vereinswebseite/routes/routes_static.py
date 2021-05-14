@@ -56,6 +56,11 @@ def src_set_new_password():
     return current_app.send_static_file('src/set_new_password.js')
 
 
+@static_bp.route('/style/unauthorized.css')
+def style_unauthorized():
+    return current_app.send_static_file('style/login.css')
+
+
 @static_bp.route('/style/login.css')
 def style_login():
     return current_app.send_static_file('style/login.css')
