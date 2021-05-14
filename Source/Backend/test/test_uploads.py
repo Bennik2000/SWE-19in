@@ -39,10 +39,10 @@ class UploadsTest(unittest.TestCase):
 
     def test_user_database_profilePicture(self):
         create_and_login_test_user(self.app)
-        response = self._send_upload_request()
+        response = self._send_upload_profile_picture_request()
         print(f"JSON response: {response.json}")
         existing_user = User.query.filter_by(email=TestEmail).first()
-        self.assertIsNotNone(existing_user.profilePicture)
+        self.assertIsNotNone(existing_user.profile_picture)
 
 
     def test_given_logged_in_then_uploaded_correctly(self):
@@ -104,6 +104,18 @@ class UploadsTest(unittest.TestCase):
 
         response = self.app.post(
             "/upload_image",
+            data={"image": test_file},
+            content_type='multipart/form-data'
+        )
+
+
+        return response
+
+    def _send_upload_profile_picture_request(self) -> Response:
+        test_file = FileStorage(stream=open(self.TEST_FILE_PATH, "rb"))
+
+        response = self.app.post(
+            "/upload_profile_picture",
             data={"image": test_file},
             content_type='multipart/form-data'
         )

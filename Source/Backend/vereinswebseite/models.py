@@ -25,7 +25,7 @@ class User(UserMixin, db.Model):
     name = db.Column(db.String, nullable=False)
     email = db.Column(db.String, unique=True, nullable=False)
     password = db.Column(db.String, nullable=False)
-    profilePicture = db.Column(db.String, nullable=True, unique = True)
+    profile_picture = db.Column(db.String, nullable=True, unique = True)
 
     blog_posts = db.relationship("BlogPost")
 

@@ -24,7 +24,27 @@ def upload_image():
     file_extension = os.path.splitext(image.filename)[1]
     random_filename = str(uuid.uuid4())[:8] + file_extension
     image.filename = random_filename
-    current_user.profilePicture = image.filename
+    
+    try:
+        filename = images.save(image)
+        return {
+            "success": True,
+            "filename": filename
+        }, HTTPStatus.CREATED
+    except flask_uploads.UploadNotAllowed:
+        return wrong_file_type
+
+@app.route('/upload_profile_picture', methods=['POST'])
+@login_required
+def upload_profile_picture():
+    if 'image' not in request.files:
+        return no_image_given
+
+    image = request.files['image']
+    file_extension = os.path.splitext(image.filename)[1]
+    random_filename = str(uuid.uuid4())[:8] + file_extension
+    image.filename = random_filename
+    current_user.profile_picture = image.filename
     db.session.commit()
     
     try:
@@ -35,3 +55,4 @@ def upload_image():
         }, HTTPStatus.CREATED
     except flask_uploads.UploadNotAllowed:
         return wrong_file_type
+
