@@ -1,0 +1,171 @@
+*{
+    margin:0px;
+    padding: 0px;
+    
+}
+
+#whole_post_page{
+    position: fixed;
+
+    height: 100%;
+    width: 100%;
+    overflow: auto; 
+}
+
+
+html{
+    height: 100%;
+}
+
+body{
+    height: 100%;
+}
+
+
+.container{
+    padding: 0px;
+  
+}
+
+#post {
+    border: 5px ;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin-top: 100px;
+    padding: 10px;
+    background-color: white;
+    padding-bottom: 25px;
+    padding-left: 25px;
+    padding-right: 25px;
+    height: auto;
+}
+
+#authorAndDate_div {
+    padding-left: 1vw;
+}
+
+p {
+    margin-bottom: 0 !important;
+}
+
+#content {
+    margin-top: 1vw;
+    margin-bottom: 1vw;
+    padding-bottom: 1vw;
+    border-bottom: 1px solid #e0e0e0;
+    border-top: 1px solid #e0e0e0;
+    font-size: 1vw !important;
+}
+
+ul {
+    margin-left: 25px;
+}
+
+#authorAndDate_div
+{
+    color: #888a89;
+    font-size: 1.2vw;
+
+}
+
+#post_text{
+    padding-left: 2px;
+    color: black;
+}
+
+button {
+    font-size: 1vw !important;
+}
+
+#title {
+    font-size: 2.5vw;
+}
+
+#button_delete_post{
+    font-size: 1vw;
+    margin-top: 2%;
+    margin-left: 1%;
+    padding: 0.5% 2% 0.5% 2%;
+  }
+
+#button_edit_post{
+    font-size: 1vw;
+    margin-top: 2%;
+    margin-left: 1%;
+    padding: 0.5% 2% 0.5% 2%;
+}
+
+#content h1 {
+    margin-top: 2vw;
+    font-size: 2.3vw !important;
+}
+h2 {
+    margin-top: 1.8vw;
+    font-size: 2.1vw !important;
+}
+h3 {
+    margin-top: 1.6vw;
+    font-size: 1.9vw !important;
+}
+h4 {
+    margin-top: 1.4vw;
+    font-size: 1.7vw !important;
+}
+h5 {
+    margin-top: 1.2vw;
+    font-size: 1.5vw !important;
+}
+h6 {
+    margin-top: 1vw;
+    font-size: 1.4vw !important;
+}
+
+@media (max-width: 768px) 
+{
+    button {
+        font-size: 1.5vw !important;
+    }
+    
+    #authorAndDate_div {
+        font-size: 1.8vw;
+    }  
+
+    #title {
+        font-size: 3vw;
+    }
+
+    #content {
+        font-size: 1.5vw !important;
+    }
+
+    #content h1 {
+        margin-top: 2.5vw;
+        font-size: 2.5vw !important;
+      }
+      h2 {
+        margin-top: 2.3vw;
+        font-size: 2.3vw !important;
+      }
+      h3 {
+        margin-top: 2.1vw;
+        font-size: 2.1vw !important;
+      }
+      h4 {
+        margin-top: 1.9vw;
+        font-size: 1.9vw !important;
+      }
+      h5 {
+        margin-top: 1.7vw;
+        font-size: 1.7vw !important;
+      }
+      h6 {
+        margin-top: 1.5vw;
+        font-size: 1.5vw !important;
+      }      
+}
+
+table, th, td {
+    border: 1px solid black;
+  }
+  
+  

@@ -348,3 +348,4 @@ Source/.idea
 Source/Backend/.vscode/settings.json
 
 Source/Backend/node_modules
+Source/Backend/src/flask-uploads

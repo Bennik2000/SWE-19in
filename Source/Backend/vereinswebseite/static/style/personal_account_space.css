@@ -3,7 +3,7 @@
     padding: 0px;
   }
   #page{
-  position: fixed;
+    position: fixed;
     background-color: lightblue;
     height: 100%;
     width: 100%;
@@ -34,6 +34,9 @@
   #head_description{
     max-height: 150px;
   }
+  #head_description_edit {
+    margin-right: 5px;
+  }
   #left_body{
     margin-bottom: 20px;
   }
@@ -44,8 +47,35 @@
   #current_email{
     resize: none;
   }
+  #old_email{
+    resize: none;
+    margin-bottom: 5px;
+  }
   #new_password{
     resize: none;
   }
   
+  #rename_new_password {
+    margin-bottom: 8px;
+  }
+
+  #rename_new_password, #rename_new_password2, #current_email, #old_email, #current_email_new{
+    width: 30vw;
+  }
   
+  p {
+    margin-bottom: 4px !important;
+  }
+
+  #rename_password_h1 {
+    font-size: 1.7vw;
+  }
+
+  @media (max-width: 1000px) {
+    #rename_new_password, #rename_new_password2 #current_email {
+      width: 40vw;
+    }
+    #rename_password_h1 {
+      font-size: 2.2vw;
+    }
+  }

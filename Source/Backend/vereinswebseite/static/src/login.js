@@ -23,6 +23,6 @@ function login() {
                 alert("Login fehlgeschlagen!" + "\n➔ " + response.errors[0].title + ".");
             }
         }
-        frontendHelper.makeHttpRequest("POST", "/users/login", jsonObj, myOnloadFunction);
+        frontendHelper.makeHttpRequest("POST", "/api/users/login", jsonObj, myOnloadFunction);
     }
 }

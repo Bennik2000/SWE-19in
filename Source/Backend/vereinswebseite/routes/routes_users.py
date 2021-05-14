@@ -1,12 +1,17 @@
 from uuid import uuid4
 
-from vereinswebseite import app, db, login_manager
 from vereinswebseite.email_utils import send_reset_password_email
-from vereinswebseite.models import User, UserSchema, AccessToken, PasswordResetToken
-from vereinswebseite.errors import generate_error
-from flask import request, jsonify, abort, render_template
-from flask_login import current_user, login_user, logout_user, login_required
+from vereinswebseite.models import db
+from vereinswebseite.models.roles import Role
+from vereinswebseite.models.token import AccessToken, PasswordResetToken
+from vereinswebseite.models.user import UserSchema, User
+from vereinswebseite.request_utils import success_response, generate_error
+from vereinswebseite.decorators import roles_required
+from flask import Blueprint, request, jsonify, abort, render_template, current_app
+from flask_login import LoginManager, current_user, login_user, logout_user, login_required
 from http import HTTPStatus
+
+login_manager = LoginManager()
 
 # Init Schemas
 OneUser = UserSchema()
@@ -21,12 +26,15 @@ already_authenticated = generate_error("Bereits eingeloggt", HTTPStatus.BAD_REQU
 email_or_password_wrong = generate_error("Email und/oder Passwort falsch", HTTPStatus.UNAUTHORIZED)
 token_invalid = generate_error("Registrierungscode ungültig", HTTPStatus.UNAUTHORIZED)
 reset_token_invalid = generate_error("Code ungültig", HTTPStatus.UNAUTHORIZED)
+unauthorized_response = generate_error("Nicht authorisiert", HTTPStatus.UNAUTHORIZED)
+user_id_invalid = generate_error("User ID ungültig", HTTPStatus.BAD_REQUEST)
+roles_invalid = generate_error("Rolle(n) ungültig oder nicht gefunden", HTTPStatus.BAD_REQUEST)
+
+users_bp = Blueprint('users', __name__, url_prefix='/api/users')
+users_frontend_bp = Blueprint('users_frontend', __name__, url_prefix='/users')
 
 
-success_response = {"success": True}
-
-
-@app.route('/users', methods=['POST'])
+@users_bp.route('', methods=['POST'])
 def register_user():
     name = request.json.get('name')
     email = request.json.get('email')
@@ -42,8 +50,10 @@ def register_user():
     if password is None or password == "":
         return password_invalid
 
+    is_first_user = len(User.query.all()) == 0
+
     token = AccessToken.query.get(token_string)
-    if token is None and not app.debug:
+    if token is None and not is_first_user and not current_app.debug:
         return token_invalid
 
     existing_user = User.query.filter_by(email=email).first()
@@ -53,16 +63,20 @@ def register_user():
     new_user = User(name=name, email=email)
     new_user.set_password(password)
 
+    if is_first_user:
+        webmaster_role = Role.query.filter_by(name='Webmaster').first()
+        new_user.roles = [webmaster_role, ]
+
     db.session.add(new_user)
 
-    if not app.debug:
+    if not current_app.debug and token is not None:
         db.session.delete(token)
 
     db.session.commit()
     return success_response, 201
 
 
-@app.route('/users/login', methods=['POST', 'GET'])
+@users_bp.route('/login', methods=['POST', 'GET'])
 def login():
     if request.method == "GET":
         abort(405)
@@ -88,26 +102,14 @@ def login():
     return success_response
 
 
-@app.route("/users/logout")
+@users_bp.route("/logout", methods=['POST'])
 @login_required
 def logout():
     logout_user()
     return success_response
 
 
-@login_manager.user_loader
-def load_user(user_id):
-    if user_id is not None:
-        return User.query.get(user_id)
-    return None
-
-
-@login_manager.unauthorized_handler
-def unauthorized():
-    return {"success": False}, HTTPStatus.UNAUTHORIZED
-
-
-@app.route('/users/personal_info', methods=['GET'])
+@users_bp.route('/personal_info', methods=['GET'])
 @login_required
 def personal_info():
     current_user_info = User.query.get(current_user.id)
@@ -116,7 +118,7 @@ def personal_info():
     return result
 
 
-@app.route('/users/change_password', methods=['POST'])
+@users_bp.route('/change_password', methods=['POST'])
 @login_required
 def change_password():
     password = request.json.get("password")
@@ -128,7 +130,8 @@ def change_password():
     db.session.commit()
     return success_response
 
-@app.route('/users/change_email', methods = ['POST'])
+
+@users_bp.route('/change_email', methods=['POST'])
 @login_required
 def change_email():
     email = request.json.get("email")
@@ -141,14 +144,11 @@ def change_email():
     return success_response
 
 
-
-@app.route('/users', methods=['GET'])
+@users_bp.route('', methods=['GET'])
 @login_required
-# TODO: Webmaster role required
+@roles_required('Webmaster')
 def get_users():
     id_ = request.args.get("id", default="*")
-
-    result = None
 
     if id_ == "*":
         all_users = User.query.all()
@@ -161,7 +161,7 @@ def get_users():
     return result
 
 
-@app.route('/users/delete', methods=['DELETE'])
+@users_bp.route('/delete', methods=['DELETE'])
 @login_required
 def delete():
     db.session.delete(current_user)
@@ -170,7 +170,7 @@ def delete():
     return success_response
 
 
-@app.route('/users/request_new_password', methods=['POST'])
+@users_bp.route('/request_new_password', methods=['POST'])
 def request_new_password():
     email = request.json.get('email')
 
@@ -194,17 +194,7 @@ def request_new_password():
     return success_response
 
 
-@app.route('/users/reset_password/<reset_token>', methods=['GET'])
-def reset_password_page(reset_token):
-    token = PasswordResetToken.query.filter_by(token=reset_token).first()
-
-    if token is None:
-        return abort(HTTPStatus.NOT_FOUND)
-    else:
-        return render_template('set_new_password.jinja2', token=reset_token)
-
-
-@app.route('/users/reset_password', methods=['POST'])
+@users_bp.route('/reset_password', methods=['POST'])
 def reset_password():
     password = request.json.get("password")
     reset_token = request.json.get("token")
@@ -222,3 +212,85 @@ def reset_password():
     db.session.commit()
 
     return success_response
+
+
+@users_bp.route('/current_user_roles', methods=['GET'])
+@login_required
+def current_user_roles():
+    roles = [role.name for role in current_user.roles]
+
+    return success_response | {
+        "roles": roles
+    }
+
+
+@users_bp.route('/user_roles', methods=['GET'])
+@login_required
+@roles_required('Webmaster')
+def get_user_roles():
+    user_id = request.json.get("user_id")
+
+    if user_id is None or user_id == "":
+        return user_id_invalid
+
+    user = User.query.get(user_id)
+    if user is None:
+        return user_id_invalid
+
+    roles = [role.name for role in user.roles]
+
+    return success_response | {
+        "roles": roles
+    }
+
+
+@users_bp.route('/user_roles', methods=['PUT'])
+@login_required
+@roles_required('Webmaster')
+def put_user_roles():
+    user_id = request.json.get("user_id")
+    role_names = request.json.get("roles")
+
+    if user_id is None or user_id == "":
+        return user_id_invalid
+
+    if role_names is None:
+        return roles_invalid
+
+    roles = [Role.query.filter_by(name=role_name).first() for role_name in role_names]
+
+    if None in roles:
+        return roles_invalid
+
+    user = User.query.get(user_id)
+    if user is None:
+        return user_id_invalid
+
+    user.roles = roles
+
+    return success_response
+
+
+@users_frontend_bp.route('/reset_password/<reset_token>', methods=['GET'])
+def reset_password_page(reset_token):
+    token = PasswordResetToken.query.filter_by(token=reset_token).first()
+
+    if token is None:
+        return abort(HTTPStatus.NOT_FOUND)
+    else:
+        return render_template('set_new_password.jinja2', token=reset_token)
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    if user_id is not None:
+        return User.query.get(user_id)
+    return None
+
+
+@login_manager.unauthorized_handler
+def unauthorized():
+    if request.path.startswith("/api/"):
+        return unauthorized_response
+
+    return render_template('unauthorized.jinja2'), HTTPStatus.UNAUTHORIZED

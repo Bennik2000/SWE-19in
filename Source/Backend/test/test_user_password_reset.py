@@ -1,28 +1,28 @@
-import unittest
 from http import HTTPStatus
 
-from test.test_utils import setup_test_app, add_test_user, TestEmail
-from vereinswebseite import db
-from vereinswebseite.models import PasswordResetToken, User
+from test.base_test_case import BaseTestCase, TestEmail
+from vereinswebseite.models import db
+from vereinswebseite.models.token import PasswordResetToken
+from vereinswebseite.models.user import User
 
 
-class UserPasswordResetTest(unittest.TestCase):
+class UserPasswordResetTest(BaseTestCase):
     TestToken = "ZHHEU2345"
 
     def setUp(self) -> None:
-        self.app = setup_test_app()
-        add_test_user()
+        super().setUp()
+        self.add_test_user()
 
     def test_given_user_exists_when_request_password_reset_then_token_generated(self):
         self.clear_reset_tokens()
-        response = self.app.post("/users/request_new_password", json={"email": TestEmail})
+        response = self.app.post("/api/users/request_new_password", json={"email": TestEmail})
 
         self.assertTrue(response.json["success"])
         self.assertEqual(len(PasswordResetToken.query.all()), 1)
 
     def test_given_user_not_exists_when_request_password_reset_then_no_token(self):
         self.clear_reset_tokens()
-        response = self.app.post("/users/request_new_password", json={"email": "NotExisting"})
+        response = self.app.post("/api/users/request_new_password", json={"email": "NotExisting"})
 
         self.assertTrue(response.json["success"])
         self.assertEqual(len(PasswordResetToken.query.all()), 0)
@@ -43,7 +43,7 @@ class UserPasswordResetTest(unittest.TestCase):
         self.insert_test_token()
 
         new_password = "newPassword"
-        response = self.app.post("/users/reset_password", json={
+        response = self.app.post("/api/users/reset_password", json={
             "password": new_password,
             "token": self.TestToken})
 
@@ -55,7 +55,7 @@ class UserPasswordResetTest(unittest.TestCase):
         self.insert_test_token()
 
         new_password = "newPassword"
-        response = self.app.post("/users/reset_password", json={
+        response = self.app.post("/api/users/reset_password", json={
             "password": new_password,
             "token": "invalidToken"})
 
