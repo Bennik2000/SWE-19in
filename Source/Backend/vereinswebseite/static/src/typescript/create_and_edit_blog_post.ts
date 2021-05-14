@@ -324,3 +324,9 @@ function deleteBlogPost() {
     }
 }
 
+function changeCheckboxChecked() {
+    var checkBox = document.getElementById("livePreviewCheckbox");
+
+    checkBox.checked = !checkBox.checked;
+    swapShowingLivePreview(checkBox);
+}

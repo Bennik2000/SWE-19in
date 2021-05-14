@@ -100,9 +100,10 @@ label {
     font-size: 1.5em !important;
     font-weight: bold;
 }
+
  
 #livePreviewCheckbox_label {
-    font-size: 1em !important;
+    font-size: 0.8em !important;
     font-weight: normal;
 }
 
@@ -165,6 +166,6 @@ p {
 } 
 input[type=checkbox]
  {
-   transform: scale(1);  
+   transform: scale(1.2);  
  }
 
