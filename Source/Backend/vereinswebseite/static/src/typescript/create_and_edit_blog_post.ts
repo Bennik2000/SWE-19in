@@ -9,7 +9,7 @@ let errorMessageNoMarkdownEntered = "Um eine Vorschau anzeigen zu lassen bitte M
 let errorMessageShowingPreview = "Anzeigen der Vorschau fehlgeschlagen!";
 let errorMessageUpdatingPreview = "Aktualisieren der Vorschau fehlgeschlagen!";
 let errorMessageUpdatingOrShowingLivePreview = "Live-Vorschau: Anzeigen/Aktualisieren fehlgeschlagen!";
-let errorMessageNoFilesSelected = "Bitte Bilder zum Hochladen auswählen!";
+let errorMessageNoFilesSelected = "Bitte Bild zum Hochladen auswählen!";
 let errorMessageUploadingFiles = "Hochladen fehlgeschlagen!";
 
 
