@@ -276,7 +276,7 @@ function deleteBlogPost() {
         frontendHelper.makeHttpRequest("DELETE", "/api/blog_posts/delete", jsonObj, myOnloadFunction);
     }
 }
-function changeCheckboxChecked() {
+function swapCheckbox() {
     var checkBox = document.getElementById("livePreviewCheckbox");
     checkBox.checked = !checkBox.checked;
     swapShowingLivePreview(checkBox);

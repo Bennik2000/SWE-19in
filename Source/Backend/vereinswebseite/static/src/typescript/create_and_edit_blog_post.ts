@@ -327,7 +327,7 @@ function deleteBlogPost() {
     }
 }
 
-function changeCheckboxChecked() {
+function swapCheckbox() {
     var checkBox = document.getElementById("livePreviewCheckbox");
 
     checkBox.checked = !checkBox.checked;
