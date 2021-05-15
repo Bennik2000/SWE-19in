@@ -5,13 +5,12 @@ from . import db
 from vereinswebseite.routes import ma
 
 
-
-
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
     email = db.Column(db.String, unique=True, nullable=False)
     password = db.Column(db.String, nullable=False)
+    profile_picture = db.Column(db.String, nullable=True, unique=True)
 
     roles = db.relationship('Role', secondary='user_roles')
     blog_posts = db.relationship("BlogPost")
@@ -63,6 +62,7 @@ class User(UserMixin, db.Model):
 
         # All requirements have been met: return True
         return True
+
 
 class NamedRelation(ma.Field):
     def __init__(self, name_column, **kwargs):
