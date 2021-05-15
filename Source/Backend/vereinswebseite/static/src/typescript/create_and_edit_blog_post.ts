@@ -9,8 +9,9 @@ let errorMessageNoMarkdownEntered = "Um eine Vorschau anzeigen zu lassen bitte M
 let errorMessageShowingPreview = "Anzeigen der Vorschau fehlgeschlagen!";
 let errorMessageUpdatingPreview = "Aktualisieren der Vorschau fehlgeschlagen!";
 let errorMessageUpdatingOrShowingLivePreview = "Live-Vorschau: Anzeigen/Aktualisieren fehlgeschlagen!";
-let errorMessageNoFilesSelected = "Bitte Bilder zum Hochladen auswählen!";
+let errorMessageNoFilesSelected = "Bitte Bild zum Hochladen auswählen!";
 let errorMessageUploadingFiles = "Hochladen fehlgeschlagen!";
+
 
 function swapShowingPreview() {
     var markdown = document.getElementById("markdown") as HTMLInputElement;
@@ -324,4 +325,11 @@ function deleteBlogPost() {
         }
         frontendHelper.makeHttpRequest("DELETE", "/api/blog_posts/delete", jsonObj, myOnloadFunction); 
     }
+}
+
+function swapCheckbox() {
+    var checkBox = document.getElementById("livePreviewCheckbox");
+
+    checkBox.checked = !checkBox.checked;
+    swapShowingLivePreview(checkBox);
 }
