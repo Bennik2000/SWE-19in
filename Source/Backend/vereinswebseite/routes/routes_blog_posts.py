@@ -164,6 +164,7 @@ def render_blog_post_preview():
 def render_all_blog_posts():
     posts = BlogPost.query.all()
     all_posts = []
+    authenticated = False
 
     for post in posts:
         if post.is_expired():
@@ -178,8 +179,7 @@ def render_all_blog_posts():
 
         can_edit = False
         is_webmaster = False
-        authenticated = False
-
+    
         if current_user.is_authenticated:
             authenticated = True
             roles = [role.name for role in current_user.roles]
