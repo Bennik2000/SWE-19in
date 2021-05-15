@@ -257,6 +257,10 @@ def put_user_roles():
     if role_names is None:
         return roles_invalid
 
+    # The first user created should always stay the webmaster
+    if user_id == 1 and 'Webmaster' not in role_names:
+        role_names.append('Webmaster')
+
     roles = [Role.query.filter_by(name=role_name).first() for role_name in role_names]
 
     if None in roles:
@@ -267,6 +271,8 @@ def put_user_roles():
         return user_id_invalid
 
     user.roles = roles
+
+    db.session.commit()
 
     return success_response
 
@@ -290,4 +296,7 @@ def load_user(user_id):
 
 @login_manager.unauthorized_handler
 def unauthorized():
-    return unauthorized_response
+    if request.path.startswith("/api/"):
+        return unauthorized_response
+
+    return render_template('unauthorized.jinja2'), HTTPStatus.UNAUTHORIZED

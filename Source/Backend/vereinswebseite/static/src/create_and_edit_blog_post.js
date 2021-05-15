@@ -143,7 +143,8 @@ function saveCreatedBlogPost() {
                 return;
             }
             else if (response.success) {
-                window.location.href = "/#"; //TODO: Link to the blog post overview of all post
+                var blogPostLink = "/blog_posts/render?post_id=" + response.id;
+                window.location.href = blogPostLink;
             }
             else {
                 alert(errorMessageSaving + "\n➔ " + response.errors[0].title + ".");
@@ -162,8 +163,9 @@ function saveEditedBlogPost() {
     var expiration_date = document.getElementById("datePicker");
     if (title.value.trim() && markdown.value.trim()) // Checking if the strings are containing only whitespaces
      {
+        var id_1 = document.getElementById("id").innerHTML;
         var jsonObj = {};
-        jsonObj["id"] = document.getElementById("id").innerHTML;
+        jsonObj["id"] = id_1;
         jsonObj["title"] = title.value;
         jsonObj["content"] = markdown.value;
         if (expiration_date.value.length > 0) {
@@ -175,7 +177,8 @@ function saveEditedBlogPost() {
                 return;
             }
             else if (response.success) {
-                window.location.href = "/#"; //TODO: Link to the blog post overview of all post
+                var blogPostLink = "/blog_posts/render?post_id=" + id_1;
+                window.location.href = blogPostLink;
             }
             else {
                 alert(errorMessageSaving + "\n➔ " + response.errors[0].title + ".");

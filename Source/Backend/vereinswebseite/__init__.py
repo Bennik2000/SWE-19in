@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_uploads import configure_uploads
 from vereinswebseite import config
+import os.path
 
 
 def create_app(test_config=None):
@@ -10,6 +11,7 @@ def create_app(test_config=None):
     # Allow adding a route '' to a blueprint with a url prefix
     app.url_map.strict_slashes = False
     app.config.from_pyfile('config.py')
+    app.config["UPLOADED_IMAGES_DEST"] = os.path.join(app.root_path, "../uploads")
     if test_config is not None:
         app.config.from_mapping(test_config)
 
