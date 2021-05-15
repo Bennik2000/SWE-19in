@@ -44,3 +44,7 @@ function scrollToContent(direction) {
         document.getElementById("content").scrollIntoView();
     }
 }
+window.onload = function () {
+    var message = { scroll: true };
+    window.parent.postMessage(message, "*");
+};

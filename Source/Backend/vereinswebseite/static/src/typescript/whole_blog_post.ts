@@ -53,3 +53,9 @@ function scrollToContent(direction: String) {
         document.getElementById("content").scrollIntoView();
     }
 }
+
+
+window.onload=function(){
+    let message = {scroll: true}
+    window.parent.postMessage(message,"*")
+}

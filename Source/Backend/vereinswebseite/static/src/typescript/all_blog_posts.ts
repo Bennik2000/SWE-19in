@@ -5,14 +5,13 @@ function add_post_button(){
 }
 function post_more_button(id:Number){
     window.location.href="/blog_posts/render?post_id="+id;
-    
 }
 function post_edit_button(id:Number){
     window.open("/blog_posts/edit?post_id="+id,'_blank');
 }   
 
 window.onload=function(){
-    let message = { height: document.body.scrollHeight, width: document.body.scrollWidth };	
+    let message = { height: document.body.scrollHeight, width: document.body.scrollWidth, scroll:false};	
 
 	window.top.postMessage(message, "*");
 }

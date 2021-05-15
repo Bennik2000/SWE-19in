@@ -9,6 +9,6 @@ function post_edit_button(id) {
     window.open("/blog_posts/edit?post_id=" + id, '_blank');
 }
 window.onload = function () {
-    var message = { height: document.body.scrollHeight, width: document.body.scrollWidth };
+    var message = { height: document.body.scrollHeight, width: document.body.scrollWidth, scroll: false };
     window.top.postMessage(message, "*");
 };
