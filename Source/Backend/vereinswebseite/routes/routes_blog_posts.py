@@ -4,7 +4,7 @@ from http import HTTPStatus
 import markdown
 from flask_login import login_required, current_user
 
-from vereinswebseite import data_cleanup
+from vereinswebseite import data_cleanup, permissions
 from vereinswebseite.models.blog_post import BlogPostSchema, BlogPost, RenderedPost
 from vereinswebseite.models.user import User
 from vereinswebseite.routes import limiter
@@ -22,8 +22,7 @@ content_invalid = generate_error("Inhalt ungültig", HTTPStatus.BAD_REQUEST)
 user_invalid = generate_error("Benutzer ID ungültig", HTTPStatus.BAD_REQUEST)
 blog_post_id_invalid = generate_error("Blog Post ID ungültig", HTTPStatus.BAD_REQUEST)
 date_format_invalid = generate_error("Falsches Datumsformat.", HTTPStatus.BAD_REQUEST)
-not_permitted_to_edit_or_delete = generate_error("Dieser Post gehört zu einem anderen Benutzer. "
-                                                 "Daher kann er nicht bearbeitet oder gelöscht werden.",
+not_permitted_to_edit_or_delete = generate_error("Keine Berechtigung um den Post zu bearbeiten oder zu löschen",
                                                  HTTPStatus.FORBIDDEN)
 
 blog_posts_bp = Blueprint('blog_posts', __name__, url_prefix='/api/blog_posts')
@@ -85,7 +84,7 @@ def update_blog_post():
     if post is None:
         return blog_post_id_invalid
 
-    if post.author_id != current_user.id:
+    if not permissions.can_user_edit_blog_post(current_user, post):
         return not_permitted_to_edit_or_delete
 
     post.expiration_date = expiration_date
@@ -134,7 +133,7 @@ def delete_blog_post():
     if post is None:
         return blog_post_id_invalid
 
-    if post.author_id != current_user.id:
+    if not permissions.can_user_delete_blog_post(current_user, post):
         return not_permitted_to_edit_or_delete
 
     db.session.delete(post)
@@ -175,34 +174,18 @@ def render_all_blog_posts():
         if user is not None:
             username = user.name
 
-
-        can_edit = False
-        is_webmaster = False
-        authenticated = False
-
-        if current_user.is_authenticated:
-            authenticated = True
-            roles = [role.name for role in current_user.roles]
-            if "Webmaster" in roles:
-                is_webmaster = True
-            if current_user.id == post.author_id:
-                can_edit = True
-
-        
-
         all_posts.append(RenderedPost(
-
             post_id=post.id,
             title=post.title,
             summary=markdown.markdown(post.make_post_summary()),
             content=None,
             creation_date=post.creation_date,
             name=username,
-            can_edit_post=can_edit,
-            is_webmaster = is_webmaster
+            can_edit_post=permissions.can_user_edit_blog_post(current_user, post),
+            can_delete_post=permissions.can_user_delete_blog_post(current_user, post)
         ))
-        
-    return render_template('all_blog_posts.jinja2', posts=all_posts,authenticated = authenticated)
+
+    return render_template('all_blog_posts.jinja2', posts=all_posts, is_logged_in=current_user.is_authenticated)
 
 
 @blog_posts_frontend_bp.route('/create')
@@ -225,6 +208,7 @@ def render_edit_blog_post():
                            content=post.content,
                            creation_date=post.creation_date,
                            expiration_date=post.expiration_date,
+                           can_delete_post=permissions.can_user_delete_blog_post(current_user, post),
                            id=post.id)
 
 
@@ -247,14 +231,11 @@ def render_blog_post():
     if author is not None:
         author_name = author.name
 
-    can_edit = current_user.is_authenticated
-    can_delete = current_user.is_authenticated
-
     return render_template("whole_blog_post.jinja2",
-                           can_edit_post=can_edit,
-                           can_delete_post=can_delete,
+                           can_edit_post=permissions.can_user_edit_blog_post(current_user, post),
+                           can_delete_post=permissions.can_user_delete_blog_post(current_user, post),
                            post=html,
                            title=post.title,
-                           author=author_name, 
+                           author=author_name,
                            id=post_id,
                            date=post.creation_date)
