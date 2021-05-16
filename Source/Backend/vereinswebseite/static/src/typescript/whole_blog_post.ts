@@ -54,8 +54,14 @@ function scrollToContent(direction: String) {
     }
 }
 
+document.getElementById("post").addEventListener("resize",function(){
+    let message = { height: document.getElementById("post").scrollHeight, width: document.getElementById("post").scrollWidth, scroll:false};
+    window.parent.postMessage(message,"*")
+})
 
 window.onload=function(){
-    let message = { height: document.body.scrollHeight, width: document.body.scrollWidth, scroll:true};
+    let message = { height: document.getElementById("post").scrollHeight, width: document.getElementById("post").scrollWidth, scroll:true};
     window.parent.postMessage(message,"*")
+    
 }
+
