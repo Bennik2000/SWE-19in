@@ -36,7 +36,7 @@ class BaseTestCase(TestCase):
         self.app = self.flask_app.test_client()
 
         db.drop_all()
-        vereinswebseite.init_db()
+        vereinswebseite.create_and_fill_db()
 
     def tearDown(self):
         self.app_context.pop()

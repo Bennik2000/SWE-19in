@@ -24,5 +24,4 @@ class MarkdownRenderer:
         return all_image_names
 
 
-
 post_renderer = MarkdownRenderer()

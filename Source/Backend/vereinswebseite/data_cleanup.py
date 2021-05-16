@@ -10,6 +10,10 @@ from vereinswebseite.routes.routes_uploads import images
 
 
 def delete_unused_images():
+    """
+    This function deletes all unused images from the file system. This prevents trashing the
+    file system with not used images and thus saves storage
+    """
     posts = BlogPost.query.all()
 
     all_used_images = []

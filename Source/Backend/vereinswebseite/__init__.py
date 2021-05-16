@@ -5,9 +5,16 @@ import os.path
 
 
 def create_app(test_config=None):
-    app = Flask('vereinswebseite',
-                static_url_path='')
+    app = Flask('vereinswebseite', static_url_path='')
 
+    configure_app(app, test_config)
+    init_app(app)
+    setup_routes(app)
+
+    return app
+
+
+def configure_app(app, test_config):
     # Allow adding a route '' to a blueprint with a url prefix
     app.url_map.strict_slashes = False
     app.config.from_pyfile('config.py')
@@ -15,6 +22,8 @@ def create_app(test_config=None):
     if test_config is not None:
         app.config.from_mapping(test_config)
 
+
+def init_app(app):
     from vereinswebseite.models import db
     from vereinswebseite.routes.routes_users import login_manager
     from vereinswebseite.email_utils import mail
@@ -27,6 +36,8 @@ def create_app(test_config=None):
     limiter.init_app(app)
     ma.init_app(app)
 
+
+def setup_routes(app):
     from vereinswebseite.routes import general_bp
     from vereinswebseite.routes.routes_accss_token import access_token_bp
     from vereinswebseite.routes.routes_blog_posts import blog_posts_bp, blog_posts_frontend_bp
@@ -42,10 +53,8 @@ def create_app(test_config=None):
     app.register_blueprint(users_bp)
     app.register_blueprint(users_frontend_bp)
 
-    return app
 
-
-def init_db():
+def create_and_fill_db():
     from vereinswebseite.models import db
     from vereinswebseite.models.roles import Role
 
