@@ -45,6 +45,6 @@ function scrollToContent(direction) {
     }
 }
 window.onload = function () {
-    var message = { scroll: true };
+    var message = { height: document.body.scrollHeight, width: document.body.scrollWidth, scroll: true };
     window.parent.postMessage(message, "*");
 };

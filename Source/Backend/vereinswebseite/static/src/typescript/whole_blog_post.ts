@@ -56,6 +56,6 @@ function scrollToContent(direction: String) {
 
 
 window.onload=function(){
-    let message = {scroll: true}
+    let message = { height: document.body.scrollHeight, width: document.body.scrollWidth, scroll:true};
     window.parent.postMessage(message,"*")
 }

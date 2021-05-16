@@ -11,7 +11,10 @@
     width: 100%;
     overflow: auto; 
 }
-
+::-webkit-scrollbar{
+    display: none;
+    width: 0;
+}
 
 html{
     height: 100%;
