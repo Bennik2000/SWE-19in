@@ -1,6 +1,7 @@
 from flask_mail import Mail, Message
 
 from vereinswebseite.models.user import User
+from vereinswebseite.request_utils import get_server_root
 
 mail = Mail()
 
@@ -10,7 +11,7 @@ def send_reset_password_email(user: User, reset_url: str):
                "Hallo " + user.name +
                ",\n"
                "benutze diesen Link um dein Passwort zurückzusetzen:\n"
-               + reset_url +
+               + get_server_root() + reset_url +
                "\n"
                "\n"
                "Falls Du kein neues Passwort angefordert hast, kannst Du diese Email ignorieren.",
