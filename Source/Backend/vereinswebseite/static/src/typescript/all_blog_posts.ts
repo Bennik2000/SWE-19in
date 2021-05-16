@@ -8,10 +8,14 @@ function post_more_button(id:Number){
 }
 function post_edit_button(id:Number){
     window.open("/blog_posts/edit?post_id="+id,'_blank');
-}   
+} 
+function reload(){
+    window.location.reload(true);
+    let message = { height: document.body.scrollHeight, width: document.body.scrollWidth, scroll:false};	
+	window.top.postMessage(message, "*");
+}  
 
 window.onload=function(){
     let message = { height: document.body.scrollHeight, width: document.body.scrollWidth, scroll:false};	
-
 	window.top.postMessage(message, "*");
 }
