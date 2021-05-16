@@ -1,12 +1,12 @@
 from datetime import datetime
 from http import HTTPStatus
 
-import markdown
 from flask_login import login_required, current_user
 
 from vereinswebseite import data_cleanup
 from vereinswebseite.models.blog_post import BlogPostSchema, BlogPost, RenderedPost
 from vereinswebseite.models.user import User
+from vereinswebseite.post_rendering import post_renderer
 from vereinswebseite.routes import limiter
 from vereinswebseite.models import db
 from flask import request, abort, render_template, Blueprint
@@ -153,7 +153,7 @@ def render_blog_post_preview():
     if content is None:
         return content_invalid
 
-    html = markdown.markdown(content, extensions=["extra"])
+    html = post_renderer.render(content)
 
     return generate_success({
         "html": html
@@ -175,7 +175,6 @@ def render_all_blog_posts():
         if user is not None:
             username = user.name
 
-
         can_edit = False
         is_webmaster = False
         authenticated = False
@@ -188,21 +187,19 @@ def render_all_blog_posts():
             if current_user.id == post.author_id:
                 can_edit = True
 
-        
-
         all_posts.append(RenderedPost(
 
             post_id=post.id,
             title=post.title,
-            summary=markdown.markdown(post.make_post_summary()),
+            summary=post_renderer.render(post.make_post_summary()),
             content=None,
             creation_date=post.creation_date,
             name=username,
             can_edit_post=can_edit,
-            is_webmaster = is_webmaster
+            is_webmaster=is_webmaster
         ))
-        
-    return render_template('all_blog_posts.jinja2', posts=all_posts,authenticated = authenticated)
+
+    return render_template('all_blog_posts.jinja2', posts=all_posts, authenticated=authenticated)
 
 
 @blog_posts_frontend_bp.route('/create')
@@ -239,7 +236,7 @@ def render_blog_post():
     if post.is_expired():
         abort(HTTPStatus.NOT_FOUND)
 
-    html = markdown.markdown(post.content, extensions=["extra"])
+    html = post_renderer.render(post.content)
 
     author = User.query.get(post.author_id)
     author_name = ""
@@ -255,6 +252,6 @@ def render_blog_post():
                            can_delete_post=can_delete,
                            post=html,
                            title=post.title,
-                           author=author_name, 
+                           author=author_name,
                            id=post_id,
                            date=post.creation_date)
