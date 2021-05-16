@@ -55,12 +55,24 @@ function scrollToContent(direction: String) {
 }
 
 document.getElementById("post").addEventListener("resize",function(){
+    let post = document.getElementById("post")
+    var elHeight = post.offsetHeight;
+    elHeight += parseInt(window.getComputedStyle(post).getPropertyValue('margin-top'));
+    elHeight += parseInt(window.getComputedStyle(post).getPropertyValue('margin-bottom'));
+    elHeight +=1
+
     let message = { height: document.getElementById("post").scrollHeight, scroll:false};
     window.parent.postMessage(message,"*")
 })
 
 window.onload=function(){
-    let message = { height: document.getElementById("post").scrollHeight, scroll:true};
+    let post = document.getElementById("post")
+    var elHeight = post.offsetHeight;
+    elHeight += parseInt(window.getComputedStyle(post).getPropertyValue('margin-top'));
+    elHeight += parseInt(window.getComputedStyle(post).getPropertyValue('margin-bottom'));
+    elHeight +=1
+    
+    let message = { height: elHeight , scroll:true};
     window.parent.postMessage(message,"*")
     
 }
