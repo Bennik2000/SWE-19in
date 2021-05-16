@@ -46,11 +46,6 @@ def personal_account_space():
     return render_template('personal_account_space.jinja2')
 
 
-@general_bp.route('/blog_overview')
-def render_blog_overview():
-    return render_template('blog_overview.jinja2')
-
-
 @general_bp.errorhandler(HTTPStatus.TOO_MANY_REQUESTS)
 def rate_limit_handler(e):
     response = e.get_response()
