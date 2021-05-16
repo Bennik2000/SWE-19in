@@ -47,9 +47,9 @@ function deleteBlogPost() {
 
 function scrollToContent(direction: String) {
     if (direction == "bottom") {
-        document.getElementById("content").scrollIntoView(false);
+        document.getElementById("post").scrollIntoView(false);
     }
     else {
-        document.getElementById("content").scrollIntoView();
+        document.getElementById("post").scrollIntoView();
     }
 }
