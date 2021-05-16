@@ -288,7 +288,7 @@ function uploadImage() {
 function embedImageIntoMarkdown(filename) {
     let markdown = document.getElementById("markdown") as HTMLInputElement;
 
-    var imageURL = "![](/_uploads/images/" + filename + "){: style='width: 5vw;'}";
+    var imageURL = "![](/_uploads/images/" + filename + "){: style='width: 5em;'}";
 
     if (markdown.selectionStart || markdown.selectionStart === 0) {
         var startPos = markdown.selectionStart;

@@ -1,12 +1,12 @@
 from datetime import datetime
 from http import HTTPStatus
 
-import markdown
 from flask_login import login_required, current_user
 
 from vereinswebseite import data_cleanup, permissions
 from vereinswebseite.models.blog_post import BlogPostSchema, BlogPost, RenderedPost
 from vereinswebseite.models.user import User
+from vereinswebseite.post_rendering import post_renderer
 from vereinswebseite.routes import limiter
 from vereinswebseite.models import db
 from flask import request, abort, render_template, Blueprint
@@ -152,7 +152,7 @@ def render_blog_post_preview():
     if content is None:
         return content_invalid
 
-    html = markdown.markdown(content, extensions=["extra"])
+    html = post_renderer.render(content)
 
     return generate_success({
         "html": html
@@ -177,7 +177,7 @@ def render_all_blog_posts():
         all_posts.append(RenderedPost(
             post_id=post.id,
             title=post.title,
-            summary=markdown.markdown(post.make_post_summary()),
+            summary=post_renderer.render(post.make_post_summary()),
             content=None,
             creation_date=post.creation_date,
             name=username,
@@ -186,6 +186,7 @@ def render_all_blog_posts():
         ))
 
     return render_template('all_blog_posts.jinja2', posts=all_posts, is_logged_in=current_user.is_authenticated)
+
 
 
 @blog_posts_frontend_bp.route('/create')
@@ -223,7 +224,7 @@ def render_blog_post():
     if post.is_expired():
         abort(HTTPStatus.NOT_FOUND)
 
-    html = markdown.markdown(post.content, extensions=["extra"])
+    html = post_renderer.render(post.content)
 
     author = User.query.get(post.author_id)
     author_name = ""

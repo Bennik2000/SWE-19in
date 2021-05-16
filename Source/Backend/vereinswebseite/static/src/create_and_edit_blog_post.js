@@ -243,7 +243,7 @@ function uploadImage() {
 }
 function embedImageIntoMarkdown(filename) {
     var markdown = document.getElementById("markdown");
-    var imageURL = "![](/_uploads/images/" + filename + "){: style='width: 5vw;'}";
+    var imageURL = "![](/_uploads/images/" + filename + "){: style='width: 5em;'}";
     if (markdown.selectionStart || markdown.selectionStart === 0) {
         var startPos = markdown.selectionStart;
         var endPos = markdown.selectionEnd;

@@ -73,6 +73,9 @@ def register_user():
         db.session.delete(token)
 
     db.session.commit()
+
+    login_user(new_user)
+
     return success_response, 201
 
 
@@ -188,8 +191,7 @@ def request_new_password():
     db.session.add(token)
     db.session.commit()
 
-    link = request.url_root + "users/reset_password/" + token_string
-    send_reset_password_email(user, link)
+    send_reset_password_email(user, "users/reset_password/" + token_string)
 
     return success_response
 
