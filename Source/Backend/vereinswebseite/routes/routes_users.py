@@ -73,6 +73,9 @@ def register_user():
         db.session.delete(token)
 
     db.session.commit()
+
+    login_user(new_user)
+
     return success_response, 201
 
 
