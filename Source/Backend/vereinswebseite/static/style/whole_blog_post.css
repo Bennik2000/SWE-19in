@@ -41,11 +41,11 @@ body{
     width: 90%;
 }
 
-#autor{
+#author{
     float: left;
 }
 
-#datum{
+#date{
     float: right;
 }
 
@@ -68,7 +68,7 @@ p {
     font-size: clamp(1.0rem, 1.4vw , 1.4rem);
 }
 
-ul {
+ul, li{
     margin-left: 25px;
 }
 
@@ -87,16 +87,13 @@ button {
 }
 
 #button_delete_post{
-    font-size: clamp(1.1rem, 1.4vw , 1.4rem);
     margin-top: 2%;
     margin-left: 1%;
     padding: 0.5% 2% 0.5% 2%;
   }
 
 #button_edit_post{
-    font-size: clamp(1.1rem, 1.4vw , 1.4rem);
     margin-top: 2%;
-    margin-left: 1%;
     padding: 0.5% 2% 0.5% 2%;
 }
 
