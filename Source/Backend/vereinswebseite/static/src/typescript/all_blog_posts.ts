@@ -11,11 +11,11 @@ function post_edit_button(id:Number){
 } 
 function reload(){
     window.location.reload(true);
-    let message = { height: document.body.scrollHeight, width: document.body.scrollWidth, scroll:false};	
+    let message = { height: document.body.scrollHeight, scroll:false};	
 	window.top.postMessage(message, "*");
 }  
 
 window.onload=function(){
-    let message = { height: document.body.scrollHeight, width: document.body.scrollWidth, scroll:false};	
+    let message = { height: document.body.scrollHeight, scroll:false};	
 	window.top.postMessage(message, "*");
 }

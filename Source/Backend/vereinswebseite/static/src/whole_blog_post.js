@@ -45,10 +45,10 @@ function scrollToContent(direction) {
     }
 }
 document.getElementById("post").addEventListener("resize", function () {
-    var message = { height: document.getElementById("post").scrollHeight, width: document.getElementById("post").scrollWidth, scroll: false };
+    var message = { height: document.getElementById("post").scrollHeight, scroll: false };
     window.parent.postMessage(message, "*");
 });
 window.onload = function () {
-    var message = { height: document.getElementById("post").scrollHeight, width: document.getElementById("post").scrollWidth, scroll: true };
+    var message = { height: document.getElementById("post").scrollHeight, scroll: true };
     window.parent.postMessage(message, "*");
 };
