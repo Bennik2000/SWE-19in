@@ -21,7 +21,7 @@ function setNewPassword() {
             }
             else if(response.success) { // The response accesses "success:" of the responded JSON Object
                 alert("Passwort erfolgreich geändert!"); 
-                window.location.href = "/#";
+                window.location.href = "/login";
             }
             else
             {
