@@ -190,7 +190,7 @@ def render_all_blog_posts():
 
         
 
-        all_posts.append(RenderedPost(
+        all_posts.insert(0,RenderedPost(
 
             post_id=post.id,
             title=post.title,
