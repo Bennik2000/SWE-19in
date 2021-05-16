@@ -1,7 +1,7 @@
 from datetime import datetime
 from http import HTTPStatus
 
-from flask import request
+from flask import request, current_app
 
 success_response = {"success": True}
 
@@ -48,3 +48,6 @@ def generate_error(error_title: str, http_status_code: int, error_details=None):
                "success": False
            }, int(http_status_code)
 
+
+def get_server_root() -> str:
+    return current_app.config["SERVER_HOSTNAME"] + current_app.config["SERVER_PATH"]

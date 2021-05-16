@@ -12,4 +12,7 @@ MAIL_PASSWORD = '2021SWEsem4'
 MAIL_USE_TLS = False
 MAIL_USE_SSL = True
 
+SERVER_HOSTNAME = "127.0.0.1"
+SERVER_PATH = "/"
+
 ROLES = ["Webmaster", "Vorstand"]
