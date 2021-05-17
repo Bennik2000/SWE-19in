@@ -30,7 +30,7 @@ jobs:
         cd Source/Backend/
         coverage run -m unittest
         coverage report
-        coverage report
+        coverage html
     - uses: actions/upload-artifact@v2
       with:
         name: coverage-result
