@@ -30,3 +30,8 @@ jobs:
         cd Source/Backend/
         coverage run -m unittest
         coverage report
+        coverage report
+    - uses: actions/upload-artifact@v2
+      with:
+        name: coverage-result
+        path: Source/Backend/htmlcov/
