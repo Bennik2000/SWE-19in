@@ -35,7 +35,7 @@ users_frontend_bp = Blueprint('users_frontend', __name__, url_prefix='/users')
 
 
 @users_bp.route('', methods=['POST'])
-def register_user():
+def api_register_user():
     name = request.json.get('name')
     email = request.json.get('email')
     password = request.json.get('password')
@@ -80,7 +80,7 @@ def register_user():
 
 
 @users_bp.route('/login', methods=['POST', 'GET'])
-def login():
+def api_login():
     if request.method == "GET":
         abort(405)
 
@@ -107,14 +107,14 @@ def login():
 
 @users_bp.route("/logout", methods=['POST'])
 @login_required
-def logout():
+def api_logout():
     logout_user()
     return success_response
 
 
 @users_bp.route('/personal_info', methods=['GET'])
 @login_required
-def personal_info():
+def api_personal_info():
     current_user_info = User.query.get(current_user.id)
     result = OneUser.jsonify(current_user_info)
     result.headers.add("Access-Control-Allow-Origin", "*")
@@ -123,7 +123,7 @@ def personal_info():
 
 @users_bp.route('/change_password', methods=['POST'])
 @login_required
-def change_password():
+def api_change_password():
     password = request.json.get("password")
 
     if password is None or password == "":
@@ -136,7 +136,7 @@ def change_password():
 
 @users_bp.route('/change_email', methods=['POST'])
 @login_required
-def change_email():
+def api_change_email():
     email = request.json.get("email")
 
     if email is None or email == "":
@@ -150,7 +150,7 @@ def change_email():
 @users_bp.route('', methods=['GET'])
 @login_required
 @roles_required('Webmaster')
-def get_users():
+def api_get_users():
     id_ = request.args.get("id", default="*")
 
     if id_ == "*":
@@ -166,7 +166,7 @@ def get_users():
 
 @users_bp.route('/delete', methods=['DELETE'])
 @login_required
-def delete():
+def api_delete_user():
     db.session.delete(current_user)
     db.session.commit()
     logout_user()
@@ -174,7 +174,7 @@ def delete():
 
 
 @users_bp.route('/request_new_password', methods=['POST'])
-def request_new_password():
+def api_request_new_password():
     email = request.json.get('email')
 
     if email is None or email == "":
@@ -197,7 +197,7 @@ def request_new_password():
 
 
 @users_bp.route('/reset_password', methods=['POST'])
-def reset_password():
+def api_reset_password():
     password = request.json.get("password")
     reset_token = request.json.get("token")
 
@@ -218,7 +218,7 @@ def reset_password():
 
 @users_bp.route('/current_user_roles', methods=['GET'])
 @login_required
-def current_user_roles():
+def api_get_current_user_roles():
     roles = [role.name for role in current_user.roles]
 
     return success_response | {
@@ -229,7 +229,7 @@ def current_user_roles():
 @users_bp.route('/user_roles', methods=['GET'])
 @login_required
 @roles_required('Webmaster')
-def get_user_roles():
+def api_get_user_roles():
     user_id = request.json.get("user_id")
 
     if user_id is None or user_id == "":
@@ -249,7 +249,7 @@ def get_user_roles():
 @users_bp.route('/user_roles', methods=['PUT'])
 @login_required
 @roles_required('Webmaster')
-def put_user_roles():
+def api_put_user_roles():
     user_id = request.json.get("user_id")
     role_names = request.json.get("roles")
 
@@ -280,7 +280,7 @@ def put_user_roles():
 
 
 @users_frontend_bp.route('/reset_password/<reset_token>', methods=['GET'])
-def reset_password_page(reset_token):
+def api_reset_password_page(reset_token):
     token = PasswordResetToken.query.filter_by(token=reset_token).first()
 
     if token is None:
@@ -297,7 +297,7 @@ def load_user(user_id):
 
 
 @login_manager.unauthorized_handler
-def unauthorized():
+def unauthorized_handler():
     if request.path.startswith("/api/"):
         return unauthorized_response
 

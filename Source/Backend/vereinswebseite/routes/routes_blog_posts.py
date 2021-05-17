@@ -31,7 +31,7 @@ blog_posts_frontend_bp = Blueprint('blog_posts_frontend', __name__, url_prefix='
 
 @blog_posts_bp.route('', methods=['POST'])
 @login_required
-def add_blog_post():
+def api_add_blog_post():
     title = request.json.get('title')
     content = request.json.get('content')
     expiration_date_string = request.json.get('expiration_date')
@@ -41,9 +41,6 @@ def add_blog_post():
 
     if content is None or content == "":
         return content_invalid
-
-    if current_user is None:
-        return user_invalid
 
     success, expiration_date = parse_date(expiration_date_string)
 
@@ -61,13 +58,13 @@ def add_blog_post():
 
 @blog_posts_bp.route('/update', methods=['PUT'])
 @login_required
-def update_blog_post():
+def api_update_blog_post():
     id_ = request.json.get('id')
     title = request.json.get('title')
     content = request.json.get('content')
     expiration_date_string = request.json.get('expiration_date')
 
-    if id_ is None or title == "":
+    if id_ is None or id_ == "":
         return blog_post_id_invalid
 
     if title is None or title == "":
@@ -97,8 +94,12 @@ def update_blog_post():
     return success_response
 
 
+def _validate_input_data_for_post():
+    pass
+
+
 @blog_posts_bp.route('', methods=['GET'])
-def get_all_blog_posts():
+def api_get_all_blog_posts():
     posts = BlogPost.query.all()
     all_posts = []
     for post in posts:
@@ -125,7 +126,7 @@ def get_all_blog_posts():
 
 @blog_posts_bp.route('/delete', methods=['DELETE'])
 @login_required
-def delete_blog_post():
+def api_delete_blog_post():
     post_id = request.json.get("id")
 
     post = BlogPost.query.get(post_id)
@@ -146,7 +147,7 @@ def delete_blog_post():
 
 @blog_posts_bp.route('/render_preview', methods=['POST'])
 @limiter.limit("5 per second")
-def render_blog_post_preview():
+def api_render_blog_post_preview():
     content = request.json.get("content")
 
     if content is None:
@@ -186,7 +187,6 @@ def render_all_blog_posts():
         ))
 
     return render_template('all_blog_posts.jinja2', posts=all_posts, is_logged_in=current_user.is_authenticated)
-
 
 
 @blog_posts_frontend_bp.route('/create')

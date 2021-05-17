@@ -31,7 +31,7 @@ def ping_handler():
 
 
 @general_bp.route('/create_account')
-def create_account():
+def render_create_account():
     return render_template('create_account.jinja2')
 
 
@@ -42,7 +42,7 @@ def render_login():
 
 @general_bp.route('/account')
 @login_required
-def personal_account_space():
+def render_personal_account_space():
     return render_template('personal_account_space.jinja2')
 
 
@@ -54,21 +54,11 @@ def rate_limit_handler(e):
     return response
 
 
-@general_bp.errorhandler(HTTPStatus.UNAUTHORIZED)
-def unauthorized_handler(e):
-    response = e.get_response()
-    response.data = json.dumps(unauthorized[0])
-    response.content_type = "application/json"
-    return response
-
-
 @general_bp.route('/reset_password')
 def render_reset_password():
     return render_template('reset_password.jinja2')
 
 
-
 @general_bp.route('/navigation_page')
 def render_navigation_page():
     return render_template('navigation_page.jinja2')
-
