@@ -7,6 +7,10 @@ success_response = {"success": True}
 
 
 def get_int_from_request(key):
+    """
+    Reads an integer from the request arguments if possible.
+    If no paramter with the specified key is available it returns None
+    """
     value_str = request.args.get(key, default=None)
     if value_str is None:
         return None
@@ -17,7 +21,13 @@ def get_int_from_request(key):
         return None
 
 
-def parse_date(date_string):
+def parse_date(date_string: str) -> (bool, datetime):
+    """
+    Parses a date time string with the format YYYY-mm-dd
+    :return: (True, date) when the parsing was successful
+             (False, None) when the parsing was not successful
+             (True, None) when date_string is None
+    """
     if date_string is None:
         return True, None
 
@@ -29,6 +39,13 @@ def parse_date(date_string):
 
 
 def generate_success(return_values, status=HTTPStatus.OK):
+    """
+    Generates a successful api response with the given key value pairs. API routes should
+    use this function to generate their response message
+    :param return_values: A dictionary of return values
+    :param status: The HTTP status code
+    :return:
+    """
     response = success_response
 
     for key in return_values:
@@ -37,7 +54,14 @@ def generate_success(return_values, status=HTTPStatus.OK):
     return response, status
 
 
-def generate_error(error_title: str, http_status_code: int, error_details=None):
+def generate_error(error_title: str, http_status_code: int):
+    """
+    Generates an error api response with the given error title and status code. API routes should
+    use this function to generate their response message
+    :param error_title: A short and user friendly summary of the error
+    :param http_status_code: The HTTP status code of the error (e.g. 404 or 403, ...)
+    :return:
+    """
     return {
                "errors": [
                    {
@@ -50,4 +74,11 @@ def generate_error(error_title: str, http_status_code: int, error_details=None):
 
 
 def get_server_root() -> str:
+    """
+    Returns the URL root where this server instance is hosted. This could be something like this:
+    127.0.0.1:5000/
+    127.0.0.1:5000/swe_server/
+    domain.org/swe/
+    ...
+    """
     return current_app.config["SERVER_HOSTNAME"] + current_app.config["SERVER_PATH"]
