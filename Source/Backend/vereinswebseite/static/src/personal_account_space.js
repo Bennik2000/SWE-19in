@@ -269,7 +269,7 @@ function delete_access_token(elem) {
   
       let jsonObj={};
       jsonObj["token"]=elem.parentElement.getElementsByTagName("a")[0].innerHTML
-      frontendHelper.makeHttpRequest("DELETE", "/api/accessToken/delete", jsonObj, myOnloadFunction);
+      frontendHelper.makeHttpRequest("DELETE", "/api/accessToken", jsonObj, myOnloadFunction);
   */ 
 }
 function get_user_info() {
