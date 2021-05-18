@@ -15,18 +15,26 @@
 <body onload="showOrHideScrollButtons()">
     <div id="whole_post_page">
 
-        <div class="container" id="post">
+        <div class="container-fluid" id="post">
             <div id="post_head">
 
                 <h1 id="title">{{title}}</h1>
-                <div id = "authorAndDate_div">
-                    <p>{{author}} <br> {{date.strftime("%d.%m.%Y")}} </p>
+                <div id = "authorAndDate_div" class ="clearfix">
+                    <div class = "links">
+                         <p id="author">{{author}} </p>
+                    </div>  
+                    <div id="right">
+                        <p id="date">{{date.strftime("%d.%m.%Y")}}</p>
+                        
+                    </div> 
+                
                 </div>            
             </div>
 
             <div id="content">
-                <button type="button" style="display:none; margin-top: 0.5vw" class="btn btn-outline-info float-right" id="button_scrollToBottom" onclick="scrollToContent('bottom');">Zum Ende scrollen</button>
+                <button type="button" style="display:none; margin-top: 0.5vw" class="btn btn-outline-info" id="button_scrollToBottom" onclick="scrollToContent('bottom');">Zum Ende scrollen</button>
                 {{post}}
+                <button type="button" style="display:none" class="btn btn-outline-info" id="button_scrollToTop" onclick="scrollToContent('top')">Zum Anfang scrollen</button>
             </div> 
 
             {% if can_edit_post %}
@@ -37,7 +45,7 @@
                     <button type="button" class="btn btn-danger" id="button_delete_post" onclick="deleteBlogPost();">Beitrag löschen</button>
             {% endif %}
             
-            <button type="button" style="display:none" class="btn btn-outline-info" id="button_scrollToTop" onclick="scrollToContent('top')">Zum Anfang scrollen</button>
+            
 
 
         </div>

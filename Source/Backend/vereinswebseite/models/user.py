@@ -6,6 +6,11 @@ from vereinswebseite.routes import ma
 
 
 class User(UserMixin, db.Model):
+    """
+    This class represents a user. It is stored in the database and implements UserMixin this means
+    it is used by flask_login. The current user can be accessed using current_user
+    """
+
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
     email = db.Column(db.String, unique=True, nullable=False)
@@ -21,10 +26,11 @@ class User(UserMixin, db.Model):
     def check_password(self, password):
         return check_password_hash(self.password, password)
 
-    # Originally copied from
-    # https://github.com/lingthio/Flask-User/blob/5c652e6479036c3d33aa1626524e4e65bd3b961e/flask_user/user_mixin.py
     def has_roles(self, *requirements):
-        """ Return True if the user has all of the specified roles. Return False otherwise.
+        """ Originally copied from:
+            https://github.com/lingthio/Flask-User/blob/5c652e6479036c3d33aa1626524e4e65bd3b961e/flask_user/user_mixin.py
+
+            Return True if the user has all of the specified roles. Return False otherwise.
             has_roles() accepts a list of requirements:
                 has_role(requirement1, requirement2, requirement3).
             Each requirement is either a role_name, or a tuple_of_role_names.

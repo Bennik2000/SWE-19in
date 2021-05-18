@@ -35,7 +35,7 @@ function deleteBlogPost() {
             }
             else if (response.success) {
                 alert("Artikel erfolgreich gelöscht!");
-                window.location.href = "/#"; //TODO: Link to the blog post overview of all post
+                window.location.href = "/blog_posts/all"; 
             }
             else {
                 alert("Löschen fehlgeschlagen!" + "\n➔ " + response.errors[0].title + ".");
@@ -47,10 +47,10 @@ function deleteBlogPost() {
 
 function scrollToContent(direction: String) {
     if (direction == "bottom") {
-        document.getElementById("content").scrollIntoView(false);
+        document.getElementById("post").scrollIntoView(false);
     }
     else {
-        document.getElementById("content").scrollIntoView();
+        document.getElementById("post").scrollIntoView();
     }
 }
 

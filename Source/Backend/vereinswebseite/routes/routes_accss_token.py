@@ -21,7 +21,7 @@ access_token_bp = Blueprint('access_token', __name__, url_prefix='/api/accessTok
 
 
 @access_token_bp.route('/validate')
-def validate_access_token():
+def api_validate_access_token():
     token = request.json['token']
     access_token = AccessToken.query.get(token)
 
@@ -30,9 +30,9 @@ def validate_access_token():
     })
 
 
-@access_token_bp.route('/delete')
+@access_token_bp.route('', methods=["DELETE"])
 @login_required
-def delete_access_token():
+def api_delete_access_token():
     token = request.json['token']
     access_token = AccessToken.query.get(token)
 
@@ -47,7 +47,7 @@ def delete_access_token():
 @access_token_bp.route('', methods=["POST"])
 @login_required
 @roles_required('Webmaster')
-def create_access_token():
+def api_create_access_token():
     access_token = str(uuid4())[0:AccessTokenLength].upper()
     token = AccessToken(access_token)
 
@@ -62,7 +62,7 @@ def create_access_token():
 @access_token_bp.route('', methods=['GET'])
 @login_required
 @roles_required('Webmaster')
-def all_access_token():
+def api_all_access_token():
     all_tokens = AccessToken.query.all()
 
     response = {"tokens": []}

@@ -5,7 +5,6 @@ from vereinswebseite.routes import ma
 
 class PasswordResetToken(db.Model):
     token = db.Column(db.String, primary_key=True)
-
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     user = db.relationship("User")
 

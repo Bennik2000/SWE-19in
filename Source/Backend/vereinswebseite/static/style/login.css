@@ -12,7 +12,7 @@
     color: #92badd;
     display:inline-block;
     text-decoration: none;
-    font-size: 0.8vw;
+    font-size: 0.8em;
   }
 
   .new_account {
@@ -20,7 +20,7 @@
   }
 
   p {
-    font-size: 1vw;
+    font-size: 1em;
     color: black;
     margin-top: 4%;
     font-weight: bold;
@@ -67,7 +67,7 @@
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 1vw;
+    font-size: 1em;
     margin: 4% 4% 4% 4%;
   }
   
@@ -79,7 +79,7 @@
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 1vw;
+    font-size: 1em;
     margin: 5px;
     width: 85%;
     border: 2px solid #f6f6f6;
@@ -98,32 +98,4 @@
   }
   
 
-  @media (max-width: 768px) 
-  {
-     #email, #password, #loginbutton {
-         font-size: 1.5vw; 
-     }
-     p {
-         font-size: 2vw;;
-     }
-     a {
-      font-size: 1.2vw;;
-  }
-  }
-
-  @media (max-width: 500px) 
-  {
-     #loginbutton {
-         font-size: 2vw; 
-     }
-     #email, #password {
-        font-size: 2vw;
-        height: 1vw;
-     }
-     p {
-         font-size: 2.5vw;;
-     }
-     a {
-      font-size: 2vw;;
-  }
-  }
+ 

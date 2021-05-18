@@ -42,10 +42,22 @@ body{
     padding-right: 25px;
     height: auto;
     margin-bottom: 10px;
+    width: 90%;
+}
+
+#author{
+    float: left;
+}
+
+#date{
+    float: right;
+
 }
 
 #authorAndDate_div {
     padding-left: 1vw;
+    color: #888a89;
+    font-size: clamp(0.9rem, 1.2vw , 1.2rem);
 }
 
 p {
@@ -58,19 +70,13 @@ p {
     padding-bottom: 1vw;
     border-bottom: 1px solid #e0e0e0;
     border-top: 1px solid #e0e0e0;
-    font-size: 1vw !important;
+    font-size: clamp(1.0rem, 1.4vw , 1.4rem);
 }
 
-ul {
+ul, li{
     margin-left: 25px;
 }
 
-#authorAndDate_div
-{
-    color: #888a89;
-    font-size: 1.2vw;
-
-}
 
 #post_text{
     padding-left: 2px;
@@ -78,93 +84,94 @@ ul {
 }
 
 button {
-    font-size: 1vw !important;
+    font-size: clamp(1.1rem, 1.4vw , 1.4rem);
 }
 
 #title {
-    font-size: 2.5vw;
+    font-size: clamp(2.3rem, 2.5vw , 2.5rem);
 }
 
 #button_delete_post{
-    font-size: 1vw;
     margin-top: 2%;
     margin-left: 1%;
     padding: 0.5% 2% 0.5% 2%;
   }
 
 #button_edit_post{
-    font-size: 1vw;
     margin-top: 2%;
-    margin-left: 1%;
     padding: 0.5% 2% 0.5% 2%;
 }
 
 #content h1 {
     margin-top: 2vw;
-    font-size: 2.3vw !important;
+    font-size: clamp(2.0rem, 2.5vw , 2.5rem);
 }
+
 h2 {
     margin-top: 1.8vw;
-    font-size: 2.1vw !important;
+    font-size: clamp(1.8rem, 2.1vw , 2.1rem);
+
 }
 h3 {
     margin-top: 1.6vw;
-    font-size: 1.9vw !important;
+    font-size: clamp(1.6rem, 1.9vw , 1.9rem);
 }
 h4 {
     margin-top: 1.4vw;
-    font-size: 1.7vw !important;
+    font-size: clamp(1.4rem, 1.7vw , 1.7rem);
 }
 h5 {
     margin-top: 1.2vw;
-    font-size: 1.5vw !important;
+    font-size: clamp(1.2rem, 1.5vw , 1.5rem);
 }
 h6 {
     margin-top: 1vw;
-    font-size: 1.4vw !important;
+    font-size: clamp(1.1rem, 1.4vw , 1.4rem);
 }
 
 @media (max-width: 768px) 
 {
     button {
-        font-size: 1.5vw !important;
+        font-size: clamp(1.1rem, 1.5vw , 1.5rem);
     }
     
     #authorAndDate_div {
-        font-size: 1.8vw;
+        font-size: clamp(1.5rem, 1.8vw , 1.8rem);
     }  
 
     #title {
-        font-size: 3vw;
+        font-size: clamp(2.7rem, 3.0vw , 3.0rem);
     }
 
     #content {
-        font-size: 1.5vw !important;
+        font-size: clamp(1.2rem, 1.5vw , 1.5rem);
     }
 
     #content h1 {
         margin-top: 2.5vw;
-        font-size: 2.5vw !important;
+        font-size: clamp(2.2rem, 2.5vw , 2.5rem);
       }
       h2 {
         margin-top: 2.3vw;
-        font-size: 2.3vw !important;
+        font-size: clamp(2.0rem, 2.3vw , 2.3rem);  
+        
       }
       h3 {
         margin-top: 2.1vw;
-        font-size: 2.1vw !important;
+        font-size: clamp(1.8rem, 2.1vw , 2.1rem);
       }
       h4 {
         margin-top: 1.9vw;
-        font-size: 1.9vw !important;
+        font-size: clamp(1.6rem, 1.9vw , 1.9rem);
       }
       h5 {
         margin-top: 1.7vw;
-        font-size: 1.7vw !important;
+        font-size: clamp(1.4rem, 1.7vw , 1.7rem);
+
       }
       h6 {
         margin-top: 1.5vw;
-        font-size: 1.5vw !important;
+        font-size: clamp(1.2rem, 1.5vw , 1.5rem);
       }      
 }
 

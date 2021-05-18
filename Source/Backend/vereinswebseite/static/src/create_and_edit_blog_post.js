@@ -8,7 +8,7 @@ var errorMessageNoMarkdownEntered = "Um eine Vorschau anzeigen zu lassen bitte M
 var errorMessageShowingPreview = "Anzeigen der Vorschau fehlgeschlagen!";
 var errorMessageUpdatingPreview = "Aktualisieren der Vorschau fehlgeschlagen!";
 var errorMessageUpdatingOrShowingLivePreview = "Live-Vorschau: Anzeigen/Aktualisieren fehlgeschlagen!";
-var errorMessageNoFilesSelected = "Bitte Bilder zum Hochladen auswählen!";
+var errorMessageNoFilesSelected = "Bitte Bild zum Hochladen auswählen!";
 var errorMessageUploadingFiles = "Hochladen fehlgeschlagen!";
 function swapShowingPreview() {
     var markdown = document.getElementById("markdown");
@@ -243,7 +243,7 @@ function uploadImage() {
 }
 function embedImageIntoMarkdown(filename) {
     var markdown = document.getElementById("markdown");
-    var imageURL = "![](/_uploads/images/" + filename + "){: style='width: 5vw;'}";
+    var imageURL = "![](/_uploads/images/" + filename + "){: style='width: 5em;'}";
     if (markdown.selectionStart || markdown.selectionStart === 0) {
         var startPos = markdown.selectionStart;
         var endPos = markdown.selectionEnd;
@@ -267,7 +267,7 @@ function deleteBlogPost() {
             }
             else if (response.success) {
                 alert("Artikel erfolgreich gelöscht!");
-                window.location.href = "/#"; //TODO: Link to the blog post overview of all post
+                window.location.href = "/blog_posts/all";
             }
             else {
                 alert("Löschen fehlgeschlagen!" + "\n➔ " + response.errors[0].title + ".");
@@ -275,4 +275,9 @@ function deleteBlogPost() {
         }
         frontendHelper.makeHttpRequest("DELETE", "/api/blog_posts/delete", jsonObj, myOnloadFunction);
     }
+}
+function swapCheckbox() {
+    var checkBox = document.getElementById("livePreviewCheckbox");
+    checkBox.checked = !checkBox.checked;
+    swapShowingLivePreview(checkBox);
 }

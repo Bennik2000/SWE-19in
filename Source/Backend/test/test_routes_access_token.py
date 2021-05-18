@@ -18,7 +18,7 @@ class AccessTokenRoutesTest(BaseTestCase):
         db.session.add(AccessToken(self.AccessTokenToDelete))
         db.session.commit()
 
-        response = self.app.get(f"/api/accessToken/delete", json={"token": self.AccessTokenToDelete})
+        response = self.app.delete(f"/api/accessToken", json={"token": self.AccessTokenToDelete})
 
         print(f"JSON response: {response.json}")
         self.assertTrue(response.json["success"])
@@ -26,7 +26,7 @@ class AccessTokenRoutesTest(BaseTestCase):
 
     def test_given_access_token_not_existing_when_delete_access_token_then_error(self):
         self.create_and_login_test_user()
-        response = self.app.get(f"/api/accessToken/delete", json={"token": "tokenThatDoesNotExist"})
+        response = self.app.delete(f"/api/accessToken", json={"token": "tokenThatDoesNotExist"})
 
         print(f"JSON response: {response.json}")
         self.assertIsNotNone(response.status_code, 404)
@@ -62,7 +62,7 @@ class AccessTokenRoutesTest(BaseTestCase):
     def test_not_logged_in_when_delete_access_token_then_error(self):
         db.session.add(AccessToken(self.AccessTokenToDelete))
         db.session.commit()
-        response = self.app.get(f"/api/accessToken/delete", json={"token": self.AccessTokenToDelete})
+        response = self.app.delete(f"/api/accessToken", json={"token": self.AccessTokenToDelete})
         self.assertFalse(response.json["success"])
 
     def test_given_not_webmaster_when_get_all_then_error(self):
