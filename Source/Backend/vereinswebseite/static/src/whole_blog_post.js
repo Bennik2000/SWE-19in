@@ -44,3 +44,21 @@ function scrollToContent(direction) {
         document.getElementById("post").scrollIntoView();
     }
 }
+document.getElementById("post").addEventListener("resize", function () {
+    var post = document.getElementById("post");
+    var elHeight = post.offsetHeight;
+    elHeight += parseInt(window.getComputedStyle(post).getPropertyValue('margin-top'));
+    elHeight += parseInt(window.getComputedStyle(post).getPropertyValue('margin-bottom'));
+    elHeight += 1;
+    var message = { height: document.getElementById("post").scrollHeight, scroll: false };
+    window.parent.postMessage(message, "*");
+});
+window.onload = function () {
+    var post = document.getElementById("post");
+    var elHeight = post.offsetHeight;
+    elHeight += parseInt(window.getComputedStyle(post).getPropertyValue('margin-top'));
+    elHeight += parseInt(window.getComputedStyle(post).getPropertyValue('margin-bottom'));
+    elHeight += 1;
+    var message = { height: elHeight, scroll: true };
+    window.parent.postMessage(message, "*");
+};

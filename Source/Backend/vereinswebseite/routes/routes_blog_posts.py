@@ -164,6 +164,7 @@ def api_render_blog_post_preview():
 def render_all_blog_posts():
     posts = BlogPost.query.all()
     all_posts = []
+    authenticated = False
 
     for post in posts:
         if post.is_expired():
@@ -175,7 +176,22 @@ def render_all_blog_posts():
         if user is not None:
             username = user.name
 
-        all_posts.append(RenderedPost(
+
+        can_edit = False
+        is_webmaster = False
+    
+        if current_user.is_authenticated:
+            authenticated = True
+            roles = [role.name for role in current_user.roles]
+            if "Webmaster" in roles:
+                is_webmaster = True
+            if current_user.id == post.author_id:
+                can_edit = True
+
+        
+
+        all_posts.insert(0,RenderedPost(
+
             post_id=post.id,
             title=post.title,
             summary=post_renderer.render(post.make_post_summary()),
