@@ -20,12 +20,16 @@
         <div class="position-absolute " id="background"></div>
         <div class="postition-relative" id="wrapper">
             <div class="container position-relative" id="before">
-                    
+
+                <span onclick="reload();" href="#" type="button" class="btn ml-3" id="add_post">
+                    <i class="fas fa-sync"></i></span>  
                 {%if is_logged_in %}
                     <span onclick="add_post_button();" href="#" type="button" class="btn ml-3" id="add_post">
-                    <i class="fas fa-plus"></i>
-                    Neuer Post</span>
+                      <i class="fas fa-plus"></i>
+                      Neuer Post
+                    </span>
                 {%endif%}
+                
             </div>
             <div class="container" id="overview_space">
 

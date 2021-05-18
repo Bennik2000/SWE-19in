@@ -261,18 +261,18 @@ function get_access_token(){
             let token=document.createElement("a");
             token.innerHTML=element;
     
-            /*let button=document.createElement("button");
+            let button=document.createElement("button");
             button.type="button";
             button.classList.add("btn");
             button.classList.add("btn-secondary");
             button.classList.add("ml-2");
             button.setAttribute("onclick","delete_access_token(this);");
-            button.innerHTML="Löschen";*/
+            button.innerHTML="Löschen";
     
             let listItem=document.createElement("li");
             listItem.classList.add("list-group-item");
-            //listItem.appendChild(button);
             listItem.appendChild(token);
+            listItem.appendChild(button);
     
             tokenlist.appendChild(listItem);
         });
@@ -282,6 +282,30 @@ function get_access_token(){
     frontendHelper.makeHttpRequest("GET", "/api/accessToken", jsonObj, myOnloadFunction);
 
 }
+function generate_passcode(){
+
+    function myOnloadFunction(response){
+        get_access_token();
+    }
+    let jsonObj ={};
+    frontendHelper.makeHttpRequest("POST", "/api/accessToken", jsonObj, myOnloadFunction);
+}
+
+function delete_access_token(elem: HTMLButtonElement ){
+    function myOnloadFunction(response){
+        if (response.success == true){
+            get_access_token();
+        }
+        console.log(response);
+        
+    }
+
+    let jsonObj={};
+    jsonObj["token"]=elem.parentElement.getElementsByTagName("a")[0].innerHTML as String
+    console.log(jsonObj);
+    frontendHelper.makeHttpRequest("GET", "/api/accessToken/delete", jsonObj, myOnloadFunction);
+}
+
 function get_users(){
 
     let userList=document.getElementById("user_list");
@@ -301,17 +325,7 @@ function get_users(){
     let jsonObj={};
     frontendHelper.makeHttpRequest("GET", "/api/users", jsonObj, myOnloadFunction);
 }
-function delete_access_token(elem: Element ){
-  /*  function myOnloadFunction(response){
-        if (response.success=true){
-            get_access_token();
-        }
-    }
 
-    let jsonObj={};
-    jsonObj["token"]=elem.parentElement.getElementsByTagName("a")[0].innerHTML
-    frontendHelper.makeHttpRequest("DELETE", "/api/accessToken/delete", jsonObj, myOnloadFunction);
-*/}
 function get_user_info(){
     function myOnloadFunction(response){
         document.getElementById("Username").innerHTML=response.name;

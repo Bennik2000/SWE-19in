@@ -11,7 +11,10 @@
     width: 100%;
     overflow: auto; 
 }
-
+::-webkit-scrollbar{
+    display: none;
+    width: 0;
+}
 
 html{
     height: 100%;
@@ -38,6 +41,7 @@ body{
     padding-left: 25px;
     padding-right: 25px;
     height: auto;
+    margin-bottom: 10px;
     width: 90%;
 }
 
@@ -47,6 +51,7 @@ body{
 
 #date{
     float: right;
+
 }
 
 #authorAndDate_div {
