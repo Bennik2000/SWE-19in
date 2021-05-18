@@ -30,7 +30,7 @@ def api_validate_access_token():
     })
 
 
-@access_token_bp.route('/delete')
+@access_token_bp.route('', methods=["DELETE"])
 @login_required
 def api_delete_access_token():
     token = request.json['token']
