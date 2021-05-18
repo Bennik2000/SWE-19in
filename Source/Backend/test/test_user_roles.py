@@ -129,3 +129,17 @@ class UserRolesTest(BaseTestCase):
         roles_received = response.json[0].get('roles')
         self.assertIsNotNone(roles_received, "No roles received")
         self.assertEqual(roles_received, test_user_roles)
+
+    def test_given_first_user_on_remove_webmaster_role_then_role_not_removed(self):
+        user = self.create_and_login_test_user(roles=['Webmaster'])
+
+        response = self.app.put(
+            "/api/users/user_roles",
+            json={
+                "user_id": user.id,
+                "roles": []
+            }
+        )
+
+        self.assertTrue(response.json["success"], f"Unexpected JSON response: {response.json}")
+        self.assertTrue(user.has_roles('Webmaster'), "First user doesn't have the Webmaster role")

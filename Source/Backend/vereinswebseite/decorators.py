@@ -14,12 +14,12 @@ def roles_accepted(*role_names):
         def edit_article():  # User must be 'Writer' OR 'Editor'
             ...
     """
+
     # convert the list to a list containing that list.
     # Because roles_required(a, b) requires A AND B
     # while roles_required([a, b]) requires A OR B
     def wrapper(func):
-
-        @wraps(func)    # Tells debuggers that is is a function wrapper
+        @wraps(func)  # Tells debuggers that is is a function wrapper
         def decorator(*args, **kwargs):
             # User must have the required roles
             # NB: roles_required would call has_roles(*role_names): ('A', 'B') --> ('A', 'B')
@@ -44,13 +44,16 @@ def roles_required(*role_names):
         def escape_capture():  # User must be 'Special' AND 'Agent'
             ...
     """
+
     def wrapper(func):
-        @wraps(func)    # Tells debuggers that is is a function wrapper
+        @wraps(func)  # Tells debuggers that is is a function wrapper
         def decorator(*args, **kwargs):
             if not current_user.has_roles(*role_names):
                 # Redirect to the unauthorized page
                 return current_app.login_manager.unauthorized()
             # It's OK to call the view
             return func(*args, **kwargs)
+
         return decorator
+
     return wrapper

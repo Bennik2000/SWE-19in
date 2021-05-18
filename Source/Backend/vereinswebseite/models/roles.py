@@ -18,4 +18,4 @@ class UserRoles(db.Model):
 
 class RoleSchema(ma.Schema):
     class Meta:
-        fields = ('name', )
+        fields = ('name',)

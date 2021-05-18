@@ -6,6 +6,9 @@ from . import db
 
 
 class BlogPost(db.Model):
+    """
+    Defines the data model of a blog post. All properties are stored in the database
+    """
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.UnicodeText)
     content = db.Column(db.UnicodeText)
@@ -41,15 +44,21 @@ class BlogPost(db.Model):
 
 
 class RenderedPost:
-    def __init__(self, post_id, title, summary, content, creation_date, name, can_edit_post,is_webmaster):
+    """
+    Represents rendered post which is given to the template to display it.
+    This means the content and summary can contain rendered html.
+    It is not guaranteed that both, content and summary contain values.
+    """
+
+    def __init__(self, post_id, title, summary, content, creation_date, name, can_edit_post, can_delete_post):
         self.id = post_id
         self.title = title
         self.summary = summary
         self.content = content
         self.creation_date = creation_date
         self.name = name
-        self.edit = can_edit_post
-        self.webmaster = is_webmaster
+        self.can_edit_post = can_edit_post
+        self.can_delete_post = can_delete_post
 
 
 class BlogPostSchema(ma.Schema):

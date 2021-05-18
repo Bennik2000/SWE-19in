@@ -23,7 +23,7 @@
                 <div id="livePreviewCheckbox_div">
                     <input id="livePreviewCheckbox" type="checkbox" onclick="swapShowingLivePreview(this)">
                     <span class="checkmark"></span>                   
-                    <label class="checkbox-primary text-primary" id="livePreviewCheckbox_label">Live-Vorschau</label>
+                    <a class="checkbox-primary text-primary" id="livePreviewCheckbox_label" onclick="swapCheckbox()">Live-Vorschau</a>
                 </div>
             </label>
             <textarea class="form-control" required name="markdown" id="markdown">{{ content }}</textarea>
@@ -34,7 +34,7 @@
                 <button class="btn btn-primary btn-sm" id="updatePreview_button" type="button" style="display: none" onclick="updatePreview()">Vorschau aktualisieren</button>
             </div>
         <br>
-            <label for="preview">Vorschau</label>
+            <label for="markdown_preview">Vorschau</label>
             <div class="form-group" id="markdown_preview"></div>
         </div>
         <p id="uploadPictures">Bild hochladen und einfügen: 

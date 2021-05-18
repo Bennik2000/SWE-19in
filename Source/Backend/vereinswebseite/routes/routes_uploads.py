@@ -19,14 +19,14 @@ uploads_bp = Blueprint('uploads', __name__)
 
 @uploads_bp.route('/api/upload_image', methods=['POST'])
 @login_required
-def upload_image():
+def api_upload_image():
     success, response, filename = _save_uploaded_file()
     return response
 
 
 @uploads_bp.route('/api/upload_profile_picture', methods=['POST'])
 @login_required
-def upload_profile_picture():
+def api_upload_profile_picture():
     success, response, filename = _save_uploaded_file()
 
     if success:
