@@ -25,6 +25,19 @@ class UserRegistrationTest(BaseTestCase):
         self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertIsNone(db.session.query(User.name).filter_by(name='TestUser').first())
 
+    def test_login_user_email_case_insensitive(self):
+        self._prepare_access_token()
+        self.app.post("/api/users", json=self.ValidTestJson)
+        self.app.post("/api/users/logout")
+
+        response = self.app.post("/api/users/login", json={
+            "email": TestEmail.upper(),
+            "password": TestPassword
+        })
+
+        self.assertEqual(response.status_code, HTTPStatus.OK)
+        self.assertTrue(response.json["success"])
+
     def test_register_user_valid_user(self):
         self._prepare_access_token()
         response = self.app.post("/api/users", json=self.ValidTestJson)

@@ -47,6 +47,8 @@ def api_register_user():
     if email is None or email == "":
         return email_invalid
 
+    email = email.lower()
+
     if password is None or password == "":
         return password_invalid
 
@@ -89,6 +91,8 @@ def api_login():
 
     if email is None or email == "":
         return email_invalid
+
+    email = email.lower()
 
     if password is None or password == "":
         return password_invalid
@@ -142,6 +146,8 @@ def api_change_email():
     if email is None or email == "":
         return email_invalid
 
+    email = email.lower()
+
     current_user.email = email
     db.session.commit()
     return success_response
@@ -179,6 +185,8 @@ def api_request_new_password():
 
     if email is None or email == "":
         return email_invalid
+
+    email = email.lower()
 
     user = User.query.filter_by(email=email).first()
 
