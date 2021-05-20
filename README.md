@@ -2,11 +2,11 @@
 
 # Installationsanleitung für Mac OS
 
-1. Python 3.9 von der Webseite installieren (https://www.python.org/downloads/)
-2. Terminal öffnen und in den Ordner `Source/Backend/` navigieren
-3. `sh setup_environment.sh` ausführen um die venv zu erzeugen und alle Abhängigkeiten zu laden
-4. `sh start_server.sh` ausführen um den Server zu starten
-5. Im Browser die Seite `127.0.0.1:5000/navigation_page` aufrufen
+1. Install Python 3.9 (https://www.python.org/downloads/)
+2. Open the terminal and navigate to `Source/Backend/` 
+3. Execute `sh setup_environment.sh` to create the venv and install the dependencies
+4. Start the server with `sh start_server.sh`
+5. Open the [127.0.0.1:5000/navigation_page]() in the browser
 
 ## General installation guide
 1. install Python (version 3.9 or higher required)
