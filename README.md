@@ -1,7 +1,8 @@
 # SWE Project - VereinSWEbseite
 
-### Beschreibung
-
-Das Projekt soll eine Webanwendung werden, die ein Blog System für Vereine bietet. Angemeldete Benutzer können Beiträge schreiben und veröffentlichen. Unangemeldete Benutzer können die neusten Beiträge sehen. Für angemeldete Benutzer können Rollen mit entsprechenden Rechten zugewiesen werden. Beiträge können Kategorien zugeordnet werden.
-
-Die Beiträge, Benutzer, Rollen werden in einer Datenbank gespeichert.
+## installation guide
+1. install Python (version 3.9 or higher required)
+2. set up a virtual environment
+3. open the project in an IDE
+4. install the requirements by executing the command `pip install -r requirements.txt`
+5. run the application --> listening on port 5000    
