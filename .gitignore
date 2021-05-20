@@ -1,4 +1,4 @@
-﻿
+
 # Created by https://www.toptal.com/developers/gitignore/api/pycharm
 # Edit at https://www.toptal.com/developers/gitignore?templates=pycharm
 
@@ -349,3 +349,4 @@ Source/Backend/.vscode/settings.json
 
 Source/Backend/node_modules
 Source/Backend/src/flask-uploads
+Source/Backend/get-pip.py
