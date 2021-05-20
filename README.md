@@ -1,7 +1,16 @@
-# SWE Project - VereinSWEbseite
+## SWE Project - VereinSWEbseite
 
-### Beschreibung
+# Installationsanleitung für Mac OS
 
-Das Projekt soll eine Webanwendung werden, die ein Blog System für Vereine bietet. Angemeldete Benutzer können Beiträge schreiben und veröffentlichen. Unangemeldete Benutzer können die neusten Beiträge sehen. Für angemeldete Benutzer können Rollen mit entsprechenden Rechten zugewiesen werden. Beiträge können Kategorien zugeordnet werden.
+1. Install Python 3.9 (https://www.python.org/downloads/)
+2. Open the terminal and navigate to `Source/Backend/` 
+3. Execute `sh setup_environment.sh` to create the venv and install the dependencies
+4. Start the server with `sh start_server.sh`
+5. Open the [127.0.0.1:5000/navigation_page]() in the browser
 
-Die Beiträge, Benutzer, Rollen werden in einer Datenbank gespeichert.
+## General installation guide
+1. install Python (version 3.9 or higher required)
+2. Go to the `Source/Backend/` directory
+3. set up a virtual environment
+4. install the requirements by executing the command `pip install -r requirements.txt`
+5. run the application with the command `python run.py`    
